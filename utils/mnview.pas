@@ -1,0 +1,184 @@
+{
+Monster Viewer for Ice Queen
+Copyright (C) 2001 Angelo Bertolli
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+Angelo Bertolli
+<angelo.bertolli@gmail.com>
+}
+
+program MonsterViewer;
+
+uses crt;
+
+const
+     version        =    'v2.1';
+
+{$I global.pas}
+
+var
+     ch             :    char;
+     int            :    integer;
+     loop           :    integer;
+     monster        :    monsterrecord;
+     dosname        :    stringtype;
+     pasfile        :    file of monsterrecord;
+
+{--------------------------------------------------------------------------}
+function exist(dosname:stringtype) : boolean;
+
+var
+     pasfile        :   text;
+
+begin
+     {$I-}
+     assign(pasfile,dosname);
+     reset(pasfile);
+     close(pasfile);
+     {$I+}
+     exist:=(IoResult=0);
+end;
+{--------------------------------------------------------------------------}
+
+
+begin {main}
+  repeat
+     clrscr;
+     writeln('Ice Queen Monster Viewer ',version);
+     writeln;
+     writeln;
+     repeat
+          write('View which file:  ');
+          readln(dosname);
+          if not(exist(dosname)) then
+               writeln('File does not exist.');
+     until exist(dosname);
+     assign(pasfile,dosname);
+     reset(pasfile);
+     read(pasfile,monster);
+     close(pasfile);
+     writeln('File read, press any key to continue.');
+     ch:=readkey;
+     clrscr;
+     writeln;
+     writeln;
+     with monster do
+          begin
+               write('Monster name:  ');
+               writeln(name);
+               write('Monster picture file:  ');
+               writeln(picfile);
+               write('Gender:  ');
+               writeln(sex);
+               write('Alignment:  ');
+               writeln(alignment);
+               write('Hit Dice:  ');
+               write(hitdice);
+               if (hpbonus<0) then
+                    writeln(hpbonus)
+               else
+                    if (hpbonus>0) then
+                         writeln('+',hpbonus)
+                    else
+                         writeln;
+               endurance:=0;
+               endurancemax:=0;
+               write('Armor Class:  ');
+               writeln(armorclass);
+               write('THAC0:  ');
+               writeln(thac0);
+               with damage do
+                    begin
+                         write('Damage:  ');
+                         write(rollnum,'d',dicetype);
+                         if (bonus<0) then
+                              writeln(bonus)
+                         else
+                              if (bonus>0) then
+                                   writeln('+',bonus)
+                              else
+                                   writeln;
+                    end;
+               write('Attack type:  ');
+               writeln(name,' ',attacktype,' you!');
+               write('Saving Throw:  ');
+               writeln(savingthrow);
+               write('Morale (2-12):  ');
+               write(morale,' ');
+               case morale of
+                    2:writeln('(runs from a speck of dust)');
+                 3..5:writeln('(cowardly)');
+                 6..8:writeln('(cautious)');
+                9..11:writeln('(brave)');
+                   12:writeln('(fearless)');
+               else
+                    writeln('(what the heck?!!)');
+               end;{case}
+               write('Experience value (basic):  ');
+               writeln(xpvalue);
+               write('EXPERIENCE:  The game will multiply the xpv by ');
+               writeln(xpmultiplier);
+               writeln('    and then add half the monster''s HP to it for');
+               writeln('    total xpv.');
+               with treasure do
+                    begin
+                         write('Coins:  ');
+                         write(rollnum,'d',dicetype);
+                         if (bonus<0) then
+                              writeln(bonus)
+                         else
+                              if (bonus>0) then
+                                   writeln('+',bonus)
+                              else
+                                   writeln;
+                    end;
+               coins:=0;
+               write('spells ');
+               writeln('(',numspells,')');
+               for loop:=1 to numspells do
+                    begin
+                         case spell[loop] of
+                              icestorm       :write('icestorm':15);
+                              fireblast      :write('fire blast':15);
+                              web            :write('web':15);
+                              callwild       :write('call wild':15);
+                              heal           :write('heal':15);
+                              courage        :write('courage':15);
+                              freeze         :write('freeze':15);
+                              obliterate     :write('obliterate':15);
+                              icicle         :write('icicle':15);
+                              power          :write('power':15);
+                              shatter        :write('shatter':15);
+                              glacier        :write('glacier':15);
+                              dragonbreath   :write('dragon breath':15);
+                              resistfire     :write('resist fire':15);
+                              resistcold     :write('resist cold':15);
+                         else
+                              write('error');
+                         end;{case}
+                         if ((loop MOD 2)=0) then
+                              writeln
+                         else
+                              write('          ');
+                    end;
+          end;
+     writeln;
+     writeln('<Enter> to continue, <ESC> to quit.');
+     repeat
+          ch:=readkey;
+     until (ch in [#27,#13])
+  until (ch in [#27]);
+end. {main}
