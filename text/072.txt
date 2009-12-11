@@ -1,0 +1,2 @@
+                                SKULL: "Death"
+                       Your endurance decreases by 1 point.

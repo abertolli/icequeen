@@ -1,0 +1,5 @@
+   You pick up a small stone and cast
+your spell.  The stone becomes frozen,
+making it very brittle.  You crush it
+easily.  This spell only works on small
+objects.

@@ -1,0 +1,2 @@
+                                EYE: "Weakness"
+                       Your strength decreases by 1 point.

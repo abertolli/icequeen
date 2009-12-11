@@ -1,0 +1,2 @@
+                            LIGHTNING: "Sloth"
+                    Your dexterity decreases by 1 point.
