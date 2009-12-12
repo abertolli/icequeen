@@ -27,10 +27,10 @@ uses crt, graph, graphio;
 {$r icequeen.res}
 {$endif}
 
-{$I game.h}
-{$I character.h}
-{$I monster.h}
-{$I encounter.h}
+{$I game.pas}
+{$I character.pas}
+{$I monster.pas}
+{$I encounter.pas}
 
 
 var
