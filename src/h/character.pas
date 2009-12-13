@@ -1,4 +1,4 @@
-{$I item.h}
+{$I item.pas}
 
 const
    itemmax     =    9;
