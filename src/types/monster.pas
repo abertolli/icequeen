@@ -1,6 +1,3 @@
-const
-     MON_dir        =    'monst/';
-
 type
 
      monsterrecord  =    record
