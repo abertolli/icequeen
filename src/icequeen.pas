@@ -26,12 +26,9 @@ uses crt, graph, graphio;
 {$ifdef win32}
 {$r icequeen.res}
 {$endif}
-{$I config.pas}
 
-{$I types/game.pas}
-{$I types/character.pas}
-{$I types/monster.pas}
-{$I types/encounter.pas}
+{$I config.pas}
+{$I types.pas}
 
 
 var

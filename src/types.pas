@@ -66,7 +66,18 @@ type
                           mshield,knight,treasure,lizard,iceq,endgame);
                          {keep endgame as the last enum type}
      location       =    (town,wilderness,dungeon);
-{$I item.pas}
+
+
+type
+
+	item_t		= record
+		name		: string;
+		item_type	: byte;
+		value	 	: word;
+		picfile		: string;
+		msg		: string;
+		data		: array[1..8] of shortint;
+	end;
 
 const
 	itemmax	= 9;
