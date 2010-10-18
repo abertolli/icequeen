@@ -175,7 +175,7 @@ begin {main}
           goahead:=true;
      if goahead then
           begin
-               assign(pasfile,MON_DIR+dosname);
+               assign(pasfile,monsterdir+dosname);
                rewrite(pasfile);
                write(pasfile,monster);
                close(pasfile);

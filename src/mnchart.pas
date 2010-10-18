@@ -93,7 +93,7 @@ begin {main}
      write('Enter Save File Name:  ');
      readln(dosname);
      goahead:=false;
-     if exist(CHT_DIR+dosname) then
+     if exist(chartdir+dosname) then
           begin
                writeln('File exists.');
                writeln('Overwrite? (y/n)');
@@ -108,7 +108,7 @@ begin {main}
           goahead:=true;
      if goahead then
           begin
-               assign(pasfile,CHT_DIR+dosname);
+               assign(pasfile,chartdir+dosname);
                rewrite(pasfile);
                write(pasfile,chart);
                close(pasfile);

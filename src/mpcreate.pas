@@ -343,7 +343,7 @@ begin
                          write('Load filename: ');
                          readln(dosname);
                     end;
-               assign(pasfile,MAP_DIR+dosname);
+               assign(pasfile,mapdir+dosname);
                reset(pasfile);
                read(pasfile,map);
                close(pasfile);
@@ -362,7 +362,7 @@ begin
                     end;
                if (ans in ['y','Y']) or not(exist(dosname)) then
                     begin
-                         assign(pasfile,MAP_DIR+dosname);
+                         assign(pasfile,mapdir+dosname);
                          rewrite(pasfile);
                          write(pasfile,map);
                          close(pasfile);

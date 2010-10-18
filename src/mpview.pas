@@ -85,7 +85,7 @@ begin
      else
           filename:='blank.bmp';
      end;
-     DrawPic(xpix,ypix,PIC_DIR+filename);
+     DrawPic(xpix,ypix,imagedir+filename);
 end;
 {---------------------------------------------------------------------------}
 procedure drawmap(themap:matrix);
@@ -253,7 +253,7 @@ begin {main}
                write('enter map file name:  ');
                readln(dosname);
           end;
-     getmap(MAP_DIR+dosname,mapmap);
+     getmap(mapdir+dosname,mapmap);
      write('Enter code file name:  ');
 
      readln(dosname);
@@ -263,7 +263,7 @@ begin {main}
                write('enter code file name:  ');
                readln(dosname);
           end;
-     getmap(MAP_DIR+dosname,mapcode);
+     getmap(mapdir+dosname,mapcode);
      writeln;
      writeln('Map and Code loaded.  Press <Enter> to continue.');
      readln;

@@ -208,7 +208,7 @@ begin
      monster.numspells:=numspells;
      monster.spell:=spell;
 
-     savemonster(MON_DIR+filename,monster);
+     savemonster(monsterdir+filename,monster);
 
 end;
 {--------------------------------------------------------------------------}
@@ -578,7 +578,7 @@ begin
      themap[20,13]:=5;
      themap[20,14]:=5;
 
-     savemap(MAP_DIR+'surface.map',themap);
+     savemap(mapdir+'surface.map',themap);
 
      {surface.cod}
      themap[1,1]:=1;
@@ -864,7 +864,7 @@ begin
      themap[20,13]:=1;
      themap[20,14]:=1;
 
-     savemap(MAP_DIR+'surface.cod',themap);
+     savemap(mapdir+'surface.cod',themap);
 
      {cave.map}
      themap[1,1]:=29;
@@ -1154,7 +1154,7 @@ begin
      themap[20,13]:=29;
      themap[20,14]:=29;
 
-     savemap(MAP_DIR+'cave.map',themap);
+     savemap(mapdir+'cave.map',themap);
 
      {cave.cod}
      themap[1,1]:=1;
@@ -1441,7 +1441,7 @@ begin
      themap[20,13]:=1;
      themap[20,14]:=1;
 
-     savemap(MAP_DIR+'cave.cod',themap);
+     savemap(mapdir+'cave.cod',themap);
 
      {castle.map}
      themap[1,1]:=0;
@@ -1729,7 +1729,7 @@ begin
      themap[20,13]:=0;
      themap[20,14]:=0;
 
-     savemap(MAP_DIR+'castle.map',themap);
+     savemap(mapdir+'castle.map',themap);
 
      {castle.cod}
      themap[1,1]:=1;
@@ -2013,7 +2013,7 @@ begin
      themap[20,13]:=1;
      themap[20,14]:=1;
 
-     savemap(MAP_DIR+'castle.cod',themap);
+     savemap(mapdir+'castle.cod',themap);
 
      {dungeon.map}
      themap[1,1]:=0;
@@ -2299,7 +2299,7 @@ begin
      themap[20,13]:=0;
      themap[20,14]:=0;
 
-     savemap(MAP_DIR+'dungeon.map',themap);
+     savemap(mapdir+'dungeon.map',themap);
 
      {dungeon.cod}
      themap[1,1]:=1;
@@ -2583,7 +2583,7 @@ begin
      themap[20,13]:=1;
      themap[20,14]:=1;
 
-     savemap(MAP_DIR+'dungeon.cod',themap);
+     savemap(mapdir+'dungeon.cod',themap);
 
 end;
 {--------------------------------------------------------------------------}
@@ -2724,7 +2724,7 @@ begin
                parse('1',number[20]);
           end;
 
-     savechart(CHT_DIR+'wild.dat',thechart);
+     savechart(chartdir+'wild.dat',thechart);
 
      {cave.dat}
      with thechart do
@@ -2798,7 +2798,7 @@ begin
                parse('1d8',number[12]);
           end;
 
-     savechart(CHT_DIR+'cave.dat',thechart);
+     savechart(chartdir+'cave.dat',thechart);
 
      {castle.dat}
      with thechart do
@@ -2811,7 +2811,7 @@ begin
                parse('1d4+4',number[1]);
           end;
 
-     savechart(CHT_DIR+'castle.dat',thechart);
+     savechart(chartdir+'castle.dat',thechart);
 
      {dungeon.dat}
      with thechart do
@@ -2854,7 +2854,7 @@ begin
                parse('1d8',number[7]);
           end;
 
-     savechart(CHT_DIR+'dungeon.dat',thechart);
+     savechart(chartdir+'dungeon.dat',thechart);
 
 
 end;
@@ -2962,7 +2962,7 @@ begin
                chargemax:=0;
           end;
 
-     savegame(SAV_DIR+savedefault,player);
+     savegame(savedir+savedefault,player);
 
 end;
 {--------------------------------------------------------------------------}

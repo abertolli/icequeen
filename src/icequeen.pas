@@ -28,7 +28,7 @@ uses crt, graph, graphio;
 {$endif}
 
 {$I config.pas}
-{$I types.pas}
+{$I datatypes.pas}
 
 
 var
@@ -121,14 +121,14 @@ begin
      else
           filename:='blank.bmp';
      end;
-     DrawPic(xpix,ypix,PIC_DIR+filename);
+     DrawPic(xpix,ypix,imagedir+filename);
 end;
 {---------------------------------------------------------------------------}
 procedure drawitem(xpos,ypos:integer;theitem:item_t);
 
 
 begin
-     DrawPic(xpos,ypos,PIC_DIR+theitem.picfile);
+     DrawPic(xpos,ypos,imagedir+theitem.picfile);
 end;
 
 {Title and Main Menu Functions and Procedures}
@@ -144,7 +144,7 @@ begin
      setcolor(white);
      outtextxy(140,380,'The Ice Queen');
      settextstyle(default,horizontal,2);
-     DrawPic(120,10,PIC_DIR+'tcastle.bmp');
+     DrawPic(120,10,imagedir+'tcastle.bmp');
      settextstyle(default,horizontal,1);
      setcolor(lightgray);
      prompt;
@@ -159,7 +159,7 @@ begin
      homecursor(x,y);
      settextstyle(sanseri,horizontal,2);
      setcolor(lightblue);
-     writefile(y,TXT_DIR+'intro.txt');
+     writefile(y,textdir+'intro.txt');
      prompt;
 end;
 {---------------------------------------------------------------------------}
@@ -170,14 +170,14 @@ procedure credits;
 begin
      cleardevice;
      settextstyle(sanseri,horizontal,2);
-     DrawPic(80,60,PIC_DIR+'credits.bmp');
+     DrawPic(80,60,imagedir+'credits.bmp');
      setcolor(white);
      prompt;
 {
      cleardevice;
      setcolor(white);
      homecursor(x,y);
-     writefile(y,TXT_DIR+'credits.txt');
+     writefile(y,textdir+'credits.txt');
      prompt;
 }
 end;
@@ -198,8 +198,8 @@ begin
      graphwriteln(x,y,'                                Welcome');
      graphwriteln(x,y,'                       Please make your selection.');
      settextstyle(default,horizontal,3);
-     DrawPic(60,225,PIC_DIR+leftpic);
-     DrawPic(460,240,PIC_DIR+rightpic);
+     DrawPic(60,225,imagedir+leftpic);
+     DrawPic(460,240,imagedir+rightpic);
 end;
 {---------------------------------------------------------------------------}
 procedure startgame(var player:character_t);
@@ -250,9 +250,9 @@ begin
                     until (sex in ['m','M','f','F']);
                     outtextxy(x,y,sex);
                     if (sex in ['m','M']) then
-                         DrawPic(x+200,y,PIC_DIR+'mplayer.bmp')
+                         DrawPic(x+200,y,imagedir+'mplayer.bmp')
                     else
-                         DrawPic(x+200,y,PIC_DIR+'fplayer.bmp');
+                         DrawPic(x+200,y,imagedir+'fplayer.bmp');
                     graphwriteln(x,y,'');
                     setcolor(white);
                     level:=1;
@@ -407,10 +407,10 @@ begin
           graphwriteln(x,y,'');
           graphwriteln(x,y,'');
           setcolor(lightgray);
-          if exist(SAV_DIR+dosname) then
+          if exist(savedir+dosname) then
                begin
                     graphwriteln(x,y,'Loading...');
-                    assign(pasfile,SAV_DIR+dosname);
+                    assign(pasfile,savedir+dosname);
                     reset(pasfile);
                     read(pasfile,player);
                     close(pasfile);
@@ -732,7 +732,7 @@ begin
           calcstats(player);
           with player do
                begin
-                    DrawPic(20,20,PIC_DIR+picfile);
+                    DrawPic(20,20,imagedir+picfile);
                     settextstyle(triplex,horizontal,4);
                     setcolor(white);
                     x:=240;
@@ -1041,7 +1041,7 @@ begin
      y:=0;
      if (nummonsters<=1) then
           begin
-               DrawPic(x,y,PIC_DIR+monster[nummonsters].picfile);
+               DrawPic(x,y,imagedir+monster[nummonsters].picfile);
                setcolor(lightgray);
                tempstring:=monster[nummonsters].name;
                outtextxy(x+60-(textwidth(tempstring) DIV 2),y+120,tempstring);
@@ -1050,7 +1050,7 @@ begin
      if (nummonsters<=4)and(nummonsters>1) then
           for loop:=1 to nummonsters do
                begin
-                    DrawPic(x,y,PIC_DIR+monster[loop].picfile);
+                    DrawPic(x,y,imagedir+monster[loop].picfile);
                     setcolor(lightgray);
                     str(loop,tempstring);
                     tempstring:=tempstring + '.' + monster[loop].name;
@@ -1061,7 +1061,7 @@ begin
           begin
                for loop:=1 to 4 do
                     begin
-                         DrawPic(x,y,PIC_DIR+monster[loop].picfile);
+                         DrawPic(x,y,imagedir+monster[loop].picfile);
                          setcolor(lightgray);
                          str(loop,tempstring);
                          tempstring:=tempstring + '.' + monster[loop].name;
@@ -1072,7 +1072,7 @@ begin
                y:=120 + spacing;
                for loop:=5 to nummonsters do
                     begin
-                         DrawPic(x,y,PIC_DIR+monster[loop].picfile);
+                         DrawPic(x,y,imagedir+monster[loop].picfile);
                          setcolor(lightgray);
                          str(loop,tempstring);
                          tempstring:=tempstring + '.' + monster[loop].name;
@@ -1085,7 +1085,7 @@ begin
      combatstats(player);       {Create the combat stats window on the right}
      x:=(640 DIV 2) - 60;   {Draw the player in the center}
      y:=340;
-     DrawPic(x,y,PIC_DIR+player.picfile);
+     DrawPic(x,y,imagedir+player.picfile);
 end;
 {---------------------------------------------------------------------------}
 
@@ -1388,9 +1388,9 @@ begin
                                         else
                                              begin
                                                   {------roll monster-----}
-                                                  if not(exist(CHT_DIR+wildchart)) then
+                                                  if not(exist(chartdir+wildchart)) then
                                                        exit;
-                                                  assign(pasfile,CHT_DIR+wildchart);
+                                                  assign(pasfile,chartdir+wildchart);
                                                   reset(pasfile);
                                                   read(pasfile,monsterchart);
                                                   close(pasfile);
@@ -1959,9 +1959,9 @@ begin
                                         else
                                              begin
                                                   {------roll monster-----}
-                                                  if not(exist(CHT_DIR+wildchart)) then
+                                                  if not(exist(chartdir+wildchart)) then
                                                        exit;
-                                                  assign(pasfile,CHT_DIR+wildchart);
+                                                  assign(pasfile,chartdir+wildchart);
                                                   reset(pasfile);
                                                   read(pasfile,monsterchart);
                                                   close(pasfile);
@@ -2528,7 +2528,7 @@ begin
      graphwriteln(x,y,'');
      graphwriteln(x,y,'');
      setcolor(lightgray);
-     if exist(SAV_DIR+dosname) then
+     if exist(savedir+dosname) then
           begin
                graphwriteln(x,y,'File exists.');
                graphwriteln(x,y,'Overwrite? (y/n)');
@@ -2542,7 +2542,7 @@ begin
           goahead:=true;
      if goahead then
           begin
-               assign(pasfile,SAV_DIR+dosname);
+               assign(pasfile,savedir+dosname);
                rewrite(pasfile);
                write(pasfile,player);
                close(pasfile);
@@ -2800,15 +2800,15 @@ begin
                                         settextstyle(sanseri,horizontal,2);
 { Modify using item_t
                                         case item[tempinteger] of
-                                             bluepotion     :writefile(1,TXT_DIR+'blue.txt');
+                                             bluepotion     :writefile(1,textdir+'blue.txt');
                                              redpotion      :begin
-                                                                  writefile(1,TXT_DIR+'red.txt');
+                                                                  writefile(1,textdir+'red.txt');
                                                                   endurance:=endurance + d(6)+1;
                                                                   if (endurance>endurancemax) then
                                                                        endurance:=endurancemax;
                                                              end;
                                              greenpotion    :begin
-                                                                  writefile(1,TXT_DIR+'green.txt');
+                                                                  writefile(1,textdir+'green.txt');
                                                                   endurance:=endurancemax;
                                                              end;
                                         end;
@@ -3070,12 +3070,12 @@ begin
           settextstyle(default,horizontal,1);
           setcolor(white);
           outtextxy(240,400,('You have ' + tempstring + ' coins'));
-          DrawPic(20,280,PIC_DIR+'wizard.bmp');
-          DrawPic(150,100,PIC_DIR+'potion-blue.bmp');
-          DrawPic(150,200,PIC_DIR+'potion-red.bmp');
-          DrawPic(150,300,PIC_DIR+'potion-green.bmp');
-          DrawPic(320,100,PIC_DIR+'skilbook.bmp');
-          DrawPic(380,280,PIC_DIR+'ring.bmp');
+          DrawPic(20,280,imagedir+'wizard.bmp');
+          DrawPic(150,100,imagedir+'potion-blue.bmp');
+          DrawPic(150,200,imagedir+'potion-red.bmp');
+          DrawPic(150,300,imagedir+'potion-green.bmp');
+          DrawPic(320,100,imagedir+'skilbook.bmp');
+          DrawPic(380,280,imagedir+'ring.bmp');
           repeat
                ans:=readarrowkey;
           until (ans in ['e','E','b','B','s','S','l','L']);
@@ -3100,9 +3100,9 @@ begin
      prompt;
      cleardevice;
      x:=(getmaxx DIV 2) - 100;
-     DrawPic(x,1,PIC_DIR+'gdemon.bmp');
+     DrawPic(x,1,imagedir+'gdemon.bmp');
      x:=(getmaxx DIV 2) - 60;
-     DrawPic(x,300,PIC_DIR+player.picfile);
+     DrawPic(x,300,imagedir+player.picfile);
      setcolor(red);
      settextstyle(sanseri,horizontal,2);
      x:=(getmaxx DIV 2) - (textwidth('(A)ttack or (R)un') DIV 2);
@@ -3203,64 +3203,64 @@ begin
                                                  settextstyle(default,horizontal,2);
         {equal out the unused charge}            charges:=charges+1;
                                             end;
-                                   web:writefile(1,TXT_DIR+'027.txt');
+                                   web:writefile(1,textdir+'027.txt');
                                    callwild:if (area=wilderness) then
-                                                 writefile(1,TXT_DIR+'024.txt')
+                                                 writefile(1,textdir+'024.txt')
                                             else
                                                  if (area=dungeon) then
-                                                      writefile(1,TXT_DIR+'025.txt')
+                                                      writefile(1,textdir+'025.txt')
                                                  else
-                                                      writefile(1,TXT_DIR+'007.txt');
+                                                      writefile(1,textdir+'007.txt');
                                    heal:begin
-                                             writefile(1,TXT_DIR+'008.txt');
+                                             writefile(1,textdir+'008.txt');
                                              endurance:=endurance + d(6) +1;
                                              if (endurance>endurancemax) then
                                                   endurance:=endurancemax;
                                         end;
                                    obliterate:begin
-                                                   writefile(1,TXT_DIR+'026.txt');
+                                                   writefile(1,textdir+'026.txt');
         {equal out the unused charge}              charges:=charges+1;
                                               end;
                                    power:case d(20) of
                                        1..3:begin
-                                                 writefile(1,TXT_DIR+'009.txt');
+                                                 writefile(1,textdir+'009.txt');
                                                  endurance:=endurance + d(2);
                                                  if (endurance>endurancemax) then
                                                       endurance:=endurancemax;
                                             end;
                                        4..6:begin
-                                                 writefile(1,TXT_DIR+'010.txt');
+                                                 writefile(1,textdir+'010.txt');
                                                  endurance:=endurance - d(2);
                                             end;
                                        7..9:if (area=wilderness) then
-                                                 writefile(1,TXT_DIR+'023.txt')
+                                                 writefile(1,textdir+'023.txt')
                                             else
-                                                 writefile(1,TXT_DIR+'011.txt');
-                                     10..12:writefile(1,TXT_DIR+'012.txt');
-                                     13..15:writefile(1,TXT_DIR+'028.txt');
+                                                 writefile(1,textdir+'011.txt');
+                                     10..12:writefile(1,textdir+'012.txt');
+                                     13..15:writefile(1,textdir+'028.txt');
                                          16:if (area=town) then
-                                                 writefile(1,TXT_DIR+'032.txt')
+                                                 writefile(1,textdir+'032.txt')
                                             else
                                                  fakebattle(player);
                                          17:begin
-                                                 writefile(1,TXT_DIR+'033.txt');
+                                                 writefile(1,textdir+'033.txt');
                                                  endurance:=endurancemax;
                                             end;
-                                     18..20:writefile(1,TXT_DIR+'013.txt');
+                                     18..20:writefile(1,textdir+'013.txt');
                                      end;{case}
-                                  shatter:writefile(1,TXT_DIR+'014.txt');
+                                  shatter:writefile(1,textdir+'014.txt');
                                   dragonbreath:if(area=wilderness)then
-                                                    writefile(1,TXT_DIR+'029.txt')
+                                                    writefile(1,textdir+'029.txt')
                                                else
                                                     if (area=dungeon) then
-                                                         writefile(1,TXT_DIR+'030.txt')
+                                                         writefile(1,textdir+'030.txt')
                                                     else
-                                                         writefile(1,TXT_DIR+'031.txt');
-                                  resistfire:writefile(1,TXT_DIR+'034.txt');
-                                  resistcold:writefile(1,TXT_DIR+'035.txt');
-                                  courage:writefile(1,TXT_DIR+'036.txt');
-                                  glacier:writefile(1,TXT_DIR+'037.txt');
-                                  freeze:writefile(1,TXT_DIR+'038.txt');
+                                                         writefile(1,textdir+'031.txt');
+                                  resistfire:writefile(1,textdir+'034.txt');
+                                  resistcold:writefile(1,textdir+'035.txt');
+                                  courage:writefile(1,textdir+'036.txt');
+                                  glacier:writefile(1,textdir+'037.txt');
+                                  freeze:writefile(1,textdir+'038.txt');
                               end;{case}
                               charges:=charges-1;
                          end;
@@ -3392,7 +3392,7 @@ begin
                                               thepicture:='skulldie.bmp';
                                          end;
                               end;{case}
-                              DrawPic(loop*115,240,PIC_DIR+thepicture);
+                              DrawPic(loop*115,240,imagedir+thepicture);
                          end;
                     x:=10;
                     y:=300;
@@ -3518,14 +3518,14 @@ begin
                coins:=coins - tipprice;
                outtextxy(1,140,'You toss Roland a coin and he tells you:  ');
                case d(8) of
-                    1:writefile(240,TXT_DIR+'015.txt');
-                    2:writefile(240,TXT_DIR+'016.txt');
-                    3:writefile(240,TXT_DIR+'017.txt');
-                    4:writefile(240,TXT_DIR+'018.txt');
-                    5:writefile(240,TXT_DIR+'019.txt');
-                    6:writefile(240,TXT_DIR+'020.txt');
-                    7:writefile(240,TXT_DIR+'021.txt');
-                    8:writefile(240,TXT_DIR+'022.txt');
+                    1:writefile(240,textdir+'015.txt');
+                    2:writefile(240,textdir+'016.txt');
+                    3:writefile(240,textdir+'017.txt');
+                    4:writefile(240,textdir+'018.txt');
+                    5:writefile(240,textdir+'019.txt');
+                    6:writefile(240,textdir+'020.txt');
+                    7:writefile(240,textdir+'021.txt');
+                    8:writefile(240,textdir+'022.txt');
                end;
                settextstyle(default,horizontal,2);
                prompt;
@@ -3566,8 +3566,8 @@ var
 
 begin
      cleardevice;
-     DrawPic(2,1,PIC_DIR+'pub.bmp');
-     DrawPic(40,160,PIC_DIR+'dwarf.bmp');
+     DrawPic(2,1,imagedir+'pub.bmp');
+     DrawPic(40,160,imagedir+'dwarf.bmp');
      settextstyle(sanseri,horizontal,3);
      setcolor(magenta);
      x:=210;
@@ -3600,7 +3600,7 @@ begin
                prompt;
                repeat
                     clearpub;
-                    DrawPic(240,140,PIC_DIR+'roland.bmp');
+                    DrawPic(240,140,imagedir+'roland.bmp');
                     settextstyle(sanseri,horizontal,3);
                     setcolor(lightmagenta);
                     outtextxy(1,280,'      "So, what''ll it be," asks Roland McDoland');
@@ -3648,7 +3648,7 @@ begin
      outtextxy(x+1,y+1,'     The Eagle Talon Inn');
      setcolor(cyan);
      outtextxy(x,y,'     The Eagle Talon Inn');
-     DrawPic(420,120,PIC_DIR+'innkeep.bmp');
+     DrawPic(420,120,imagedir+'innkeep.bmp');
      settextstyle(sanseri,horizontal,3);
      setcolor(lightblue);
      str(innprice,tempstring);
@@ -3775,7 +3775,7 @@ begin
                cleardevice;
                settextstyle(triplex,horizontal,3);
                setcolor(red);
-               writefile(1,TXT_DIR+'081.txt');
+               writefile(1,textdir+'081.txt');
                prompt;
                player.coins:=player.coins+reward;
                player.stages:=player.stages + [endgame];
@@ -3783,7 +3783,7 @@ begin
      leavetown:=false;
      repeat
           cleardevice;
-          DrawPic(45,45,PIC_DIR+'thetown.bmp');
+          DrawPic(45,45,imagedir+'thetown.bmp');
           settextstyle(default,horizontal,1);
           setcolor(white);
           x:=10;
@@ -3823,14 +3823,14 @@ begin
      graphwriteln(x,y,'You overhear some gossip...');
      graphwriteln(x,y,'');
      case d(8) of
-        1:writefile(250,TXT_DIR+'040.txt');
-        2:writefile(250,TXT_DIR+'041.txt');
-        3:writefile(250,TXT_DIR+'042.txt');
-        4:writefile(250,TXT_DIR+'043.txt');
-        5:writefile(250,TXT_DIR+'044.txt');
-        6:writefile(250,TXT_DIR+'045.txt');
-        7:writefile(250,TXT_DIR+'046.txt');
-        8:writefile(250,TXT_DIR+'047.txt');
+        1:writefile(250,textdir+'040.txt');
+        2:writefile(250,textdir+'041.txt');
+        3:writefile(250,textdir+'042.txt');
+        4:writefile(250,textdir+'043.txt');
+        5:writefile(250,textdir+'044.txt');
+        6:writefile(250,textdir+'045.txt');
+        7:writefile(250,textdir+'046.txt');
+        8:writefile(250,textdir+'047.txt');
      end;{case}
 
 end;
@@ -3843,14 +3843,14 @@ var
 
 begin
      setcolor(green);
-     writefile(200,TXT_DIR+'048.txt');
+     writefile(200,textdir+'048.txt');
      repeat
           ans:=readarrowkey;
      until (ans in ['y','Y','n','N']);
      if (ans in ['y','Y']) then
           begin
                clearesi;
-               writefile(175,TXT_DIR+'049.txt');
+               writefile(175,textdir+'049.txt');
                repeat
                     ans:=readarrowkey;
                until (ans in ['a','A','s','S']);
@@ -3869,7 +3869,7 @@ begin
                          nummonsters:=4;
                          combat(player,nummonsters,monster);
                          cleardevice;
-                         DrawPic(70,10,PIC_DIR+'esi.bmp');
+                         DrawPic(70,10,imagedir+'esi.bmp');
                          settextstyle(small,horizontal,6);
                          setcolor(green);
                          y:=175;
@@ -3886,10 +3886,10 @@ begin
                else
                     begin
                          clearesi;
-                         writefile(175,TXT_DIR+'050.txt');
+                         writefile(175,textdir+'050.txt');
                          prompt;
                          clearesi;
-                         writefile(175,TXT_DIR+'051.txt');
+                         writefile(175,textdir+'051.txt');
                          repeat
                               ans:=readarrowkey;
                          until (ans in ['y','Y','n','N']);
@@ -3932,30 +3932,30 @@ begin
         1:begin
                if not(baltar in player.stages) then
                     begin
-                         writefile(200,TXT_DIR+'052.txt');
+                         writefile(200,textdir+'052.txt');
                          repeat
                               ans:=readarrowkey;
                          until (ans in ['y','Y','n','N']);
                          clearesi;
                          if (ans in ['y','Y']) then
-                              writefile(175,TXT_DIR+'058.txt')
+                              writefile(175,textdir+'058.txt')
                          else
                               begin
                                    clearesi;
-                                   writefile(175,TXT_DIR+'059.txt');
+                                   writefile(175,textdir+'059.txt');
                                    repeat
                                         ans:=readarrowkey;
                                    until (ans in ['y','Y','n','N']);
                                    clearesi;
                                    if (ans in ['n','N']) then
-                                        writefile(175,TXT_DIR+'060.txt')
+                                        writefile(175,textdir+'060.txt')
                                    else
                                         begin
                                              nummonsters:=1;
                                              rollmonsters(monster,nummonsters,'baltar.dat');
                                              combat(player,nummonsters,monster);
                                              cleardevice;
-                                             DrawPic(70,10,PIC_DIR+'esi.bmp');
+                                             DrawPic(70,10,imagedir+'esi.bmp');
                                              settextstyle(small,horizontal,6);
                                              setcolor(lightblue);
                                              y:=175;
@@ -3976,19 +3976,19 @@ begin
                     esi_gossip;
           end;
         2:begin
-               writefile(200,TXT_DIR+'053.txt');
+               writefile(200,textdir+'053.txt');
           end;
         3:begin
-               writefile(200,TXT_DIR+'054.txt');
+               writefile(200,textdir+'054.txt');
           end;
         4:begin
-               writefile(200,TXT_DIR+'055.txt');
+               writefile(200,textdir+'055.txt');
           end;
         5:begin
-               writefile(200,TXT_DIR+'056.txt');
+               writefile(200,textdir+'056.txt');
           end;
         6:begin
-               writefile(200,TXT_DIR+'057.txt');
+               writefile(200,textdir+'057.txt');
           end;
      end;{case}
 
@@ -4062,7 +4062,7 @@ begin
                graphwriteln(x,y,'');
                case d(100) of
                    1..20:begin
-                              writefile(200,TXT_DIR+'061.txt');
+                              writefile(200,textdir+'061.txt');
                          end;
                   21..80:begin
                               esi_gossip;
@@ -4135,19 +4135,19 @@ begin
                player.charges:=player.chargemax;
                if (company) then
                     begin
-                         writefile(200,TXT_DIR+'062.txt');
+                         writefile(200,textdir+'062.txt');
                          prompt;
                          clearesi;
                          y:=175;
                          if (d(100)<=6) then
                               begin
-                                   writefile(175,TXT_DIR+'063.txt');
+                                   writefile(175,textdir+'063.txt');
                                    prompt;
                                    nummonsters:=1;
                                    rollmonsters(monster,nummonsters,'succubus.dat');
                                    combat(player,nummonsters,monster);
                                    cleardevice;
-                                   DrawPic(70,10,PIC_DIR+'esi.bmp');
+                                   DrawPic(70,10,imagedir+'esi.bmp');
                                    settextstyle(small,horizontal,6);
                                    x:=10;
                                    y:=175;
@@ -4232,12 +4232,12 @@ begin
                     begin
                          roll[loop]:=d(6);
                          case roll[loop] of
-                              1:DrawPic(200+((loop-1)*50),200,PIC_DIR+'die1.bmp');
-                              2:DrawPic(200+((loop-1)*50),200,PIC_DIR+'die2.bmp');
-                              3:DrawPic(200+((loop-1)*50),200,PIC_DIR+'die3.bmp');
-                              4:DrawPic(200+((loop-1)*50),200,PIC_DIR+'die4.bmp');
-                              5:DrawPic(200+((loop-1)*50),200,PIC_DIR+'die5.bmp');
-                              6:DrawPic(200+((loop-1)*50),200,PIC_DIR+'die6.bmp');
+                              1:DrawPic(200+((loop-1)*50),200,imagedir+'die1.bmp');
+                              2:DrawPic(200+((loop-1)*50),200,imagedir+'die2.bmp');
+                              3:DrawPic(200+((loop-1)*50),200,imagedir+'die3.bmp');
+                              4:DrawPic(200+((loop-1)*50),200,imagedir+'die4.bmp');
+                              5:DrawPic(200+((loop-1)*50),200,imagedir+'die5.bmp');
+                              6:DrawPic(200+((loop-1)*50),200,imagedir+'die6.bmp');
                          end;{case}
                     end;
                setcolor(cyan);
@@ -4266,12 +4266,12 @@ begin
                     begin
                          roll[loop]:=d(6);
                          case roll[loop] of
-                              1:DrawPic(200+((loop-1)*50),300,PIC_DIR+'die1.bmp');
-                              2:DrawPic(200+((loop-1)*50),300,PIC_DIR+'die2.bmp');
-                              3:DrawPic(200+((loop-1)*50),300,PIC_DIR+'die3.bmp');
-                              4:DrawPic(200+((loop-1)*50),300,PIC_DIR+'die4.bmp');
-                              5:DrawPic(200+((loop-1)*50),300,PIC_DIR+'die5.bmp');
-                              6:DrawPic(200+((loop-1)*50),300,PIC_DIR+'die6.bmp');
+                              1:DrawPic(200+((loop-1)*50),300,imagedir+'die1.bmp');
+                              2:DrawPic(200+((loop-1)*50),300,imagedir+'die2.bmp');
+                              3:DrawPic(200+((loop-1)*50),300,imagedir+'die3.bmp');
+                              4:DrawPic(200+((loop-1)*50),300,imagedir+'die4.bmp');
+                              5:DrawPic(200+((loop-1)*50),300,imagedir+'die5.bmp');
+                              6:DrawPic(200+((loop-1)*50),300,imagedir+'die6.bmp');
                          end;{case}
                     end;
                setcolor(cyan);
@@ -4402,7 +4402,7 @@ var
 
 begin
      setcolor(lightgreen);
-     writefile(175,TXT_DIR+'064.txt');
+     writefile(175,textdir+'064.txt');
      repeat
           ans:=readarrowkey;
      until (ans in ['y','Y','n','N']);
@@ -4509,7 +4509,7 @@ begin
                                    combat(player,nummonsters,monster);
                                    cleardevice;
                                    if GAMEOVER then exit;
-                                   DrawPic(70,10,PIC_DIR+'esi.bmp');
+                                   DrawPic(70,10,imagedir+'esi.bmp');
                                    settextstyle(small,horizontal,6);
                                    x:=10;
                                    y:=175;
@@ -4541,7 +4541,7 @@ var
 
 begin
      setcolor(lightgray);
-     writefile(175,TXT_DIR+'065.txt');
+     writefile(175,textdir+'065.txt');
      repeat
           ans:=readarrowkey;
      until (ans in ['y','Y','n','N']);
@@ -4673,7 +4673,7 @@ begin
                                    rollmonsters(monster,nummonsters,'bandit.dat');
                                    combat(player,nummonsters,monster);
                                    cleardevice;
-                                   DrawPic(70,10,PIC_DIR+'esi.bmp');
+                                   DrawPic(70,10,imagedir+'esi.bmp');
                                    settextstyle(small,horizontal,6);
                                    x:=10;
                                    y:=175;
@@ -4741,7 +4741,7 @@ begin
                     graphwriteln(x,y,'the wheel of fortune!');
                     graphwriteln(x,y,'');
                     graphwriteln(x,y,'Do you want to spin?  (y/n)');
-                    DrawPic(350,175,PIC_DIR+'wheel.bmp');
+                    DrawPic(350,175,imagedir+'wheel.bmp');
                     repeat
                          ans:=readarrowkey;
                     until (ans in ['y','Y','n','N']);
@@ -4769,13 +4769,13 @@ begin
                               y:=180;
                               repeat
                                    repeat
-                                        DrawPic(x,y,PIC_DIR+'wheel1.bmp');
+                                        DrawPic(x,y,imagedir+'wheel1.bmp');
                                         delay(delayvalue);
-                                        DrawPic(x,y,PIC_DIR+'wheel2.bmp');
+                                        DrawPic(x,y,imagedir+'wheel2.bmp');
                                         delay(delayvalue);
-                                        DrawPic(x,y,PIC_DIR+'wheel3.bmp');
+                                        DrawPic(x,y,imagedir+'wheel3.bmp');
                                         delay(delayvalue);
-                                        DrawPic(x,y,PIC_DIR+'wheel4.bmp');
+                                        DrawPic(x,y,imagedir+'wheel4.bmp');
                                         delay(delayvalue);
                                    until KEYPRESSED;
                                    ch:=readkey;
@@ -4785,16 +4785,16 @@ begin
                               setcolor(white);
                               case (d(4,8)) of
                                  4:begin
-                                        writefile(350,TXT_DIR+'066.txt');
-                                        DrawPic(165,180,PIC_DIR+'wheel1.bmp');
-                                        DrawPic(300,220,PIC_DIR+'wheart.bmp');
+                                        writefile(350,textdir+'066.txt');
+                                        DrawPic(165,180,imagedir+'wheel1.bmp');
+                                        DrawPic(300,220,imagedir+'wheart.bmp');
                                         player.endurancemax:=player.endurancemax+100;
                                         player.endurance:=player.endurance+100;
                                    end;
                                 32:begin
-                                        writefile(350,TXT_DIR+'067.txt');
-                                        DrawPic(165,180,PIC_DIR+'wheel3.bmp');
-                                        DrawPic(300,220,PIC_DIR+'bskull.bmp');
+                                        writefile(350,textdir+'067.txt');
+                                        DrawPic(165,180,imagedir+'wheel3.bmp');
+                                        DrawPic(300,220,imagedir+'bskull.bmp');
                                         prompt;
                                         died;
                                         exit;
@@ -4802,9 +4802,9 @@ begin
                               else
                                    case d(8) of
                                       1:begin
-                                             writefile(350,TXT_DIR+'068.txt');
-                                             DrawPic(165,180,PIC_DIR+'wheel3.bmp');
-                                             DrawPic(300,220,PIC_DIR+'moon.bmp');
+                                             writefile(350,textdir+'068.txt');
+                                             DrawPic(165,180,imagedir+'wheel3.bmp');
+                                             DrawPic(300,220,imagedir+'moon.bmp');
                                              if (player.coins>1000) then
                                                   player.coins:=player.coins - 1000
                                              else
@@ -4815,53 +4815,53 @@ begin
                                                   player.experience:=0;
                                         end;
                                       2:begin
-                                             writefile(350,TXT_DIR+'069.txt');
-                                             DrawPic(165,180,PIC_DIR+'wheel1.bmp');
-                                             DrawPic(300,220,PIC_DIR+'candle.bmp');
+                                             writefile(350,textdir+'069.txt');
+                                             DrawPic(165,180,imagedir+'wheel1.bmp');
+                                             DrawPic(300,220,imagedir+'candle.bmp');
                                              if (player.strength<20) then
                                                   player.strength:=player.strength + 1;
                                         end;
                                       3:begin
-                                             writefile(350,TXT_DIR+'070.txt');
-                                             DrawPic(165,180,PIC_DIR+'wheel3.bmp');
-                                             DrawPic(300,220,PIC_DIR+'lit.bmp');
+                                             writefile(350,textdir+'070.txt');
+                                             DrawPic(165,180,imagedir+'wheel3.bmp');
+                                             DrawPic(300,220,imagedir+'lit.bmp');
                                              if (player.dexterity>1) then
                                                   player.dexterity:=player.dexterity - 1;
                                         end;
                                       4:begin
-                                             writefile(350,TXT_DIR+'071.txt');
-                                             DrawPic(165,180,PIC_DIR+'wheel1.bmp');
-                                             DrawPic(300,220,PIC_DIR+'heart.bmp');
+                                             writefile(350,textdir+'071.txt');
+                                             DrawPic(165,180,imagedir+'wheel1.bmp');
+                                             DrawPic(300,220,imagedir+'heart.bmp');
                                              player.endurancemax:=player.endurancemax+1;
                                              player.endurance:=player.endurance+1;
                                         end;
                                       5:begin
-                                             writefile(350,TXT_DIR+'072.txt');
-                                             DrawPic(165,180,PIC_DIR+'wheel3.bmp');
-                                             DrawPic(300,220,PIC_DIR+'skull.bmp');
+                                             writefile(350,textdir+'072.txt');
+                                             DrawPic(165,180,imagedir+'wheel3.bmp');
+                                             DrawPic(300,220,imagedir+'skull.bmp');
                                              if (player.endurancemax>1) then
                                                   player.endurancemax:=player.endurancemax - 1;
                                              if (player.endurance>1) then
                                                   player.endurance:=player.endurance - 1;
                                         end;
                                       6:begin
-                                             writefile(350,TXT_DIR+'073.txt');
-                                             DrawPic(165,180,PIC_DIR+'wheel1.bmp');
-                                             DrawPic(300,220,PIC_DIR+'water.bmp');
+                                             writefile(350,textdir+'073.txt');
+                                             DrawPic(165,180,imagedir+'wheel1.bmp');
+                                             DrawPic(300,220,imagedir+'water.bmp');
                                              if (player.dexterity<20) then
                                                   player.dexterity:=player.dexterity + 1;
                                         end;
                                       7:begin
-                                             writefile(350,TXT_DIR+'074.txt');
-                                             DrawPic(165,180,PIC_DIR+'wheel3.bmp');
-                                             DrawPic(300,220,PIC_DIR+'eye.bmp');
+                                             writefile(350,textdir+'074.txt');
+                                             DrawPic(165,180,imagedir+'wheel3.bmp');
+                                             DrawPic(300,220,imagedir+'eye.bmp');
                                              if (player.strength>1) then
                                                   player.strength:=player.strength - 1;
                                         end;
                                       8:begin
-                                             writefile(350,TXT_DIR+'075.txt');
-                                             DrawPic(165,180,PIC_DIR+'wheel1.bmp');
-                                             DrawPic(300,220,PIC_DIR+'sun.bmp');
+                                             writefile(350,textdir+'075.txt');
+                                             DrawPic(165,180,imagedir+'wheel1.bmp');
+                                             DrawPic(300,220,imagedir+'sun.bmp');
                                              player.coins:=player.coins + 1000;
                                              player.experience:=player.experience + 1000;
                                         end;
@@ -4881,10 +4881,10 @@ var
 
 begin
      cleardevice;
-     DrawPic(70,10,PIC_DIR+'esi.bmp');
+     DrawPic(70,10,imagedir+'esi.bmp');
      setcolor(yellow);
      settextstyle(small,horizontal,5);
-     writefile(180,TXT_DIR+'039.txt');
+     writefile(180,textdir+'039.txt');
      prompt;
      repeat
           clearesi;
@@ -4924,12 +4924,12 @@ begin
             'v','V':begin
                          viewstats(player);
                          cleardevice;
-                         DrawPic(70,10,PIC_DIR+'esi.bmp');
+                         DrawPic(70,10,imagedir+'esi.bmp');
                     end;
                 '1':begin
                          setcolor(yellow);
                          settextstyle(small,horizontal,5);
-                         writefile(180,TXT_DIR+'039.txt');
+                         writefile(180,textdir+'039.txt');
                          prompt;
                     end;
                 '2':begin
@@ -4981,9 +4981,9 @@ begin
      message(x,y,'');
      message(x,y,'             MONSTERS!');
      prompt;
-     if not(exist(CHT_DIR+chartfile)) then
+     if not(exist(chartdir+chartfile)) then
           exit;
-     assign(pasfile,CHT_DIR+chartfile);
+     assign(pasfile,chartdir+chartfile);
      reset(pasfile);
      read(pasfile,monsterchart);
      close(pasfile);
@@ -5085,7 +5085,7 @@ begin
      if not(unlocked in player.stages) then
           repeat
                cleardevice;
-               DrawPic(10,10,PIC_DIR+'ldoor.bmp');
+               DrawPic(10,10,imagedir+'ldoor.bmp');
                setcolor(lightmagenta);
                x:=10;
                y:=300;
@@ -5401,7 +5401,7 @@ begin
                cleardevice;
                setcolor(magenta);
                settextstyle(sanseri,horizontal,2);
-               writefile(1,TXT_DIR+'076.txt');
+               writefile(1,textdir+'076.txt');
                prompt;
                died;
           end;
@@ -5424,7 +5424,7 @@ begin
                graphwriteln(x,y,'A large bat-winged creature with the body of a lion');
                graphwriteln(x,y,'and the head of a man guards a sword here.  It sees');
                graphwriteln(x,y,'you and attacks!');
-               DrawPic(200,200,PIC_DIR+'manticor.bmp');
+               DrawPic(200,200,imagedir+'manticor.bmp');
                prompt;
                nummonsters:=1;
                rollmonsters(monster,nummonsters,'manticor.dat');
@@ -5442,7 +5442,7 @@ begin
                          graphwriteln(x,y,'You find a magic sword.');
                          graphwriteln(x,y,'');
                          graphwriteln(x,y,'');
-                         DrawPic(x,y,PIC_DIR+'magicswd.bmp');
+                         DrawPic(x,y,imagedir+'magicswd.bmp');
                          if (player.numitems<itemmax) then
                                begin
 { Modify using item_t
@@ -5509,7 +5509,7 @@ begin
                graphwriteln(x,y,'A dark, panther-like creature with tentacles looks');
                graphwriteln(x,y,'at you.  It seems to fade in and out of existence.');
                graphwriteln(x,y,'It decides it''s hungry and attacks!');
-               DrawPic(200,200,PIC_DIR+'displace.bmp');
+               DrawPic(200,200,imagedir+'displace.bmp');
                prompt;
                nummonsters:=1;
                rollmonsters(monster,nummonsters,'displace.dat');
@@ -5527,7 +5527,7 @@ begin
                          graphwriteln(x,y,'You find a magic shield.');
                          graphwriteln(x,y,'');
                          graphwriteln(x,y,'');
-                         DrawPic(x,y,PIC_DIR+'magicshl.bmp');
+                         DrawPic(x,y,imagedir+'magicshl.bmp');
                          if (player.numitems<itemmax) then
                                begin
 { Modify using item_t
@@ -5589,7 +5589,7 @@ begin
                graphwriteln(x,y,'');
                graphwriteln(x,y,'This is the home of a large lizard with six legs.');
                graphwriteln(x,y,'It rears up to atack you!');
-               DrawPic(200,200,PIC_DIR+'salamand.bmp');
+               DrawPic(200,200,imagedir+'salamand.bmp');
                prompt;
                nummonsters:=1;
                rollmonsters(monster,nummonsters,'salamand.dat');
@@ -5633,7 +5633,7 @@ begin
                graphwriteln(x,y,'');
                graphwriteln(x,y,'Lorn Paradox, the Ice Queen''s knight lives here,');
                graphwriteln(x,y,'and he just happens to be at home.  He attacks!');
-               DrawPic(200,200,PIC_DIR+'knight.bmp');
+               DrawPic(200,200,imagedir+'knight.bmp');
                prompt;
                nummonsters:=1;
                rollmonsters(monster,nummonsters,'knight.dat');
@@ -5666,7 +5666,7 @@ begin
                graphwriteln(x,y,'eventually.  You have forced me to kill you..."');
                graphwriteln(x,y,'');
                graphwriteln(x,y,'She begins conjuring strong magic and attacks!');
-               DrawPic(210,300,PIC_DIR+'icequeen.bmp');
+               DrawPic(210,300,imagedir+'icequeen.bmp');
                prompt;
                nummonsters:=1;
                rollmonsters(monster,nummonsters,'icequeen.dat');
@@ -5678,7 +5678,7 @@ begin
                          cleardevice;
                          setcolor(yellow);
                          settextstyle(triplex,horizontal,3);
-                         writefile(1,TXT_DIR+'080.txt');
+                         writefile(1,textdir+'080.txt');
                          prompt;
                     end
                else
@@ -5725,11 +5725,11 @@ var
 begin
      exitx:=px;
      exity:=py;
-     assign(pasfile,MAP_DIR+themap);
+     assign(pasfile,mapdir+themap);
      reset(pasfile);
      read(pasfile,dmap);
      close(pasfile);
-     assign(pasfile,MAP_DIR+thecode);
+     assign(pasfile,mapdir+thecode);
      reset(pasfile);
      read(pasfile,dcode);
      close(pasfile);
@@ -5916,7 +5916,7 @@ begin
                                    graphwriteln(x,y,'In the dragon''s horde, you find the Flame Wand.');
                                    graphwriteln(x,y,'');
                                    graphwriteln(x,y,'');
-                                   DrawPic(x,y,PIC_DIR+'flamewnd.bmp');
+                                   DrawPic(x,y,imagedir+'flamewnd.bmp');
                                    if (player.numitems<itemmax) then
                                         begin
 { Modify using item_t
@@ -6066,7 +6066,7 @@ var
 begin
      enter:=false;
      cleardevice;
-     DrawPic(120,1,PIC_DIR+'tcastle.bmp');
+     DrawPic(120,1,imagedir+'tcastle.bmp');
      setcolor(white);
      message(x,y,'');
      settextstyle(sanseri,horizontal,2);
@@ -6082,7 +6082,7 @@ begin
      repeat
           cleardevice;
           setcolor(white);
-          writefile(1,TXT_DIR+'077.txt');
+          writefile(1,textdir+'077.txt');
           repeat
                ans:=readarrowkey;
           until (ans in ['b','B','o','O','c','C','l','L']);
@@ -6090,11 +6090,11 @@ begin
           homecursor(x,y);
           case ans of
              'b','B':begin
-                          writefile(1,TXT_DIR+'078.txt');
+                          writefile(1,textdir+'078.txt');
                           prompt;
                      end;
              'o','O':begin
-                          writefile(1,TXT_DIR+'079.txt');
+                          writefile(1,textdir+'079.txt');
                           prompt;
                      end;
              'c','C':if (player.charges>0) then
@@ -6268,11 +6268,11 @@ var
      ans:char;
 
 begin
-     assign(pasfile,MAP_DIR+surfacemap);
+     assign(pasfile,mapdir+surfacemap);
      reset(pasfile);
      read(pasfile,map);
      close(pasfile);
-     assign(pasfile,MAP_DIR+surfacecode);
+     assign(pasfile,mapdir+surfacecode);
      reset(pasfile);
      read(pasfile,code);
      close(pasfile);
@@ -6280,7 +6280,7 @@ begin
      px:=10;
      py:=11;
      repeat
-          drawplayer(px,py,PIC_DIR+chartile);
+          drawplayer(px,py,imagedir+chartile);
           lastx:=px;
           lasty:=py;
           repeat

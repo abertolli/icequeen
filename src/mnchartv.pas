@@ -48,7 +48,7 @@ begin {main}
      writeln;
      write('Enter Chart File Name:  ');
      readln(dosname);
-     while not(exist(CHT_DIR+dosname)) do
+     while not(exist(chartdir+dosname)) do
           begin
                writeln('File does not exist.');
                write('Quit? (y/n)');
@@ -60,7 +60,7 @@ begin {main}
                write('Enter Chart File Name:  ');
                readln(dosname);
           end;
-     assign(pasfile,CHT_DIR+dosname);
+     assign(pasfile,chartdir+dosname);
      reset(pasfile);
      read(pasfile,chart);
      close(pasfile);

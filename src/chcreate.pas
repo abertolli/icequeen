@@ -187,7 +187,7 @@ begin {main}
 
      write('Enter Save File Name:  ');
      readln(dosname);
-     if exist(SAV_DIR+dosname) then
+     if exist(savedir+dosname) then
           begin
                writeln('File exists.');
                writeln('Overwrite? (y/n)');
@@ -203,7 +203,7 @@ begin {main}
           goahead:=true;
      if goahead then
           begin
-               assign(pasfile,SAV_DIR+dosname);
+               assign(pasfile,savedir+dosname);
                rewrite(pasfile);
                write(pasfile,player);
                close(pasfile);

@@ -48,7 +48,7 @@ begin {main}
           if not(exist(dosname)) then
                writeln('File does not exist.');
      until exist(dosname);
-     assign(pasfile,MON_DIR+dosname);
+     assign(pasfile,monsterdir+dosname);
      reset(pasfile);
      read(pasfile,monster);
      close(pasfile);
