@@ -1,8 +1,8 @@
 {$ifndef config}
 
 const
-	itemdir		= 'items';
-	monsterdir	= 'monsters';
+	itemdir		= 'item';
+	monsterdir	= 'monst';
 
 {$define config}
 {$endif}

@@ -66,3 +66,76 @@ type
                           mshield,knight,treasure,lizard,iceq,endgame);
                          {keep endgame as the last enum type}
      location       =    (town,wilderness,dungeon);
+{$I item.pas}
+
+const
+	itemmax	= 9;
+
+type
+	itemarray	= array[1..itemmax] of item_t;
+	character_t	= record
+		name		: string;
+		picfile		: string;
+		sex		: char;
+		level		: byte;
+		endurance	: word;
+		endurancemax	: word;
+		armorclass	: integer;
+		thac0		: shortint;
+		damage		: dicerecord;
+		savingthrow	: byte;
+		experience	: longint;
+		coins		: longint;
+		numitems	: byte;
+		item		: itemarray;
+		numspells	: byte;
+		spell		: spellarray;
+		strength	: byte;
+		dexterity	: byte;
+		stages		: set of stage;
+		charges		: byte;
+		chargemax	: byte;
+	end;
+
+type
+
+     monsterrecord  =    record
+        name           :    string;
+        picfile        :    string;
+        sex            :    char;
+        alignment      :    char;
+        hitdice        :    byte;
+        hpbonus        :    shortint;
+        endurance      :    word;
+        endurancemax   :    word;
+        armorclass     :    integer;
+        thac0          :    shortint;
+        damage         :    dicerecord;
+        attacktype     :    string;
+        savingthrow    :    byte;
+        morale         :    byte;
+        xpvalue        :    word;
+        treasure       :    dicerecord;
+        coins          :    word;
+        numspells      :    byte;
+        spell          :    spellarray;
+                         end;
+type
+
+     monsterlist    =    array[1..monstermax] of monsterrecord;
+     chartrecord    =    record
+        value          :    array[1..20,1..2] of byte;
+        filename       :    array[1..20] of string;
+        number         :    array[1..20] of dicerecord;
+        diceroll       :    dicerecord;
+                         end;
+     effectrecord    =    record
+        blue           :    boolean;
+        courage        :    boolean;
+        resistfire     :    boolean;
+        resistcold     :    boolean;
+        glacier        :    boolean;
+                          end;
+     effectlist      =    array[1..monstermax] of effectrecord;
+
+
