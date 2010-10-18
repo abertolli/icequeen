@@ -27,10 +27,10 @@ uses crt, graph, graphio;
 {$r icequeen.res}
 {$endif}
 
-{$I game.pas}
-{$I character.pas}
-{$I monster.pas}
-{$I encounter.pas}
+{$I types/game.pas}
+{$I types/character.pas}
+{$I types/monster.pas}
+{$I types/encounter.pas}
 
 
 var
@@ -895,9 +895,9 @@ var
      loop           :    word;
 
 begin
-     if not(exist(MON_DIR+monsterfile)) then
+     if not(exist(monsterdir+monsterfile)) then
           exit;
-     assign(pasfile,MON_DIR+monsterfile);
+     assign(pasfile,monsterdir+monsterfile);
      reset(pasfile);
      read(pasfile,tempmonster);
      close(pasfile);
