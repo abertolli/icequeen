@@ -1,6 +1,6 @@
 {
 GraphIO Unit
-Copyright (C) 1996-2005 Angelo Bertolli
+Copyright (C) 2002,2010 Angelo Bertolli
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -15,8 +15,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
-Angelo Bertolli <angelo.bertoli@gmail.com>
 }
 
 Unit GraphIO;
@@ -37,9 +35,12 @@ const
      vertical       =    1;
 
 const
-     graphio_ver    =    '2.2';
+     graphio_ver    =    '2.3';
 
-procedure graph_init(gd,gm:integer;fontloc:string);
+var
+	gd	: integer;
+	gm	: integer;
+
 procedure prompt;
 procedure DrawPic(beginx,beginy:integer;dosname:string);
 procedure HOMECURSOR(var x,y:integer);
@@ -47,30 +48,12 @@ procedure graphwrite(var x,y:integer;s:string);
 procedure graphwriteln(var x,y:integer;s:string);
 procedure graphread(var x,y:integer;var s:string);
 procedure writefile(beginy:integer;dosname:string);
+procedure openscreen;
+procedure closescreen;
 
 IMPLEMENTATION
 
 {$I extras.pas}
-{--------------------------------------------------------------------------}
-procedure graph_init(gd,gm:integer;fontloc:string);
-
-var
-     error          :    integer;
-
-begin
-     initgraph(gd,gm,fontloc);
-     error:=graphresult;
-     if not(error=grOK)then
-          begin
-               writeln('Graphics initialization error: ',error);
-               writeln('Program cannot continue.  Press enter.');
-               readln;
-{
-               halt(1);
-}
-          end;
-end;
-
 {Drawing Functions and Procedures}
 {--------------------------------------------------------------------------}
 function readjust(c:integer):integer;
@@ -302,19 +285,34 @@ begin
           end;
      close(pasfile);
 end;
-
+{--------------------------------------------------------------------------}
+procedure openscreen;
+begin
+	gd:=D4bit;
+	gm:=m640x480;
+	initgraph(gd,gm,'fonts');
+	if GraphResult<>grok then
+	begin
+		writeln('Graph error: ',GraphResult);
+		writeln('Cannot continue.  Press enter to quit.');
+		readln;
+		halt(GraphResult);
+	end;
+end;
+{--------------------------------------------------------------------------}
+procedure closescreen;
+begin
+	closegraph;
+end;
 {===========================================================================}
 
 begin {main}
      writeln;
      writeln('GraphIO Unit ',graphio_ver);
-     writeln('Copyright (C) 2002 - Angelo Bertolli');
-     writeln('                     abertoll@hotmail.com');
-     writeln('The GraphIO Unit comes with ABSOLUTELY NO WARRANTY');
+     writeln('Copyright (C) 2002,2010 - Angelo Bertolli');
+     writeln('This software comes with ABSOLUTELY NO WARRANTY');
      writeln('This is free software and you are welcome');
      writeln('to redistribute it under certain conditions.');
-     writeln('(See the file named LICENSE.GPL.TXT)');
-     writeln;
-     writeln('For a pascal compiler, visit http://www.freepascal.org/');
+     writeln('(See the file named LICENSE)');
      writeln;
 end.  {main}

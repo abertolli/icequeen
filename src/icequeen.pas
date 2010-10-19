@@ -1,6 +1,6 @@
 {
 Ice Queen - Main program
-Copyright (C) 1996-2003 Angelo Bertolli
+Copyright (C) 1996-2003,2010 Angelo Bertolli
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -16,12 +16,9 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 }
-{$ifdef fpc}
-{$mode TP}
-{$endif}
-
 {$ifdef Win32}
 {$define GRAPH}
+{$r icequeen.res}
 {$endif}
 
 {$ifdef Unix}
@@ -30,17 +27,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 program IceQueen;
 
-{$ifdef GRAPH}
-uses crt, graph, io;
-{$endif}
-
-{$ifdef Win32}
-{$r icequeen.res}
-{$endif}
-
-{$ifdef SDL}
-uses crt, sdl, io;
-{$endif}
+uses
+	{crt, graph, graphio;}
+	crt, sdl, sdlio;
 
 {$I config.pas}
 {$I datatypes.pas}
@@ -52,15 +41,6 @@ var
 	nummonsters	: integer;
 	monster		: monsterlist;
 	player		: character_t;
-
-	{$ifdef GRAPH}
-	gd		: integer;
-	gm		: integer;
-	{$endif}
-
-	{$ifdef SDL}
-	screen	: PSDL_Surface;
-	{$endif}
 
 {$I extras.pas}
 {--------------------------------------------------------------------------}
@@ -6433,34 +6413,16 @@ begin {main}
 
 	writeln;
 	writeln('The Icequeen ',version);
-	writeln('Copyright (C) 1996-2003 - Angelo Bertolli');
+	writeln('Copyright (C) 1996-2003,2010 - Angelo Bertolli');
 	writeln('Ice Queen comes with ABSOLUTELY NO WARRANTY');
 	writeln('This is free software and you are welcome');
 	writeln('to redistribute it under certain conditions.');
 	writeln('(See the file named LICENSE)');
 	writeln;
 
-	{$ifdef GRAPH}     
-	gd:=D4bit;
-	gm:=m640x480;
-	graph_init(gd,gm,'fonts');
-	{$endif}
-
-	{$ifdef SDL}
-	SDL_Init(SDL_INIT_VIDEO);
-	screen:=SDL_SetVideoMode(640,480,8,SDL_SWSURFACE);
-	{$endif}
-
-
+	openscreen;
 	titlescreen;
 	mainmenu;
-
-	{$ifdef GRAPH}
-	closegraph;
-	{$endif}
-
-	{$ifdef SDL}
-	SDL_Quit;
-	{$endif}
+	closescreen;
 
 end.  {main}
