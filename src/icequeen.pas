@@ -1,6 +1,6 @@
 {
 Ice Queen - Main program
-Copyright (C) 1996-2005 Angelo Bertolli
+Copyright (C) 1996-2003 Angelo Bertolli
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -15,16 +15,19 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
-Angelo Bertolli <angelo.bertoli@gmail.com>
 }
-
+{$ifdef fpc}
+{$mode TP}
+{$endif}
 program IceQueen;
 
+{$ifdef Win32}
 uses crt, graph, graphio;
-
-{$ifdef win32}
 {$r icequeen.res}
+{$endif}
+
+{$ifdef Unix}
+uses crt, SDL;
 {$endif}
 
 {$I config.pas}
@@ -32,24 +35,22 @@ uses crt, graph, graphio;
 
 
 var
-     GAMEOVER       :    boolean;
-     x              :    integer;
-     y              :    integer;
-     nummonsters    :    integer;
-     monster        :    monsterlist;
-     player         :    character_t;
-     gd             :    integer;
-     gm             :    integer;
+     GAMEOVER	: boolean;
+     x		: integer;
+     y		: integer;
+     nummonsters: integer;
+     monster	: monsterlist;
+     player	: character_t;
+     gd		: integer;
+     gm		: integer;
 
 {$I extras.pas}
 {--------------------------------------------------------------------------}
 function D(dnum:integer):integer; begin d:=random(dnum)+1; end;
-
 {The value of d(dnum) is returned as a random number between 1 and dnum.}
 
 {--------------------------------------------------------------------------}
 function D(n1,n2:integer):integer;
-
 {Returns the value of dice rolled (n1)d(n2)}
 
 var
@@ -64,13 +65,12 @@ begin
 end;
 {--------------------------------------------------------------------------}
 function D(diceroll:dicerecord):integer;
-
 {Returns the value of dice rolled based on dicerecord format (#d#+#).}
 
 begin
 	with diceroll do
 	begin
-		d:=d(rollnum,dicetype);
+		d:=d(rollnum,dicetype) + bonus;
 	end;
 end;
 {---------------------------------------------------------------------------}
@@ -6416,13 +6416,10 @@ begin {main}
      writeln;
      writeln('The Icequeen ',version);
      writeln('Copyright (C) 1996-2003 - Angelo Bertolli');
-     writeln('                     abertoll@hotmail.com');
      writeln('Ice Queen comes with ABSOLUTELY NO WARRANTY');
      writeln('This is free software and you are welcome');
      writeln('to redistribute it under certain conditions.');
      writeln('(See the file named LICENSE)');
-     writeln;
-     writeln('For a pascal compiler, visit http://www.freepascal.org/');
      writeln;
      
      gd:=D4bit;
