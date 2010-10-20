@@ -577,7 +577,8 @@ begin
 	              19:thac0:=thac0-4;
 	              20:thac0:=thac0-5;
 	          end;{case}
-{ Modify using item_t               
+{ Modify using item_t }
+{
 	          tempset:=[];
 	          for count:=1 to numitems do
 	               tempset:=tempset + [item[count]];
@@ -1927,9 +1928,9 @@ begin
 	               end;
 	    obliterate:begin
 	                    y:=360;
-	                    textcolor(magenta);
+	                    setcolor(magenta);
 	                    graphwrite(x,y,'      OBLITERATES');
-	                    textcolor(lightcyan);
+	                    setcolor(lightcyan);
 	                    graphwriteln(x,y,' you');
 	                    player.endurance:=0;
 	                end;
