@@ -1,3 +1,4 @@
+{$ifndef extras.pas}
 {
 Supplementary Functions
 Copyright (C) 1996-2005 Angelo Bertolli
@@ -72,3 +73,5 @@ begin
      capitalize:=capstring;
 end;
 {--------------------------------------------------------------------------}
+{$define extras.pas}
+{$endif}
