@@ -28,7 +28,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 program IceQueen;
 
 uses
-	crt, ggigraph, graphio;
+	{$ifdef SDL}
+	crt, sdlgraph, graphio;
+	{$else}
+	crt, graph, graphio;
+	{$endif}
 
 {$I config.pas}
 {$I datatypes.pas}
