@@ -45,6 +45,8 @@ const
 	yellow		= 14;
 	white		= 15;
 
+	maxcolors	= 16;
+
 	{used for graphics text}
 	default		= 0;
 	triplex		= 1;
@@ -53,6 +55,20 @@ const
 	gothic		= 4;
 	horizontal	= 0;
 	vertical	= 1;
+
+
+type
+	RGBRec		= packed record
+		r	: byte;
+		g	: byte;
+		b	: byte;
+	end;
+
+	PaletteType	= record
+		size	: longint;
+		color	: array[0..maxcolors-1] of RGBRec;
+	end;
+
 
 IMPLEMENTATION
 
@@ -65,8 +81,8 @@ var
 		fontsize	: byte;
 		screenw		: integer;
 		screenh		: integer;
-		colordepth	: byte;
 		driverpath	: string;
+		palette		: palettetype;
 	end;
 
 {Include helper (non-interface) functions.}
@@ -193,7 +209,11 @@ begin
 	textheight:=size;
 end;
 {--------------------------------------------------------------------------}
-procedure initgraph(var driver,mode:smallint;const path:string)
+procedure initgraph(var driver,mode:smallint;const path:string);
+
+var
+	loop:integer;
+
 begin
 	{Initialize all variables.  Right now we enforce one mode only.}
 	with graph_env do
@@ -201,13 +221,37 @@ begin
 		driverpath:=path;
 		screenw:=640;
 		screenh:=480;
-		colordepth:=4; { 16 color palette }
 		color:=white;
 		bkcolor:=black;
 		fontface:=default;
 		fontdirection:=horizontal;
 		fontsize:=2;
-	end;
+		with palette do
+		begin
+			size:=16;
+			for loop:=0 to size-1 do
+			with color[loop] do
+		        case loop of
+		        black           :begin r:=0;    g:=0;   b:=0;   end;
+		        blue            :begin r:=0;    g:=0;   b:=200; end;
+		        green           :begin r:=0;    g:=190; b:=0;   end;
+		        cyan            :begin r:=0;    g:=190; b:=190; end;
+		        red             :begin r:=200;  g:=0;   b:=0;   end;
+		        magenta         :begin r:=150;  g:=0;   b:=150; end;
+		        brown           :begin r:=190;  g:=80;  b:=64;  end;
+       			lightgray       :begin r:=190;  g:=190; b:=190; end;
+		        darkgray        :begin r:=90;   g:=90;  b:=90;  end;
+		        lightblue       :begin r:=90;   g:=90;  b:=255; end;
+		        lightgreen      :begin r:=0;    g:=255; b:=0;   end;
+		        lightcyan       :begin r:=0;    g:=255; b:=255; end;
+		        lightred        :begin r:=255;  g:=90;  b:=90;  end;
+		        lightmagenta    :begin r:=255;  g:=0;   b:=255; end;
+		        yellow          :begin r:=255;  g:=255; b:=0;   end;
+		        white           :begin r:=255;  g:=255; b:=255; end;
+		        end; {case}
+	
+		end; {palette}
+	end; {graph_env}
 end;
 {--------------------------------------------------------------------------}
 begin {main}
