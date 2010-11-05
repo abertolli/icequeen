@@ -56,34 +56,33 @@ const
 	horizontal	= 0;
 	vertical	= 1;
 
-
 type
-	RGBRec		= packed record
-		r	: byte;
-		g	: byte;
-		b	: byte;
-	end;
-
 	PaletteType	= record
-		size	: longint;
-		color	: array[0..maxcolors-1] of RGBRec;
+		size	: word;
+		color	: array[0..maxcolors-1] of TSDL_Color;
 	end;
 
+procedure outtextxy(x,y:integer;s:string);
+procedure setcolor(c:word);
+procedure settextstyle(face,direction,size:byte);
 
 IMPLEMENTATION
 
 var
 	graph_env	: record
+		screenw		: word;
+		screenh		: word;
+		depth		: byte;
 		color		: word;
 		bkcolor		: word;
 		fontface	: byte;
 		fontdirection	: byte;
 		fontsize	: byte;
-		screenw		: integer;
-		screenh		: integer;
 		driverpath	: string;
 		palette		: palettetype;
 	end;
+
+	screen		: PSDL_Surface;
 
 {Include helper (non-interface) functions.}
 {$I sdlgraphx.pas}
@@ -153,8 +152,8 @@ var
 	sdltext		: PSDL_Surface;
 	dest		: PSDL_Rect;
 begin
-	fontcolor:=sdlcolor(getcolor);
-	font:=TTF_OpenFont(getfontface,getfontsize);
+	fontcolor:=graph_env.palette.color[graph_env.color];
+	font:=TTF_OpenFont(getsdlfontface(),getsdlfontsize());
 	{render function wants a C-style string}
 	s:=s+#0;
 	sdltext:=TTF_RenderText_Solid(font,@s[1],fontcolor);
@@ -178,7 +177,7 @@ var
 	size	: word;
 	adv,minx,maxx,miny,maxy:longint;
 begin
-	font:=TTF_OpenFont(getfontface,getfontsize);
+	font:=TTF_OpenFont(getsdlfontface,getsdlfontsize);
 	size:=0;
 	adv:=0;
 	for loop:=1 to length(s) do
@@ -199,7 +198,7 @@ var
 	adv,minx,maxx,miny,maxy:longint;
 
 begin
-	font:=TTF_OpenFont(getfontface,getfontsize);
+	font:=TTF_OpenFont(getsdlfontface,getsdlfontsize);
 	size:=0;
 	for loop:=1 to length(s) do
 	begin
@@ -212,7 +211,7 @@ end;
 procedure initgraph(var driver,mode:smallint;const path:string);
 
 var
-	loop:integer;
+	loop	: integer;
 
 begin
 	{Initialize all variables.  Right now we enforce one mode only.}
@@ -221,16 +220,16 @@ begin
 		driverpath:=path;
 		screenw:=640;
 		screenh:=480;
+		depth:=4;
 		color:=white;
 		bkcolor:=black;
 		fontface:=default;
 		fontdirection:=horizontal;
 		fontsize:=2;
-		with palette do
-		begin
-			size:=16;
-			for loop:=0 to size-1 do
-			with color[loop] do
+		{ Set up the colors for the 4-bit palette }
+		palette.size:=16;
+		for loop:=0 to palette.size-1 do
+		with palette.color[loop] do
 		        case loop of
 		        black           :begin r:=0;    g:=0;   b:=0;   end;
 		        blue            :begin r:=0;    g:=0;   b:=200; end;
@@ -249,9 +248,19 @@ begin
 		        yellow          :begin r:=255;  g:=255; b:=0;   end;
 		        white           :begin r:=255;  g:=255; b:=255; end;
 		        end; {case}
-	
-		end; {palette}
 	end; {graph_env}
+
+	{ Use variables to start screen }
+	with graph_env do
+	begin
+		screen:=SDL_SetVideoMode(screenw,screenh,depth,SDL_HWPALETTE);
+		if (screen=nil) then
+		begin
+			{ do some kind of error handling or setting here}
+			halt();
+		end;
+	end;
+
 end;
 {--------------------------------------------------------------------------}
 begin {main}
