@@ -47,6 +47,21 @@ const
 
 	maxcolors	= 16;
 
+	{fill patterns}
+	emptyfill	= 0;
+	solidfill	= 1;
+	linefill	= 2;
+	ltslashfill	= 3;
+	slashfill	= 4;
+	bkslashfill	= 5;
+	ltbkslashfill	= 6;
+	hatchfill	= 7;
+	xhatchfill	= 8;
+	interleavefill	= 9;
+	widedotfill	= 10;
+	closedotfill	= 11;
+	userfill	= 12;
+
 	{used for graphics text}
 	default		= 0;
 	triplex		= 1;
