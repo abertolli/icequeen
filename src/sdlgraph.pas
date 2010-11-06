@@ -62,6 +62,7 @@ type
 		color	: array[0..maxcolors-1] of TSDL_Color;
 	end;
 
+procedure cleardevice;
 procedure outtextxy(x,y:integer;s:string);
 procedure setcolor(c:word);
 procedure settextstyle(face,direction,size:byte);
@@ -75,6 +76,8 @@ var
 		depth		: byte;
 		color		: word;
 		bkcolor		: word;
+		cursorx		: word;
+		cursory		: word;
 		fontface	: byte;
 		fontdirection	: byte;
 		fontsize	: byte;
@@ -88,8 +91,19 @@ var
 {$I sdlgraphx.pas}
 {--------------------------------------------------------------------------}
 procedure cleardevice;
-{Clears the graphical screen (with the current background color), and sets the pointer at (0,0).}
-begin end;
+{Clears the graphical screen (with the current background color)}
+begin
+	with graph_env.palette.color[graph_env.bkcolor] do
+	begin
+		SDL_FillRect(screen,nil,SDL_MapRGB(SDL_GetVideoSurface^.format,r,g,b));
+		SDL_Flip(screen);
+	end;
+	with graph_env do
+	begin
+		cursorx:=0;
+		cursory:=0;
+	end;
+end;
 {--------------------------------------------------------------------------}
 function getcolor:word;
 begin
@@ -223,6 +237,8 @@ begin
 		depth:=4;
 		color:=white;
 		bkcolor:=black;
+		cursorx:=0;
+		cursory:=0;
 		fontface:=default;
 		fontdirection:=horizontal;
 		fontsize:=2;
