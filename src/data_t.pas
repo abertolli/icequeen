@@ -25,7 +25,9 @@ const
 
 
 type
-	spell		= (icestorm,fireblast,web,callwild,heal,courage,freeze,obliterate,icicle,power,shatter,glacier,dragonbreath,resistfire,resistcold);
+	spell		= (icestorm,fireblast,web,callwild,heal,courage,
+                          freeze,obliterate,icicle,power,shatter,glacier,
+                          dragonbreath,resistfire,resistcold);
 	matrix		= array[1..colmax,1..rowmax] of integer;
 	spellarray	= array[1..spellmax] of spell;
 	dicerecord	= record

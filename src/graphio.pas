@@ -288,8 +288,13 @@ end;
 {--------------------------------------------------------------------------}
 procedure openscreen;
 begin
+        {$ifdef FPC}
 	gd:=D4bit;
 	gm:=m640x480;
+        {$else}
+        gd:=0;
+        gm:=0;
+        {$endif}
 	initgraph(gd,gm,'fonts');
 	if GraphResult<>grok then
 	begin

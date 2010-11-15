@@ -17,7 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 }
 {$ifdef Win32}
-{$define WINGRAPH}
+{ $define WINGRAPH}
 {$r icequeen.res}
 {$endif}
 
@@ -39,7 +39,7 @@ uses
 	{$endif}
 
 {$I config.pas}
-{$I datatypes.pas}
+{$I data_t.pas}
 
 var
 	GAMEOVER	: boolean;
@@ -55,7 +55,7 @@ function D(dnum:integer):integer; begin d:=random(dnum)+1; end;
 {The value of d(dnum) is returned as a random number between 1 and dnum.}
 
 {--------------------------------------------------------------------------}
-function D(n1,n2:integer):integer;
+function D2(n1,n2:integer):integer;
 {Returns the value of dice rolled (n1)d(n2)}
 
 var
@@ -66,16 +66,16 @@ begin
 	sum:=0;
 	for loop:=1 to n1 do
 	     sum:=sum + d(n2);
-	d:=sum;
+	d2:=sum;
 end;
 {--------------------------------------------------------------------------}
-function D(diceroll:dicerecord):integer;
+function rolld(diceroll:dicerecord):integer;
 {Returns the value of dice rolled based on dicerecord format (#d#+#).}
 
 begin
 	with diceroll do
 	begin
-		d:=d(rollnum,dicetype) + bonus;
+		rolld:=d2(rollnum,dicetype) + bonus;
 	end;
 end;
 {---------------------------------------------------------------------------}
@@ -267,7 +267,7 @@ begin
 	               graphwrite(x,y,'Endurance: ');
 	               str(endurancemax,tempstring);
 	               graphwriteln(x,y,tempstring);
-	               points:=d(5,6);
+	               points:=d2(5,6);
 	               strength:=d(6);
 	               dexterity:=d(6);
 	               tempint:=MINSCORE - strength;
@@ -364,7 +364,7 @@ begin
 	                     end;{case}
 	                  until (validchange);
 	               until (done);
-	               coins:=(d(3,6)+(points*10)) * 10;
+	               coins:=(d2(3,6)+(points*10)) * 10;
 	               graphwriteln(x,y,'');
 	               graphwrite(x,y,'Coins: ');
 	               str(coins,tempstring);
@@ -921,7 +921,7 @@ begin
 	                    endurance:=endurancemax;
 	                    xpvalue:=(monster[count].xpvalue*xpmultiplier)
 	                             + (endurance DIV 2);
-	                    coins:=d(treasure);
+	                    coins:=rolld(treasure);
 	               end;
 	     end;
 end;
@@ -1124,7 +1124,7 @@ begin
 	          graphwriteln(x,y,'');
 	          graphwriteln(x,y,'        You hit!');
 	          graphwriteln(x,y,'');
-	          dmg:=d(player.damage);
+	          dmg:=rolld(player.damage);
 	          if (dmg<1) then
 	               dmg:=1;
 	          flame:=false;
@@ -1258,14 +1258,14 @@ begin
 	                         dmgroll.rollnum:=20;
 	                    dmgroll.dicetype:=6;
 	                    dmgroll.bonus:=0;
-	                    dmg:=d(dmgroll);
+	                    dmg:=rolld(dmgroll);
 	               end;
 	     fireblast:begin
 	                    damagetype:='fire';
 	                    dmgroll.rollnum:=(((player.level-1) DIV 5)*2)+1;
 	                    dmgroll.dicetype:=6;
 	                    dmgroll.bonus:=dmgroll.rollnum;
-	                    dmg:=d(dmgroll);
+	                    dmg:=rolld(dmgroll);
 	               end;
 	    web,freeze:begin
 	                    graphwriteln(x,y,'     You make your foes');
@@ -1337,7 +1337,7 @@ begin
 	                    dmgroll.rollnum:=(((player.level-1) DIV 5)*2)+1;
 	                    dmgroll.dicetype:=6;
 	                    dmgroll.bonus:=dmgroll.rollnum;
-	                    dmg:=d(dmgroll);
+	                    dmg:=rolld(dmgroll);
 	               end;
 	         power:begin
 	                    powerroll:=d(20);
@@ -1406,7 +1406,7 @@ begin
 	                                             close(pasfile);
 	                                             with monsterchart do
 	                                                begin
-	                                                   theroll:=d(diceroll);
+	                                                   theroll:=rolld(diceroll);
 	                                                   for count:=1 to 20 do
 	                                                      begin
 	                                                         val1:=value[count,1];
@@ -1439,7 +1439,7 @@ begin
 	                                   dmgroll.rollnum:=6;
 	                                   dmgroll.dicetype:=6;
 	                                   dmgroll.bonus:=6;
-	                                   dmg:=d(dmgroll);
+	                                   dmg:=rolld(dmgroll);
 	                                   thespell:=fireblast;
 	                                   case d(6) of
 	                                      2:damagetype:='fire';
@@ -1814,7 +1814,7 @@ begin
 	          tempstring:=themonster.attacktype + ' YOU!';
 	          x:=120-(textwidth(tempstring) DIV 2);
 	          graphwriteln(x,y,tempstring);
-	          dmg:=d(themonster.damage);
+	          dmg:=rolld(themonster.damage);
 	          if (dmg<1) then
 	               dmg:=1;
 	          str(dmg,tempstring);
@@ -1887,7 +1887,7 @@ begin
 	                         dmgroll.rollnum:=20;
 	                    dmgroll.dicetype:=6;
 	                    dmgroll.bonus:=0;
-	                    dmg:=d(dmgroll);
+	                    dmg:=rolld(dmgroll);
 	               end;
 	     fireblast:begin
 	                    graphwriteln(x,y,'       casts a spell');
@@ -1895,7 +1895,7 @@ begin
 	                    dmgroll.rollnum:=(((themonster.hitdice-1) DIV 5)*2)+1;
 	                    dmgroll.dicetype:=6;
 	                    dmgroll.bonus:=dmgroll.rollnum;
-	                    dmg:=d(dmgroll);
+	                    dmg:=rolld(dmgroll);
 	               end;
 	        freeze:begin
 	                    graphwriteln(x,y,'    freezes you, slowing');
@@ -1951,7 +1951,7 @@ begin
 	                    dmgroll.rollnum:=(((themonster.hitdice-1) DIV 5)*2)+1;
 	                    dmgroll.dicetype:=6;
 	                    dmgroll.bonus:=dmgroll.rollnum;
-	                    dmg:=d(dmgroll);
+	                    dmg:=rolld(dmgroll);
 	               end;
 	         power:begin
 	                    case d(8) of
@@ -1977,7 +1977,7 @@ begin
 	                                             close(pasfile);
 	                                             with monsterchart do
 	                                                begin
-	                                                   theroll:=d(diceroll);
+	                                                   theroll:=rolld(diceroll);
 	                                                   for count:=1 to 20 do
 	                                                      begin
 	                                                         val1:=value[count,1];
@@ -2008,7 +2008,7 @@ begin
 	                                   dmgroll.rollnum:=6;
 	                                   dmgroll.dicetype:=6;
 	                                   dmgroll.bonus:=6;
-	                                   dmg:=d(dmgroll);
+	                                   dmg:=rolld(dmgroll);
 	                                   thespell:=fireblast;
 	                                   case d(6) of
 	                                      2:damagetype:='fire';
@@ -2163,7 +2163,7 @@ begin
 	                         if (alignment in ['n','N']) then
 	                              fleehp:=20;
 	                         tempint:=(endurance DIV endurancemax) * 100;
-	                         if (tempint<=fleehp)and((d(2,6)>morale)) then
+	                         if (tempint<=fleehp)and((d2(2,6)>morale)) then
 	                              action:=flee;
 	                         with damage do
 	                              avgdmg:=((rollnum+bonus)+(rollnum*dicetype+bonus)) DIV 2;
@@ -4793,7 +4793,7 @@ begin
 	                         y:=350;
 	                         settextstyle(default,horizontal,1);
 	                         setcolor(white);
-	                         case (d(4,8)) of
+	                         case (d2(4,8)) of
 	                            4:begin
 	                                   writefile(350,textdir+'066.txt');
 	                                   DrawPic(165,180,imagedir+'wheel1.bmp');
@@ -5000,7 +5000,7 @@ begin
 
 	with monsterchart do
 	     begin
-	          theroll:=d(diceroll);
+	          theroll:=rolld(diceroll);
 	          monmax:=diceroll.rollnum*diceroll.dicetype+diceroll.bonus;
 	          for count:=1 to monmax do
 	               begin
@@ -5009,7 +5009,7 @@ begin
 	                    if (theroll in [val1..val2]) then
 	                         begin
 	                              monsterfile:=filename[count];
-	                              nummonsters:=d(number[count]);
+	                              nummonsters:=rolld(number[count]);
 	                              if (nummonsters>monstermax) then
 	                                   nummonsters:=monstermax;
 	                              if (nummonsters<1) then
@@ -5362,7 +5362,7 @@ begin
 	   5:tempstring:='an axe trap.';
 	   6:tempstring:='a pit trap.';
 	end;
-	dmg:=d(2,6);
+	dmg:=d2(2,6);
 	clearmessage;
 	homemessage(x,y);
 	settextstyle(default,horizontal,2);
