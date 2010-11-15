@@ -17,24 +17,17 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 }
 {$ifdef Win32}
+{$apptype GUI}
 {$r icequeen.res}
-{$endif}
-
-{$ifdef Unix}
-{$define SDL}
 {$endif}
 
 program IceQueen;
 
 uses
-	{$ifdef SDL}
-	crt, sdlgraph, graphio;
-	{$else}
 	{$ifdef Win32}
-	windows, wincrt, graph, graphio;
+	wincrt, graph, graphio;
 	{$else}
 	crt, graph, graphio;
-	{$endif}
 	{$endif}
 
 {$I config.pas}
@@ -6422,6 +6415,7 @@ end;
 
 begin {main}
 
+{
 	writeln;
 	writeln('The Icequeen ',version);
 	writeln('Copyright (C) 1996-2003,2010 - Angelo Bertolli');
@@ -6430,7 +6424,7 @@ begin {main}
 	writeln('to redistribute it under certain conditions.');
 	writeln('(See the file named LICENSE)');
 	writeln;
-
+}
 	openscreen;
 	titlescreen;
 	mainmenu;

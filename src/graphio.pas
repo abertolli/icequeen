@@ -22,14 +22,10 @@ Unit GraphIO;
 INTERFACE
 
 uses
-	{$ifdef SDL}
-	crt, sdlgraph;
-	{$else}
 	{$ifdef Win32}
 	windows, wincrt, graph;
 	{$else}
 	crt, graph;
-	{$endif}
 	{$endif}
 
 const
@@ -297,13 +293,18 @@ end;
 {--------------------------------------------------------------------------}
 procedure openscreen;
 begin
-        {$ifdef FPC}
+	{$ifdef FPC}
 	gd:=D4bit;
 	gm:=m640x480;
-        {$else}
-        gd:=0;
-        gm:=0;
-        {$endif}
+	{$else}
+	gd:=0;
+	gm:=0;
+	{$endif}
+
+	{$ifdef Win32}
+	ShowWindow(GetActiveWindow,0);
+	{$endif}
+
 	initgraph(gd,gm,'fonts');
 	if GraphResult<>grok then
 	begin
@@ -313,9 +314,6 @@ begin
 		halt(GraphResult);
 	end;
 	
-	{$ifdef Win32}
-	ShowWindow(GetActiveWindow,0);
-	{$endif}
 end;
 {--------------------------------------------------------------------------}
 procedure closescreen;
@@ -325,6 +323,7 @@ end;
 {===========================================================================}
 
 begin {main}
+{
      writeln;
      writeln('GraphIO Unit ',graphio_ver);
      writeln('Copyright (C) 2002,2010 - Angelo Bertolli');
@@ -333,4 +332,5 @@ begin {main}
      writeln('to redistribute it under certain conditions.');
      writeln('(See the file named LICENSE)');
      writeln;
+}
 end.  {main}
