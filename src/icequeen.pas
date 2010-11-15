@@ -17,7 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 }
 {$ifdef Win32}
-{$define GRAPH}
+{$define WINGRAPH}
 {$r icequeen.res}
 {$endif}
 
@@ -31,7 +31,11 @@ uses
 	{$ifdef SDL}
 	crt, sdlgraph, graphio;
 	{$else}
+	{$ifdef WINGRAPH}
+	wincrt, wingraph, graphio;
+	{$else}
 	crt, graph, graphio;
+	{$endif}
 	{$endif}
 
 {$I config.pas}
@@ -303,7 +307,11 @@ begin
 	                  graphwriteln(x,y,tempstring);
 	                  setcolor(white);
 	                  graphwriteln(x,y,'');
+					  {$ifdef WINGRAPH}
+	                  settextstyle(arialfont,horizontal,4);
+					  {$else}
 	                  settextstyle(smallfont,horizontal,4);
+					  {$endif}
 	                  graphwriteln(x,y,'Use the arrow keys.');
 	                  graphwriteln(x,y,'Press <Enter> when done.');
 	                  settextstyle(sanseri,horizontal,2);
