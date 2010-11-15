@@ -31,7 +31,7 @@ uses
 	{$endif}
 
 {$I config.pas}
-{$I data_t.pas}
+{$I datadef.pas}
 
 var
 	GAMEOVER	: boolean;

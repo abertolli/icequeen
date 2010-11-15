@@ -28,7 +28,7 @@ wandering monster charts, and the config.dat file to go with them.}
 uses crt;
 
 {$I config.pas}
-{$I data_t.pas}
+{$I datadef.pas}
 
 var
      ch             :    char;
