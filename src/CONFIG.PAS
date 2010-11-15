@@ -1,4 +1,4 @@
-{$ifndef config}
+{$ifndef CONFIG.PAS}
 
 const
 	version		= '3.0';
@@ -38,5 +38,5 @@ const
 	itemdir		= 'item';
 	monsterdir	= 'monst';
 
-{$define config}
+{$define CONFIG.PAS}
 {$endif}
