@@ -27,24 +27,43 @@ function roll(s:string):integer;
 
 var
 	target		: integer;
-	dnum		: string;
-	dsides		: string;
+	dnum		: integer;
+	dsides		: integer;
 	value		: integer;
 	loop		: integer;
 	errcode		: integer;
 
 begin
+	{$ifdef DEBUG}
+	writeln('DEBUG: parsing '+s);
+	{$endif}
 
 	{ Look for a + or - }
 	target:=pos('+',s);
+
+	{$ifdef DEBUG}
+	writeln('DEBUG: target + position: ',target);
+	{$endif}
+
 	if (target<>0) then
 		roll:=roll(copy(s,1,target-1)) + roll(copy(s,target+1,length(s)));
 	target:=pos('-',s);
+
+	{$ifdef DEBUG}
+	writeln('DEBUG: target - position: ',target);
+	{$endif}
+
 	if (target<>0) then
 		roll:=roll(copy(s,1,target-1)) - roll(copy(s,target+1,length(s)));
+
 	target:=pos('d',s);
 	if (target=0) then
 		target:=pos('D',s);
+
+	{$ifdef DEBUG}
+	writeln('DEBUG: target d position: ',target);
+	{$endif}
+
 	if (target<>0) then
 	begin
 		val(copy(s,1,target-1),dnum,errcode);			{get dnum}
@@ -54,7 +73,10 @@ begin
 			value:=value + random(dsides)+1;
 		roll:=value;
 	end;
+
 	val(s,value,errcode);
 	roll:=value;
 end;
 {--------------------------------------------------------------------------}
+{$define DICE.PAS}
+{$endif}
