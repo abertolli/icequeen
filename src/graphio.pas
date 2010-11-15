@@ -21,7 +21,16 @@ Unit GraphIO;
 
 INTERFACE
 
-uses crt, graph;
+uses
+	{$ifdef SDL}
+	crt, sdlgraph;
+	{$else}
+	{$ifdef Win32}
+	windows, wincrt, graph;
+	{$else}
+	crt, graph;
+	{$endif}
+	{$endif}
 
 const
 
@@ -303,6 +312,10 @@ begin
 		readln;
 		halt(GraphResult);
 	end;
+	
+	{$ifdef Win32}
+	ShowWindow(GetActiveWindow,0);
+	{$endif}
 end;
 {--------------------------------------------------------------------------}
 procedure closescreen;

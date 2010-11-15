@@ -27,11 +27,8 @@ wandering monster charts, and the config.dat file to go with them.}
 
 uses crt;
 
-{$I h/game.pas}
-{$I h/item.pas}
-{$I h/character.pas}
-{$I h/monster.pas}
-{$I h/encounter.pas}
+{$I config.pas}
+{$I data_t.pas}
 
 var
      ch             :    char;
@@ -208,7 +205,7 @@ begin
      monster.numspells:=numspells;
      monster.spell:=spell;
 
-     savemonster(monsterdir+filename,monster);
+     savemonster(monsterdir+'/'+filename,monster);
 
 end;
 {--------------------------------------------------------------------------}
@@ -578,7 +575,7 @@ begin
      themap[20,13]:=5;
      themap[20,14]:=5;
 
-     savemap(mapdir+'surface.map',themap);
+     savemap(mapdir+'/surface.map',themap);
 
      {surface.cod}
      themap[1,1]:=1;
@@ -864,7 +861,7 @@ begin
      themap[20,13]:=1;
      themap[20,14]:=1;
 
-     savemap(mapdir+'surface.cod',themap);
+     savemap(mapdir+'/surface.cod',themap);
 
      {cave.map}
      themap[1,1]:=29;
@@ -1154,7 +1151,7 @@ begin
      themap[20,13]:=29;
      themap[20,14]:=29;
 
-     savemap(mapdir+'cave.map',themap);
+     savemap(mapdir+'/cave.map',themap);
 
      {cave.cod}
      themap[1,1]:=1;
@@ -1441,7 +1438,7 @@ begin
      themap[20,13]:=1;
      themap[20,14]:=1;
 
-     savemap(mapdir+'cave.cod',themap);
+     savemap(mapdir+'/cave.cod',themap);
 
      {castle.map}
      themap[1,1]:=0;
@@ -1729,7 +1726,7 @@ begin
      themap[20,13]:=0;
      themap[20,14]:=0;
 
-     savemap(mapdir+'castle.map',themap);
+     savemap(mapdir+'/castle.map',themap);
 
      {castle.cod}
      themap[1,1]:=1;
@@ -2013,7 +2010,7 @@ begin
      themap[20,13]:=1;
      themap[20,14]:=1;
 
-     savemap(mapdir+'castle.cod',themap);
+     savemap(mapdir+'/castle.cod',themap);
 
      {dungeon.map}
      themap[1,1]:=0;
@@ -2299,7 +2296,7 @@ begin
      themap[20,13]:=0;
      themap[20,14]:=0;
 
-     savemap(mapdir+'dungeon.map',themap);
+     savemap(mapdir+'/dungeon.map',themap);
 
      {dungeon.cod}
      themap[1,1]:=1;
@@ -2583,7 +2580,7 @@ begin
      themap[20,13]:=1;
      themap[20,14]:=1;
 
-     savemap(mapdir+'dungeon.cod',themap);
+     savemap(mapdir+'/dungeon.cod',themap);
 
 end;
 {--------------------------------------------------------------------------}
@@ -2724,7 +2721,7 @@ begin
                parse('1',number[20]);
           end;
 
-     savechart(chartdir+'wild.dat',thechart);
+     savechart(chartdir+'/wild.dat',thechart);
 
      {cave.dat}
      with thechart do
@@ -2798,7 +2795,7 @@ begin
                parse('1d8',number[12]);
           end;
 
-     savechart(chartdir+'cave.dat',thechart);
+     savechart(chartdir+'/cave.dat',thechart);
 
      {castle.dat}
      with thechart do
@@ -2811,7 +2808,7 @@ begin
                parse('1d4+4',number[1]);
           end;
 
-     savechart(chartdir+'castle.dat',thechart);
+     savechart(chartdir+'/castle.dat',thechart);
 
      {dungeon.dat}
      with thechart do
@@ -2854,7 +2851,7 @@ begin
                parse('1d8',number[7]);
           end;
 
-     savechart(chartdir+'dungeon.dat',thechart);
+     savechart(chartdir+'/dungeon.dat',thechart);
 
 
 end;
@@ -2962,7 +2959,7 @@ begin
                chargemax:=0;
           end;
 
-     savegame(savedir+savedefault,player);
+     savegame(savedir+'/'+savedefault,player);
 
 end;
 {--------------------------------------------------------------------------}
@@ -3002,7 +2999,7 @@ begin
          data[3]:=1; data[4]:=2; data[5]:=8;
          data[6]:=0; data[7]:=0; data[8]:=0;
       end;
-   saveitem(ITM_dir+'sword.dat',item);
+   saveitem(itemdir+'/sword.dat',item);
 
    with item do
       begin
@@ -3016,7 +3013,7 @@ begin
          data[3]:=1; data[4]:=4; data[5]:=10;
          data[6]:=0; data[7]:=0; data[8]:=0;
       end;
-   saveitem(ITM_dir+'axe.dat',item);
+   saveitem(itemdir+'/axe.dat',item);
 
    with item do
       begin
@@ -3030,7 +3027,7 @@ begin
          data[3]:=1; data[4]:=2; data[5]:=4;
          data[6]:=0; data[7]:=0; data[8]:=0;
       end;
-   saveitem(ITM_dir+'dagger.dat',item);
+   saveitem(itemdir+'/dagger.dat',item);
 
    with item do
       begin
@@ -3044,7 +3041,7 @@ begin
          data[3]:=1; data[4]:=1; data[5]:=4;
          data[6]:=0; data[7]:=0; data[8]:=0;
       end;
-   saveitem(ITM_dir+'club.dat',item);
+   saveitem(itemdir+'/club.dat',item);
 
    with item do
       begin
@@ -3058,7 +3055,7 @@ begin
          data[3]:=1; data[4]:=2; data[5]:=6;
          data[6]:=0; data[7]:=0; data[8]:=0;
       end;
-   saveitem(ITM_dir+'staff.dat',item);
+   saveitem(itemdir+'/staff.dat',item);
 
    with item do
       begin
@@ -3072,7 +3069,7 @@ begin
          data[3]:=1; data[4]:=3; data[5]:=6;
          data[6]:=0; data[7]:=0; data[8]:=0;
       end;
-   saveitem(ITM_dir+'hammer.dat',item);
+   saveitem(itemdir+'/hammer.dat',item);
 
    with item do
       begin
@@ -3086,7 +3083,7 @@ begin
          data[3]:=1; data[4]:=6; data[5]:=12;
          data[6]:=0; data[7]:=0; data[8]:=0;
       end;
-   saveitem(ITM_dir+'magicswd.dat',item);
+   saveitem(itemdir+'/magicswd.dat',item);
 
    with item do
       begin
@@ -3100,7 +3097,7 @@ begin
          data[3]:=2; data[4]:=8; data[5]:=24;
          data[6]:=0; data[7]:=0; data[8]:=0;
       end;
-   saveitem(ITM_dir+'flamewnd.dat',item);
+   saveitem(itemdir+'/flamewnd.dat',item);
 
    with item do
       begin
@@ -3114,7 +3111,7 @@ begin
          data[3]:=3; data[4]:=10; data[5]:=24;
          data[6]:=0; data[7]:=0; data[8]:=0;
       end;
-   saveitem(ITM_dir+'trollsfire.dat',item);
+   saveitem(itemdir+'/trollsfire.dat',item);
 
    with item do
       begin
@@ -3128,7 +3125,7 @@ begin
          data[3]:=81; data[4]:=10; data[5]:=24;
          data[6]:=0; data[7]:=0; data[8]:=0;
       end;
-   saveitem(ITM_dir+'chaos.dat',item);
+   saveitem(itemdir+'/chaos.dat',item);
 
 {armor}
 
@@ -3145,7 +3142,7 @@ begin
          data[5]:=0; data[6]:=0;
          data[7]:=0; data[8]:=0;
       end;
-   saveitem(ITM_dir+'shield.dat',item);
+   saveitem(itemdir+'/shield.dat',item);
 
    with item do
       begin
@@ -3160,7 +3157,7 @@ begin
          data[5]:=0; data[6]:=0;
          data[7]:=0; data[8]:=0;
       end;
-   saveitem(ITM_dir+'chain.dat',item);
+   saveitem(itemdir+'/chain.dat',item);
 
    with item do
       begin
@@ -3175,7 +3172,7 @@ begin
          data[5]:=0; data[6]:=0;
          data[7]:=0; data[8]:=0;
       end;
-   saveitem(ITM_dir+'shield.dat',item);
+   saveitem(itemdir+'/shield.dat',item);
 
    with item do
       begin
@@ -3190,7 +3187,7 @@ begin
          data[5]:=0; data[6]:=0;
          data[7]:=0; data[8]:=0;
       end;
-   saveitem(ITM_dir+'shield.dat',item);
+   saveitem(itemdir+'/shield.dat',item);
 
 {potions}
 
@@ -3205,7 +3202,7 @@ begin
          data[4]:=4; data[5]:=2; data[6]:=3;
          data[7]:=0; data[8]:=0;
       end;
-   saveitem(ITM_dir+'potion-blue.dat',item);
+   saveitem(itemdir+'/potion-blue.dat',item);
 
    with item do
       begin
@@ -3218,7 +3215,7 @@ begin
          data[4]:=0; data[5]:=0; data[6]:=0;
          data[7]:=0; data[8]:=0;
       end;
-   saveitem(ITM_dir+'potion-red.dat',item);
+   saveitem(itemdir+'/potion-red.dat',item);
 
    with item do
       begin
@@ -3231,7 +3228,7 @@ begin
          data[4]:=4; data[5]:=3; data[6]:=6;
          data[7]:=1; data[8]:=100;
       end;
-   saveitem(ITM_dir+'potion-green.dat',item);
+   saveitem(itemdir+'/potion-green.dat',item);
 
 
 end;

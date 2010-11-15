@@ -36,7 +36,8 @@ type
 		bonus		: integer;
 	end;
 	{stages: keep endgame as the last enum type}
-	stage		= (ring,dragon,dilvish,baltar,key,unlocked,msword,mshield,knight,treasure,lizard,iceq,endgame);
+	stage		= (ring,dragon,dilvish,baltar,key,unlocked,msword,mshield,
+					knight,treasure,lizard,iceq,endgame);
 	location	= (town,wilderness,dungeon);
 
 	item_t		= record
