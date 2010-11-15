@@ -37,9 +37,9 @@ var
 
 {$I extras.pas}
 {--------------------------------------------------------------------------}
-procedure parse(thestring:string;var therecord:dicerecord);
+function roll(dice:string):integer;
 
-{This procedure parses a string into a dice record.  ##d##+##}
+{Take a string in dice notation, and return a result.}
 
 var
      errcode   :    integer;
@@ -2894,7 +2894,7 @@ begin
                with item[1] do
                   begin
                      name:='sword';
-                     item_type:=1;
+                     item_type:=weapon;
                      value:=18;
                      picfile:='sword.bmp';
                      msg:='This is a sturdy sword';
@@ -2906,7 +2906,7 @@ begin
                with item[2] do
                   begin
                      name:='shield';
-                     item_type:=2;
+                     item_type:=shield;
                      value:=20;
                      picfile:='shield.bmp';
                      msg:='This is an average shield';
@@ -2919,7 +2919,7 @@ begin
                with item[3] do
                   begin
                      name:='plate mail';
-                     item_type:=2;
+                     item_type:=armor;
                      value:=80;
                      picfile:='plate.bmp';
                      msg:='This armor provides good protection';
@@ -2950,7 +2950,7 @@ begin
                      data[1]:=1; data[2]:=4; data[3]:=12;
                      data[4]:=0; data[5]:=0; data[6]:=0;
                      data[7]:=0; data[8]:=0;
-                  end;               
+                  end;
                numspells:=0;
                strength:=10;
                dexterity:=16;
@@ -2990,7 +2990,7 @@ begin
    with item do
       begin
          name:='sword';
-         item_type:=1;
+         item_type:=weapon;
          value:=18;
          picfile:='sword.bmp';
          msg:='This is a sturdy sword';
@@ -3004,7 +3004,7 @@ begin
    with item do
       begin
          name:='battle axe';
-         item_type:=1;
+         item_type:=weapon;
          value:=20;
          picfile:='axe.bmp';
          msg:='This is a large battle axe';
@@ -3018,7 +3018,7 @@ begin
    with item do
       begin
          name:='dagger';
-         item_type:=1;
+         item_type:=weapon;
          value:=4;
          picfile:='dagger.bmp';
          msg:='This is your typical dagger';
@@ -3032,7 +3032,7 @@ begin
    with item do
       begin
          name:='club';
-         item_type:=1;
+         item_type:=weapon;
          value:=2;
          picfile:='club.bmp';
          msg:='This is a simple club';
@@ -3046,7 +3046,7 @@ begin
    with item do
       begin
          name:='staff';
-         item_type:=1;
+         item_type:=weapon;
          value:=8;
          picfile:='staff.bmp';
          msg:='This is a finely-made staff';
@@ -3060,7 +3060,7 @@ begin
    with item do
       begin
          name:='war hammer';
-         item_type:=1;
+         item_type:=weapon;
          value:=12;
          picfile:='hammer.bmp';
          msg:='This is a heavy war hammer';
@@ -3074,7 +3074,7 @@ begin
    with item do
       begin
          name:='Luckblade';
-         item_type:=1;
+         item_type:=weapon;
          value:=4500;
          picfile:='magicswd.bmp';
          msg:='This magical sword cuts cleanly and accurately';
@@ -3088,7 +3088,7 @@ begin
    with item do
       begin
          name:='Wand of Dragon Fire';
-         item_type:=1;
+         item_type:=weapon;
          value:=6200;
          picfile:='flamewnd.bmp';
          msg:='This wand burns enemies to a crisp';
@@ -3102,7 +3102,7 @@ begin
    with item do
       begin
          name:='Trollsfire';
-         item_type:=1;
+         item_type:=weapon;
          value:=7500;
          picfile:='trollsfire.bmp';
          msg:='This flaming sword lights with green flames';
@@ -3116,7 +3116,7 @@ begin
    with item do
       begin
          name:='Sword of Chaos';
-         item_type:=1;
+         item_type:=weapon;
          value:=7280;
          picfile:='chaos.bmp';
          msg:='This sword strikes with the power of darkness';

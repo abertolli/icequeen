@@ -1,9 +1,14 @@
 {$ifndef config}
+
 const
 	version		= '3.0';
 
 	reward		= 100000;
 
+        {
+        maps - the displayed map
+        codes - the underlying meaning
+        }
 	surfacemap	= 'surface.map';
 	surfacecode	= 'surface.cod';
 	cavemap		= 'cave.map';
@@ -12,10 +17,14 @@ const
 	castlecode	= 'castle.cod';
 	dungeonmap	= 'dungeon.map';
 	dungeoncode	= 'dungeon.cod';
+        {
+        charts - wandering monster charts
+        }
 	wildchart	= 'wild.dat';
 	cavechart	= 'cave.dat';
 	castlechart	= 'castle.dat';
 	dungeonchart	= 'dungeon.dat';
+
 	leftpic		= 'msoldier.bmp';
 	rightpic	= 'landon.bmp';
 	chartile	= 'chartile.bmp';
@@ -28,5 +37,6 @@ const
 	savedir		= 'save/';
 	itemdir		= 'item';
 	monsterdir	= 'monst';
+
 {$define config}
 {$endif}

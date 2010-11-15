@@ -30,23 +30,21 @@ type
                           dragonbreath,resistfire,resistcold);
 	matrix		= array[1..colmax,1..rowmax] of integer;
 	spellarray	= array[1..spellmax] of spell;
-	dicerecord	= record
-		rollnum		: word;
-		dicetype	: word;
-		bonus		: integer;
-	end;
-	{stages: keep endgame as the last enum type}
+
+        {stages: keep endgame as the last enum type}
 	stage		= (ring,dragon,dilvish,baltar,key,unlocked,msword,mshield,
-					knight,treasure,lizard,iceq,endgame);
+                                knight,treasure,lizard,iceq,endgame);
+
 	location	= (town,wilderness,dungeon);
 
+        item            = (weapon,shield,armor,potion);
 	item_t		= record
 		name		: string;
-		item_type	: byte;
+		item_type	: item;
 		value		: word;
 		picfile		: string;
 		msg		: string;
-		data		: array[1..8] of shortint;
+		data		: array[1..8] of integer;
 	end;
 
 	itemarray	= array[1..itemmax] of item_t;
@@ -59,7 +57,7 @@ type
 		endurancemax	: word;
 		armorclass	: integer;
 		thac0		: shortint;
-		damage		: dicerecord;
+		damage		: string; {roll}
 		savingthrow	: byte;
 		experience	: longint;
 		coins		: longint;
@@ -86,12 +84,12 @@ type
 		endurancemax	: word;
 		armorclass	: integer;
 		thac0		: shortint;
-		damage		: dicerecord;
+		damage		: string; {roll}
 		attacktype	: string;
 		savingthrow	: byte;
 		morale		: byte;
 		xpvalue		: word;
-		treasure	: dicerecord;
+		treasure	: string; {roll}
 		coins		: word;
 		numspells	: byte;
 		spell		: spellarray;
@@ -101,8 +99,8 @@ type
 	chartrecord    = record
 		value		: array[1..20,1..2] of byte;
 		filename	: array[1..20] of string;
-		number		: array[1..20] of dicerecord;
-		diceroll	: dicerecord;
+		number		: array[1..20] of string; {roll}
+		diceroll	: string; {roll}
 	end;
 
 	effectrecord    = record
