@@ -16,6 +16,7 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 }
+{$mode TP}
 {$ifdef Win32}
 {$apptype GUI}
 {$r icequeen.res}
@@ -42,30 +43,7 @@ var
 	player		: character_t;
 
 {$I extras.pas}
-{--------------------------------------------------------------------------}
-function D2(n1,n2:integer):integer;
-{Returns the value of dice rolled (n1)d(n2)}
-
-var
-	sum  :    integer;
-	loop :    integer;
-
-begin
-	sum:=0;
-	for loop:=1 to n1 do
-	     sum:=sum + d(n2);
-	d2:=sum;
-end;
-{--------------------------------------------------------------------------}
-function rolld(diceroll:dicerecord):integer;
-{Returns the value of dice rolled based on dicerecord format (#d#+#).}
-
-begin
-	with diceroll do
-	begin
-		rolld:=d2(rollnum,dicetype) + bonus;
-	end;
-end;
+{$I dice.pas}
 {---------------------------------------------------------------------------}
 procedure drawmaptile(xpos,ypos:integer;themap:matrix);
 
@@ -255,7 +233,7 @@ begin
 	               graphwrite(x,y,'Endurance: ');
 	               str(endurancemax,tempstring);
 	               graphwriteln(x,y,tempstring);
-	               points:=d2(5,6);
+	               points:=roll('5d6');
 	               strength:=d(6);
 	               dexterity:=d(6);
 	               tempint:=MINSCORE - strength;
@@ -352,7 +330,7 @@ begin
 	                     end;{case}
 	                  until (validchange);
 	               until (done);
-	               coins:=(d2(3,6)+(points*10)) * 10;
+	               coins:=(roll('3d6')+(points*10)) * 10;
 	               graphwriteln(x,y,'');
 	               graphwrite(x,y,'Coins: ');
 	               str(coins,tempstring);
@@ -774,23 +752,9 @@ begin
 	               tempstring:='Saving Throw: ' + tempstring;
 	               graphwritelncol1(x,y,tempstring);
 	               x:=col1;
-	               graphwrite(x,y,'Damage: ');
-	               str(damage.rollnum,tempstring);
-	               tempstring:=tempstring + 'd';
-	               graphwrite(x,y,tempstring);
-	               str(damage.dicetype,tempstring);
-	               graphwrite(x,y,tempstring);
-	               str(damage.bonus,tempstring);
-	               if (damage.bonus>0) then
-	                    begin
-	                         tempstring:='+' + tempstring;
-	                         graphwrite(x,y,tempstring);
-	                    end;
-	               if (damage.bonus<0) then
-	                    graphwrite(x,y,tempstring);
-	               str(experience,tempstring);
-	               graphwriteln(x,y,'');
-	               tempstring:='Experience: ' + tempstring;
+	               graphwriteln(x,y,'Damage: '+damage);
+                       str(experience,tempstring);
+                       tempstring:='Experience: ' + tempstring;
 	               graphwritelncol1(x,y,tempstring);
 
 	               score:=0;
@@ -909,7 +873,7 @@ begin
 	                    endurance:=endurancemax;
 	                    xpvalue:=(monster[count].xpvalue*xpmultiplier)
 	                             + (endurance DIV 2);
-	                    coins:=rolld(treasure);
+	                    coins:=roll(treasure);
 	               end;
 	     end;
 end;
@@ -996,21 +960,8 @@ begin
 	tempstring:='THAC0: ' + tempstring;
 	graphwriteln(x,y,tempstring);
 	x:=440;
-	graphwrite(x,y,'Dmg: ');
-	str(player.damage.rollnum,tempstring);
-	tempstring:=tempstring + 'd';
-	graphwrite(x,y,tempstring);
-	str(player.damage.dicetype,tempstring);
-	graphwrite(x,y,tempstring);
-	if (player.damage.bonus<>0) then
-	     begin
-	          str(player.damage.bonus,tempstring);
-	          if (player.damage.bonus>0) then
-	               tempstring:='+' + tempstring;
-	          graphwrite(x,y,tempstring);
-	     end;
-	graphwriteln(x,y,'');
-	x:=440;
+	graphwriteln(x,y,'Dmg: '+player.damage);
+        x:=440;
 	str(player.savingthrow,tempstring);
 	tempstring:='Save: ' + tempstring;
 	graphwriteln(x,y,tempstring);
@@ -1112,7 +1063,7 @@ begin
 	          graphwriteln(x,y,'');
 	          graphwriteln(x,y,'        You hit!');
 	          graphwriteln(x,y,'');
-	          dmg:=rolld(player.damage);
+	          dmg:=roll(player.damage);
 	          if (dmg<1) then
 	               dmg:=1;
 	          flame:=false;
@@ -1159,11 +1110,11 @@ procedure combatuse(var player:character_t;itemnum:integer;
 
 begin
 	y:=360;
-	if (player.item[itemnum].item_type<=3) then
+	if (not (player.item[itemnum].item_type in [potion])) then
 	   begin
 	      graphwriteln(x,y,'        Not usable.');
 	   end;
-	if (player.item[itemnum].item_type=3) then
+	if (player.item[itemnum].item_type in [potion]) then
 	   { potion effects here
 	         bluepotion:begin
 	                         if not(playereffect.blue) then
@@ -1210,7 +1161,7 @@ procedure combatcast(var player:character_t;spellnum:integer;
 
 var
 	damagetype     :    string;
-	dmgroll        :    dicerecord;
+	dmgroll        :    string; {dice}
 	originaldmg    :    integer;
 	dmg            :    integer;
 	count          :    integer;
@@ -1241,19 +1192,18 @@ begin
 	case thespell of
 	      icestorm:begin
 	                    damagetype:='cold';
-	                    dmgroll.rollnum:=player.level;
-	                    if (dmgroll.rollnum>20) then
-	                         dmgroll.rollnum:=20;
-	                    dmgroll.dicetype:=6;
-	                    dmgroll.bonus:=0;
-	                    dmg:=rolld(dmgroll);
+                            if (player.level > 20) then
+                                str(20,tempstring)
+                            else
+                                str(player.level,tempstring);
+                            dmgroll:=tempstring+'d6';
+                            dmg:=roll(dmgroll);
 	               end;
 	     fireblast:begin
 	                    damagetype:='fire';
-	                    dmgroll.rollnum:=(((player.level-1) DIV 5)*2)+1;
-	                    dmgroll.dicetype:=6;
-	                    dmgroll.bonus:=dmgroll.rollnum;
-	                    dmg:=rolld(dmgroll);
+	                    str((((player.level-1) DIV 5)*2)+1,tempstring);
+                            dmgroll:=tempstring+'d6+'+tempstring;
+                            dmg:=roll(dmgroll);
 	               end;
 	    web,freeze:begin
 	                    graphwriteln(x,y,'     You make your foes');
@@ -1322,10 +1272,9 @@ begin
 	                end;
 	        icicle:begin
 	                    damagetype:='cold';
-	                    dmgroll.rollnum:=(((player.level-1) DIV 5)*2)+1;
-	                    dmgroll.dicetype:=6;
-	                    dmgroll.bonus:=dmgroll.rollnum;
-	                    dmg:=rolld(dmgroll);
+	                    str((((player.level-1) DIV 5)*2)+1,tempstring);
+                            dmgroll:=tempstring+'d6+'+tempstring;
+                            dmg:=roll(dmgroll);
 	               end;
 	         power:begin
 	                    powerroll:=d(20);
@@ -1394,7 +1343,7 @@ begin
 	                                             close(pasfile);
 	                                             with monsterchart do
 	                                                begin
-	                                                   theroll:=rolld(diceroll);
+	                                                   theroll:=roll(diceroll);
 	                                                   for count:=1 to 20 do
 	                                                      begin
 	                                                         val1:=value[count,1];
@@ -1424,10 +1373,8 @@ begin
 	                                   y:=310;
 	                                   graphwriteln(x,y,'      WHOA! MEGADAMAGE!');
 	                                   graphwriteln(x,y,'');
-	                                   dmgroll.rollnum:=6;
-	                                   dmgroll.dicetype:=6;
-	                                   dmgroll.bonus:=6;
-	                                   dmg:=rolld(dmgroll);
+                                           dmgroll:='8d8+8';
+                                           dmg:=roll(dmgroll);
 	                                   thespell:=fireblast;
 	                                   case d(6) of
 	                                      2:damagetype:='fire';
@@ -1664,7 +1611,7 @@ begin
 	               graphwriteln(x,y,'');
 	               for count:=1 to player.numitems do
 	                    begin
-	                         if (player.item[count].item_type in [0..2]) then
+	                         if (not(player.item[count].item_type in [potion])) then
 	                              setcolor(cyan)
 	                         else
 	                              setcolor(lightcyan);
@@ -1690,7 +1637,7 @@ begin
 	                         graphwriteln(x,y,'');
 	                         graphwriteln(x,y,'');
 	                         val(ans,tempint,errcode);
-	                         if (player.item[tempint].item_type in [0..2]) then
+	                         if (not(player.item[tempint].item_type in [potion])) then
 	                              done:=false;
 	                         combatuse(player,tempint,playereffect);
 	                    end;
@@ -1802,7 +1749,7 @@ begin
 	          tempstring:=themonster.attacktype + ' YOU!';
 	          x:=120-(textwidth(tempstring) DIV 2);
 	          graphwriteln(x,y,tempstring);
-	          dmg:=rolld(themonster.damage);
+	          dmg:=roll(themonster.damage);
 	          if (dmg<1) then
 	               dmg:=1;
 	          str(dmg,tempstring);
@@ -1839,7 +1786,7 @@ var
 	tempstring     :    string;
 	thespell       :    spell;
 	damagetype     :    string;
-	dmgroll        :    dicerecord;
+	dmgroll        :    string; {dice}
 	dmg            :    integer;
 	count          :    integer;
 	monsterchart   :    chartrecord;
@@ -1870,20 +1817,19 @@ begin
 	      icestorm:begin
 	                    graphwriteln(x,y,'       casts a spell');
 	                    damagetype:='cold';
-	                    dmgroll.rollnum:=themonster.hitdice;
-	                    if (dmgroll.rollnum>20) then
-	                         dmgroll.rollnum:=20;
-	                    dmgroll.dicetype:=6;
-	                    dmgroll.bonus:=0;
-	                    dmg:=rolld(dmgroll);
+                            if (themonster.hitdice>20) then
+                                str(20,tempstring)
+                            else
+                                str(themonster.hitdice,tempstring);
+                            dmgroll:=tempstring+'d6';
+                            dmg:=roll(dmgroll);
 	               end;
 	     fireblast:begin
 	                    graphwriteln(x,y,'       casts a spell');
 	                    damagetype:='fire';
-	                    dmgroll.rollnum:=(((themonster.hitdice-1) DIV 5)*2)+1;
-	                    dmgroll.dicetype:=6;
-	                    dmgroll.bonus:=dmgroll.rollnum;
-	                    dmg:=rolld(dmgroll);
+	                    str((((themonster.hitdice-1) DIV 5)*2)+1,tempstring);
+                            dmgroll:=tempstring+'d6+'+tempstring;
+                            dmg:=roll(dmgroll);
 	               end;
 	        freeze:begin
 	                    graphwriteln(x,y,'    freezes you, slowing');
@@ -1916,7 +1862,7 @@ begin
 	                              graphwriteln(x,y,'           stronger');
 	                              themonster.armorclass:=themonster.armorclass-1;
 	                              themonster.thac0:=themonster.thac0-1;
-	                              themonster.damage.bonus:=themonster.damage.bonus+1;
+	                              themonster.damage:=themonster.damage+'+1';
 	                         end
 	                    else
 	                         begin
@@ -1936,10 +1882,9 @@ begin
 	        icicle:begin
 	                    graphwriteln(x,y,'       casts a spell');
 	                    damagetype:='cold';
-	                    dmgroll.rollnum:=(((themonster.hitdice-1) DIV 5)*2)+1;
-	                    dmgroll.dicetype:=6;
-	                    dmgroll.bonus:=dmgroll.rollnum;
-	                    dmg:=rolld(dmgroll);
+	                    str((((themonster.hitdice-1) DIV 5)*2)+1,tempstring);
+                            dmgroll:=tempstring+'d6+'+tempstring;
+                            dmg:=roll(dmgroll);
 	               end;
 	         power:begin
 	                    case d(8) of
@@ -1965,7 +1910,7 @@ begin
 	                                             close(pasfile);
 	                                             with monsterchart do
 	                                                begin
-	                                                   theroll:=rolld(diceroll);
+	                                                   theroll:=roll(diceroll);
 	                                                   for count:=1 to 20 do
 	                                                      begin
 	                                                         val1:=value[count,1];
@@ -1993,10 +1938,8 @@ begin
 	                              end;
 	                            8:begin
 	                                   graphwriteln(x,y,'       casts a spell');
-	                                   dmgroll.rollnum:=6;
-	                                   dmgroll.dicetype:=6;
-	                                   dmgroll.bonus:=6;
-	                                   dmg:=rolld(dmgroll);
+                                           dmgroll:='8d8+8';
+                                           dmg:=roll(dmgroll);
 	                                   thespell:=fireblast;
 	                                   case d(6) of
 	                                      2:damagetype:='fire';
@@ -2151,10 +2094,9 @@ begin
 	                         if (alignment in ['n','N']) then
 	                              fleehp:=20;
 	                         tempint:=(endurance DIV endurancemax) * 100;
-	                         if (tempint<=fleehp)and((d2(2,6)>morale)) then
+	                         if (tempint<=fleehp)and((roll('2d6')>morale)) then
 	                              action:=flee;
-	                         with damage do
-	                              avgdmg:=((rollnum+bonus)+(rollnum*dicetype+bonus)) DIV 2;
+	                         avgdmg:=rollavg(damage);
 	                         if not(action=flee) and (numspells>0)
 	                            and (spellcounter[loop]<(numspells+2)) then
 	                              begin
@@ -2778,7 +2720,7 @@ begin
 	               until (ans in ['1'..tempstring[1]]);
 	               graphwriteln(x,y,'');
 	               val(ans,tempinteger,tempcode);
-	               if not(item[tempinteger].item_type=3) then
+	               if not(item[tempinteger].item_type in [potion]) then
 	                    begin
 	                         graphwriteln(x,y,'Cannot be used here!');
 	                    end
@@ -4781,7 +4723,7 @@ begin
 	                         y:=350;
 	                         settextstyle(default,horizontal,1);
 	                         setcolor(white);
-	                         case (d2(4,8)) of
+	                         case (roll('4d8')) of
 	                            4:begin
 	                                   writefile(350,textdir+'066.txt');
 	                                   DrawPic(165,180,imagedir+'wheel1.bmp');
@@ -4988,8 +4930,8 @@ begin
 
 	with monsterchart do
 	     begin
-	          theroll:=rolld(diceroll);
-	          monmax:=diceroll.rollnum*diceroll.dicetype+diceroll.bonus;
+	          theroll:=roll(diceroll);
+	          monmax:=rollmax(diceroll);
 	          for count:=1 to monmax do
 	               begin
 	                    val1:=value[count,1];
@@ -4997,7 +4939,7 @@ begin
 	                    if (theroll in [val1..val2]) then
 	                         begin
 	                              monsterfile:=filename[count];
-	                              nummonsters:=rolld(number[count]);
+	                              nummonsters:=roll(number[count]);
 	                              if (nummonsters>monstermax) then
 	                                   nummonsters:=monstermax;
 	                              if (nummonsters<1) then
@@ -5350,7 +5292,7 @@ begin
 	   5:tempstring:='an axe trap.';
 	   6:tempstring:='a pit trap.';
 	end;
-	dmg:=d2(2,6);
+	dmg:=roll('2d6');
 	clearmessage;
 	homemessage(x,y);
 	settextstyle(default,horizontal,2);

@@ -313,7 +313,7 @@ begin
 		readln;
 		halt(GraphResult);
 	end;
-	
+
 end;
 {--------------------------------------------------------------------------}
 procedure closescreen;

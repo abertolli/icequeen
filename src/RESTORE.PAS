@@ -36,85 +36,7 @@ var
      loop           :    integer;
 
 {$I extras.pas}
-{--------------------------------------------------------------------------}
-function roll(dice:string):integer;
-
-{Take a string in dice notation, and return a result.}
-
-var
-     errcode   :    integer;
-     dpos      :    integer;  {position of "d"}
-     bpos      :    integer;  {position of "+" or "-"}
-     substr    :    string;
-     tempint   :    integer;
-
-begin
-
-     dpos:=pos('d',thestring);
-     bpos:=pos('+',thestring);
-     if (bpos=0) then
-          bpos:=pos('-',thestring);
-     errcode:=0;
-
-     if (thestring='') then
-          with therecord do
-               begin
-                    rollnum:=0;
-                    dicetype:=0;
-                    bonus:=0;
-               end
-     else
-          if (dpos=0) then
-               with therecord do
-                    begin
-                         rollnum:=0;
-                         dicetype:=0;
-                         val(thestring,tempint,errcode);
-                         if not(errcode=0) then
-                              write('ERROR');
-                         bonus:=tempint;
-                    end
-          else
-               begin
-                    substr:='';
-                    for loop:=1 to (dpos-1) do
-                         substr:=substr+thestring[loop];
-                    val(substr,tempint,errcode);
-                    therecord.rollnum:=tempint;
-                    if not(errcode=0) then
-                         write('ERROR');
-                    substr:='';
-                    if (bpos=0) then
-                         begin
-                              for loop:=(dpos+1) to length(thestring) do
-                                   substr:=substr+thestring[loop];
-                              val(substr,tempint,errcode);
-                              therecord.dicetype:=tempint;
-                              if not(errcode=0) then
-                                   write('ERROR');
-                              therecord.bonus:=0;
-                         end
-                    else
-                         begin
-                              for loop:=(dpos+1) to (bpos-1) do
-                                   substr:=substr+thestring[loop];
-                              val(substr,tempint,errcode);
-                              therecord.dicetype:=tempint;
-                              if not(errcode=0) then
-                                   write('ERROR');
-                              substr:='';
-                              for loop:=(bpos+1) to length(thestring) do
-                                   substr:=substr+thestring[loop];
-                              val(substr,tempint,errcode);
-                              therecord.bonus:=tempint;
-                              if not(errcode=0) then
-                                   write('ERROR');
-                              if (pos('-',thestring)>0) then
-                                   therecord.bonus:=therecord.bonus * -1;
-                         end;
-               end;
-
-end;
+{$I dice.pas}
 {--------------------------------------------------------------------------}
 procedure createmonster(
                name           :    string;
@@ -125,20 +47,18 @@ procedure createmonster(
                hitdice        :    byte;
                hpbonus        :    shortint;
                armorclass     :    integer;
-               damagestr      :    string;
+               damage         :    string; {dice}
                attacktype     :    string;
                savingthrow    :    byte;
                morale         :    byte;
                xpvalue        :    longint;
-               treasurestr    :    string;
+               treasure       :    string; {dice}
                numspells      :    byte;
                spellstr       :    string);
 
 var
      int            :    integer;
      monster        :    monsterrecord;
-     damage         :    dicerecord;
-     treasure       :    dicerecord;
      spell          :    spellarray;
 
 
@@ -146,12 +66,37 @@ var
 procedure savemonster(filename:string;monster:monsterrecord);
 
 var
-     savefile        :    file of monsterrecord;
+        savefile        : text;
+        loop            : integer;
 
 begin
      assign(savefile,filename);
      rewrite(savefile);
-     write(savefile,monster);
+     writeln(savefile,'~'+filename);
+     with monster do
+        begin
+        writeln(savefile,name);
+        writeln(savefile,picfile);
+        writeln(savefile,sex);
+        writeln(savefile,alignment);
+        writeln(savefile,hitdice);
+        writeln(savefile,hpbonus);
+        {endurance}
+        {endurancemax}
+        writeln(savefile,armorclass);
+        writeln(savefile,thac0);
+        writeln(savefile,damage);
+        writeln(savefile,attacktype);
+        writeln(savefile,savingthrow);
+        writeln(savefile,morale);
+        writeln(savefile,xpvalue);
+        writeln(savefile,treasure);
+        {coins}
+        writeln(savefile,numspells);
+        for loop:=1 to numspells do
+             writeln(savefile,spell[loop]);
+        end;
+     writeln(savefile,'~');
      close(savefile);
      writeln(filename);
 end;
@@ -159,12 +104,10 @@ end;
 
 begin
 
-     parse(damagestr,damage);
-     parse(treasurestr,treasure);
-
      for loop:=1 to numspells do
           begin
                case spellstr[loop] of
+                    '1':spell[loop]:=icestorm;
                     '2':spell[loop]:=fireblast;
                     '3':spell[loop]:=web;
                     '4':spell[loop]:=callwild;
@@ -180,7 +123,7 @@ begin
                     'E':spell[loop]:=resistfire;
                     'F':spell[loop]:=resistcold;
                else
-                    spell[loop]:=icestorm;
+                    writeln(name,': spell ',spellstr[loop],' not found.');
                end; {case}
           end;
      monster.name:=name;
@@ -212,6 +155,7 @@ end;
 procedure createmonsters;
 
 begin
+
 {name,file,picture,gender,alignment,HD,+HD,AC,DMG,attack,save,morale,basexpv,coins,numspells,spells}
 {
 '1':icestorm        '2':fireblast       '3':web
@@ -2591,8 +2535,8 @@ type
      chartrecord    =    record
                               value     :    array[1..20,1..2] of byte;
                               filename  :    array[1..20] of string;
-                              number    :    array[1..20] of dicerecord;
-                              diceroll  :    dicerecord;
+                              number    :    array[1..20] of string; {dice}
+                              diceroll  :    string; {dice}
                          end;
 var
      thechart       :    chartrecord;
@@ -2618,107 +2562,107 @@ begin
      {wild.dat}
      with thechart do
           begin
-               parse('2d10',diceroll);
+               diceroll:='2d10';
 
                value[1,1]:=1;
                value[1,2]:=1;
                filename[1]:='roland.dat';
-               parse('1',number[1]);
+               number[1]:='1';
 
                value[2,1]:=2;
                value[2,2]:=2;
                filename[2]:='wyvern.dat';
-               parse('1',number[2]);
+               number[2]:='1';
 
                value[3,1]:=3;
                value[3,2]:=3;
                filename[3]:='centaur.dat';
-               parse('1d3',number[3]);
+               number[3]:='1d3';
 
                value[4,1]:=4;
                value[4,2]:=4;
                filename[4]:='spider.dat';
-               parse('1d4',number[4]);
+               number[4]:='1d4';
 
                value[5,1]:=5;
                value[5,2]:=5;
                filename[5]:='ant.dat';
-               parse('1d6',number[5]);
+               number[5]:='1d6';
 
                value[6,1]:=6;
                value[6,2]:=6;
                filename[6]:='beetle.dat';
-               parse('1d4',number[6]);
+               number[6]:='1d4';
 
                value[7,1]:=7;
                value[7,2]:=7;
                filename[7]:='berserke.dat';
-               parse('1d3',number[7]);
+               number[7]:='1d3';
 
                value[8,1]:=8;
                value[8,2]:=8;
                filename[8]:='orc.dat';
-               parse('1d6',number[8]);
+               number[8]:='1d6';
 
                value[9,1]:=9;
                value[9,2]:=9;
                filename[9]:='goblin.dat';
-               parse('1d6',number[9]);
+               number[9]:='1d6';
 
                value[10,1]:=10;
                value[10,2]:=10;
                filename[10]:='kobold.dat';
-               parse('1d8',number[10]);
+               number[10]:='1d8';
 
                value[11,1]:=11;
                value[11,2]:=11;
                filename[11]:='kobold.dat';
-               parse('1d8',number[11]);
+               number[11]:='1d8';
 
                value[12,1]:=12;
                value[12,2]:=12;
                filename[12]:='kobold.dat';
-               parse('1d8',number[12]);
+               number[12]:='1d8';
 
                value[13,1]:=13;
                value[13,2]:=13;
                filename[13]:='goblin.dat';
-               parse('1d6',number[13]);
+               number[13]:='1d6';
 
                value[14,1]:=14;
                value[14,2]:=14;
                filename[14]:='orc.dat';
-               parse('1d6',number[14]);
+               number[14]:='1d6';
 
                value[15,1]:=15;
                value[15,2]:=15;
                filename[15]:='wolf.dat';
-               parse('1d4',number[15]);
+               number[15]:='1d4';
 
                value[16,1]:=16;
                value[16,2]:=16;
                filename[16]:='bee.dat';
-               parse('1d6',number[16]);
+               number[16]:='1d6';
 
                value[17,1]:=17;
                value[17,2]:=17;
                filename[17]:='centiped.dat';
-               parse('1d6',number[17]);
+               number[17]:='1d6';
 
                value[18,1]:=18;
                value[18,2]:=18;
                filename[18]:='bandit.dat';
-               parse('1d4',number[18]);
+               number[18]:='1d4';
 
                value[19,1]:=19;
                value[19,2]:=19;
                filename[19]:='ogre.dat';
-               parse('1d2',number[19]);
+               number[19]:='1d2';
 
                value[20,1]:=20;
                value[20,2]:=20;
                filename[20]:='giant.dat';
-               parse('1',number[20]);
+               number[20]:='1';
           end;
 
      savechart(chartdir+'/wild.dat',thechart);
@@ -2726,73 +2670,67 @@ begin
      {cave.dat}
      with thechart do
           begin
-               parse('1d12',diceroll);
+               diceroll:='1d12';
 
                value[1,1]:=1;
                value[1,2]:=1;
                filename[1]:='gargoyle.dat';
-               parse('1d4',number[1]);
-
-
-
+               number[1]:='1d4';
 
                value[2,1]:=2;
                value[2,2]:=2;
                filename[2]:='slime.dat';
-               parse('1d8',number[2]);
+               number[2]:='1d8';
 
                value[3,1]:=3;
                value[3,2]:=3;
                filename[3]:='ooze.dat';
-               parse('1d8',number[3]);
+               number[3]:='1d8';
 
                value[4,1]:=4;
                value[4,2]:=4;
                filename[4]:='spider.dat';
-               parse('1d6',number[4]);
+               number[4]:='1d6';
 
                value[5,1]:=5;
                value[5,2]:=5;
                filename[5]:='werewolf.dat';
-               parse('1d6',number[5]);
-
-
-
+               number[5]:='1d6';
 
                value[6,1]:=6;
                value[6,2]:=6;
                filename[6]:='ogre.dat';
-               parse('1d4',number[6]);
+               number[6]:='1d4';
 
                value[7,1]:=7;
                value[7,2]:=7;
                filename[7]:='baboon.dat';
-               parse('1d6',number[7]);
+               number[7]:='1d6';
 
                value[8,1]:=8;
                value[8,2]:=8;
                filename[8]:='centiped.dat';
-               parse('2d4',number[8]);
+               number[8]:='2d4';
 
                value[9,1]:=9;
                value[9,2]:=9;
                filename[9]:='minotaur.dat';
-               parse('1d2',number[9]);
+               number[9]:='1d2';
 
                value[10,1]:=10;
                value[10,2]:=10;
                filename[10]:='troll.dat';
-               parse('1d2',number[10]);
+               number[10]:='1d2';
 
                value[11,1]:=11;
                value[11,2]:=11;
                filename[11]:='shadow.dat';
-               parse('1d6',number[11]);
+               number[11]:='1d6';
 
                value[12,1]:=12;
                value[12,2]:=12;
                filename[12]:='skeleton.dat';
-               parse('1d8',number[12]);
+               number[12]:='1d8';
           end;
 
      savechart(chartdir+'/cave.dat',thechart);
@@ -2800,12 +2738,12 @@ begin
      {castle.dat}
      with thechart do
           begin
-               parse('1',diceroll);
+               diceroll:='1';
 
                value[1,1]:=1;
                value[1,2]:=1;
                filename[1]:='soldier.dat';
-               parse('1d4+4',number[1]);
+               number[1]:='1d4+4';
           end;
 
      savechart(chartdir+'/castle.dat',thechart);
@@ -2813,42 +2751,42 @@ begin
      {dungeon.dat}
      with thechart do
           begin
-               parse('1d8',diceroll);
+               diceroll:='1d8';
 
                value[1,1]:=1;
                value[1,2]:=2;
                filename[1]:='shadow.dat';
-               parse('2d4',number[1]);
+               number[1]:='2d4';
 
                value[2,1]:=3;
                value[2,2]:=3;
                filename[2]:='skeleton.dat';
-               parse('1d8',number[2]);
+               number[2]:='1d8';
 
                value[3,1]:=4;
                value[3,2]:=4;
                filename[3]:='slime.dat';
-               parse('1d4',number[3]);
+               number[3]:='1d4';
 
                value[4,1]:=5;
                value[4,2]:=5;
                filename[4]:='ooze.dat';
-               parse('1d4',number[4]);
+               number[4]:='1d4';
 
                value[5,1]:=6;
                value[5,2]:=6;
                filename[5]:='gargoyle.dat';
-               parse('1',number[5]);
+               number[5]:='1';
 
                value[6,1]:=7;
                value[6,2]:=7;
                filename[6]:='ghoul.dat';
-               parse('2d4',number[6]);
+               number[6]:='2d4';
 
                value[7,1]:=8;
                value[7,2]:=8;
                filename[7]:='wraith.dat';
-               parse('1d8',number[7]);
+               number[7]:='1d8';
           end;
 
      savechart(chartdir+'/dungeon.dat',thechart);
@@ -2932,7 +2870,7 @@ begin
                with item[4] do
                   begin
                      name:='blue potion';
-                     item_type:=3;
+                     item_type:=potion;
                      value:=100;
                      picfile:='potion-blue.bmp';
                      msg:='potion-blue.txt';
@@ -2943,7 +2881,7 @@ begin
                with item[5] do
                   begin
                      name:='red potion';
-                     item_type:=3;
+                     item_type:=potion;
                      value:=100;
                      picfile:='potion-red.bmp';
                      msg:='potion-red.txt';
@@ -3132,7 +3070,7 @@ begin
    with item do
       begin
          name:='shield';
-         item_type:=2;
+         item_type:=shield;
          value:=20;
          picfile:='shield.bmp';
          msg:='This is an average shield';
@@ -3147,7 +3085,7 @@ begin
    with item do
       begin
          name:='chain mail';
-         item_type:=2;
+         item_type:=armor;
          value:=65;
          picfile:='chain.bmp';
          msg:='This armor provides decent protection';
@@ -3162,7 +3100,7 @@ begin
    with item do
       begin
          name:='plate mail';
-         item_type:=2;
+         item_type:=armor;
          value:=80;
          picfile:='plate.bmp';
          msg:='This armor provides good protection';
@@ -3177,7 +3115,7 @@ begin
    with item do
       begin
          name:='glimmering gem shield';
-         item_type:=2;
+         item_type:=armor;
          value:=4000;
          picfile:='magicshl.bmp';
          msg:='This magical shield increases your defense greatly';
@@ -3194,7 +3132,7 @@ begin
    with item do
       begin
          name:='blue potion';
-         item_type:=3;
+         item_type:=potion;
          value:=100;
          picfile:='potion-blue.bmp';
          msg:='potion-blue.txt';
@@ -3207,7 +3145,7 @@ begin
    with item do
       begin
          name:='red potion';
-         item_type:=3;
+         item_type:=potion;
          value:=100;
          picfile:='potion-red.bmp';
          msg:='potion-red.txt';
@@ -3220,7 +3158,7 @@ begin
    with item do
       begin
          name:='green potion';
-         item_type:=3;
+         item_type:=potion;
          value:=300;
          picfile:='potion-green.bmp';
          msg:='potion-green.txt';
