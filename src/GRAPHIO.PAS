@@ -295,7 +295,7 @@ procedure openscreen;
 begin
 	{$ifdef FPC}
 	gd:=D4bit;
-	gm:=m640x480;
+	gm:=m800x600;
 	{$else}
 	gd:=0;
 	gm:=0;
