@@ -21,61 +21,62 @@ Angelo Bertolli <angelo.bertoli@gmail.com>
 }
 
 {--------------------------------------------------------------------------}
+function d(dnum:integer):integer;
+{ The value of d(dnum) is returned as a random number between 1 and dnum.}
+
+begin
+	d:=random(dnum)+1;
+end;
+
+{--------------------------------------------------------------------------}
 function roll(s:string):integer;
 
 {Take a string in dice notation, and return a result.}
 
 var
 	target		: integer;
-	dnum		: integer;
-	dsides		: integer;
+	ndice		: integer;
+	nsides		: integer;
 	value		: integer;
 	loop		: integer;
 	errcode		: integer;
 
 begin
-	{$ifdef DEBUG}
-	writeln('DEBUG: parsing '+s);
-	{$endif}
 
 	{ Look for a + or - }
 	target:=pos('+',s);
-
-	{$ifdef DEBUG}
-	writeln('DEBUG: target + position: ',target);
-	{$endif}
-
 	if (target<>0) then
+	begin
 		roll:=roll(copy(s,1,target-1)) + roll(copy(s,target+1,length(s)));
+		exit;
+	end;
+
 	target:=pos('-',s);
-
-	{$ifdef DEBUG}
-	writeln('DEBUG: target - position: ',target);
-	{$endif}
-
 	if (target<>0) then
+	begin
 		roll:=roll(copy(s,1,target-1)) - roll(copy(s,target+1,length(s)));
+		exit;
+	end;
 
 	target:=pos('d',s);
 	if (target=0) then
 		target:=pos('D',s);
-
-	{$ifdef DEBUG}
-	writeln('DEBUG: target d position: ',target);
-	{$endif}
-
 	if (target<>0) then
 	begin
-		val(copy(s,1,target-1),dnum,errcode);			{get dnum}
-		val(copy(s,target+1,length(s)),dsides,errcode);		{get dsides}
+		val(copy(s,1,target-1),ndice,errcode);				{get dnum}
+		val(copy(s,target+1,length(s)),nsides,errcode);		{get dsides}
 		value:=0;
-		for loop:=1 to dnum do
-			value:=value + random(dsides)+1;
+		for loop:=1 to ndice do
+		begin
+			value:=value + d(nsides);
+		end;
 		roll:=value;
+		exit;
 	end;
 
 	val(s,value,errcode);
 	roll:=value;
+
 end;
 {--------------------------------------------------------------------------}
 {$define DICE.PAS}

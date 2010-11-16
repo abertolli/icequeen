@@ -43,10 +43,6 @@ var
 
 {$I extras.pas}
 {--------------------------------------------------------------------------}
-function D(dnum:integer):integer; begin d:=random(dnum)+1; end;
-{The value of d(dnum) is returned as a random number between 1 and dnum.}
-
-{--------------------------------------------------------------------------}
 function D2(n1,n2:integer):integer;
 {Returns the value of dice rolled (n1)d(n2)}
 
