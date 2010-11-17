@@ -6353,16 +6353,6 @@ end;
 
 begin {main}
 
-{
-	writeln;
-	writeln('The Icequeen ',version);
-	writeln('Copyright (C) 1996-2003,2010 - Angelo Bertolli');
-	writeln('Ice Queen comes with ABSOLUTELY NO WARRANTY');
-	writeln('This is free software and you are welcome');
-	writeln('to redistribute it under certain conditions.');
-	writeln('(See the file named LICENSE)');
-	writeln;
-}
 	openscreen;
 	titlescreen;
 	mainmenu;
