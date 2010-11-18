@@ -25,9 +25,9 @@ const
 	castlechart	= 'castle.dat';
 	dungeonchart	= 'dungeon.dat';
 
-	leftpic		= 'msoldier.bmp';
-	rightpic	= 'landon.bmp';
-	chartile	= 'chartile.bmp';
+	leftpic		= 'msoldier';
+	rightpic	= 'landon';
+	chartile	= 'chartile';
 	savedefault	= 'game.sav';
 
 	textdir		= 'text/';

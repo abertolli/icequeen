@@ -60,98 +60,63 @@ IMPLEMENTATION
 
 {$I extras.pas}
 {Drawing Functions and Procedures}
-{--------------------------------------------------------------------------}
-function readjust(c:integer):integer;
+{-------------------------------------------------------------------------}
+procedure DRAWPICTUREBYLINE(beginx,beginy:integer;dosname:string);
 
-begin
-
-   case c of
-      lightgray     :readjust:=darkgray;
-      darkgray      :readjust:=lightgray;
-      blue          :readjust:=red;
-      lightblue     :readjust:=lightred;
-      cyan          :readjust:=brown;
-      lightcyan     :readjust:=yellow;
-      brown         :readjust:=cyan;
-      yellow        :readjust:=lightcyan;
-      red           :readjust:=blue;
-      lightred      :readjust:=lightblue;
-   else
-      readjust:=c;
-
-   end; {case}
-
-end;
-{--------------------------------------------------------------------------}
-procedure drawbmp16(dosname:string;xpos,ypos:integer);
-
-type
-     FileHeader    = record
-                        bfType        : word;
-                        bfSize        : longint;
-                        bfReserved1   : word;
-                        bfReserved2   : word;
-                        bfOffBits     : longint;
-     end;
-
-     InfoHeader = record
-                     biSize           : longint;
-                     biWidth          : longint;
-                     biHeight         : longint;
-                     biPlanes         : word;
-                     biBitCount       : word;
-                     biCompression    : longint;
-                     biSizeImage      : longint;
-                     biXPelsPerMeter  : longint;
-                     biYPelsPerMeter  : longint;
-                     biClrUsed        : longint;
-                     biClrImportant   : longint;
-     end;
-
-     Quad = record
-               blue                   : byte;
-               green                  : byte;
-               red                    : byte;
-               Reserved               : byte;
-     end;
-
-     BitmapHead = record
-                      fh:        FileHeader;
-                      ih:        InfoHeader;
-                      colors:    array[0..15] of Quad;
-     end;
+{dosname            =    name of the file, including extention
+beginx, beginy      =    the coordinates of where the upper left hand corner
+                         of where the picture will be.}
 
 var
-     f     :     file of byte;
-     info  :     file of BitmapHead;
-     data  :     bitmaphead;
-     color :     integer;
-     b     :     byte;
-     x     :     word;
-     y     :     word;
+     pasfile        :    text;
+     row            :    integer;
+     col            :    integer;
+     color          :    integer;
+     length         :    integer;
+     lineoftext     :    string;
+     savename       :    string;
+     ch             :    char;
 
 begin
 
-     assign(info,dosname);
-     reset(info);
-     read(info,data);
-     close(info);
-
-     assign(f,dosname);
-     reset(f);
-     seek(f,data.fh.bfoffbits);
-
-     for y:=data.ih.biheight downto 1 do
-          for x:=1 to (data.ih.biwidth div 2+3) and not 3  do
-               begin
-                    read(f,b);
-                    color:=b shr 4;
-                    putpixel((x*2)+xpos,y+ypos,readjust(color));
-                    color:=b and 15;
-                    putpixel((x*2)+1+xpos,y+ypos,readjust(color));
-               end;
-
-     close(f);
+     savename:='';
+     if not(exist(dosname)) then
+          begin
+               savename:=dosname;
+               dosname:='nophoto.ln1';
+          end;
+     assign(pasfile,dosname);
+     reset(pasfile);
+     readln(pasfile,lineoftext);
+     if(lineoftext='FORMAT=LINE')then
+          begin
+               row:=beginy;
+               col:=beginx;
+               while not eof(pasfile) do
+                    begin
+                         while not eoln(pasfile) do
+                              begin
+                                   read(pasfile,color);
+                                   read(pasfile,ch);
+                                   read(pasfile,length);
+                                   if not eoln(pasfile) then
+                                        read(pasfile,ch);
+                                   setcolor(color);
+                                   line(col,row,(col+length),row);
+                                   col:=col + length;
+                              end;
+                         readln(pasfile);
+                         row:=row + 1;
+                         col:=beginx;
+                    end;
+          end;
+     close(pasfile);
+     if (savename<>'') then
+          begin
+               setcolor(lightblue);
+               settextstyle(default,horizontal,1);
+               outtextxy(beginx+15,beginy+20,savename);
+          end;
 
 end;
 {-------------------------------------------------------------------------}
@@ -161,16 +126,17 @@ var
    previouscolor: word;
 
 begin
+   dosname:=dosname+'.ln1';
    if not(exist(dosname)) then
       begin
          previouscolor:=getcolor;
          setcolor(lightblue);
          settextstyle(small,horizontal,4);
          outtextxy(beginx,beginy,dosname);
-		 setcolor(previouscolor);
+	 setcolor(previouscolor);
       end
    else
-      drawbmp16(dosname,beginx,beginy);
+      drawpicturebyline(beginx,beginy,dosname);
 end;
 
 {Graphics Writing Functions and Procedures}
@@ -295,7 +261,7 @@ procedure openscreen;
 begin
 	{$ifdef FPC}
 	gd:=D4bit;
-	gm:=m800x600;
+	gm:=m640x480;
 	{$else}
 	gd:=0;
 	gm:=0;
