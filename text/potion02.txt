@@ -1,0 +1,6 @@
+You quaff the blue potion.
+
+You feel a surge of energy, as you
+become fast and strong.  Soon, however,
+the potion's effects wear off.  Maybe
+you can find a better time to use it.

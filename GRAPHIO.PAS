@@ -47,8 +47,8 @@ var
 	gm	: integer;
 
 function readarrowkey:char;
+procedure DRAWPICTUREBYLINE(beginx,beginy:integer;dosname:string);
 procedure prompt;
-procedure DrawPic(beginx,beginy:integer;dosname:string);
 procedure HOMECURSOR(var x,y:integer);
 procedure graphwrite(var x,y:integer;s:string);
 procedure graphwriteln(var x,y:integer;s:string);
@@ -141,25 +141,6 @@ begin
                outtextxy(beginx+15,beginy+20,savename);
           end;
 
-end;
-{-------------------------------------------------------------------------}
-procedure DrawPic(beginx,beginy:integer;dosname:string);
-
-var
-   previouscolor: word;
-
-begin
-   dosname:=dosname+'.ln1';
-   if not(exist(dosname)) then
-      begin
-         previouscolor:=getcolor;
-         setcolor(lightblue);
-         settextstyle(small,horizontal,4);
-         outtextxy(beginx,beginy,dosname);
-	 setcolor(previouscolor);
-      end
-   else
-      drawpicturebyline(beginx,beginy,dosname);
 end;
 
 {Graphics Writing Functions and Procedures}
