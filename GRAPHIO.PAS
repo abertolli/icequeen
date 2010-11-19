@@ -23,9 +23,9 @@ INTERFACE
 
 uses
 	{$ifdef Win32}
-	windows, wincrt, graph, fileio;
+	windows, wincrt, graph, dataio;
 	{$else}
-	crt, graph, fileio;
+	crt, graph, dataio;
 	{$endif}
 
 const

@@ -32,7 +32,18 @@ uses
 	{$endif}
 
 {$I config.pas}
-{$I datadef.pas}
+
+type
+
+	monsterlist    = array[1..monstermax] of monsterrecord;
+	effectrecord    = record
+		blue		: boolean;
+		courage		: boolean;
+		resistfire	: boolean;
+		resistcold	: boolean;
+		glacier		: boolean;
+					 end;
+	effectlist	 = array[1..monstermax] of effectrecord;
 
 var
 	GAMEOVER	: boolean;

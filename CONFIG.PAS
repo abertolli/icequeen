@@ -38,5 +38,27 @@ const
 	itemdir		= 'item';
 	monsterdir	= 'monst';
 
+
+	{used for text columns}
+	col1	= 20;	 {column 1 for viewing stats}
+	col2	= 240;	 {column 2 for viewing stats}
+	col3	= 440;	 {column 3 for viewing stats}
+
+	{used for maps}
+
+	monstermax	= 8;	{number of monsters in one battle}
+	xpmultiplier= 5;	{xp value multiplier for monsters}
+	maxlevel	= 12;	{number of levels character can achieve}
+	ringmax		= 20;	{maximum charges a ring can have}
+
+	{encounters}
+	wildchance		= 10;	  {% chance per square to encounter.}
+	roadchance		= 5;		{% chance per square on the road.}
+	dungeonchance	= 20;	  {% chance per square in the dungeon.}
+
+	{combat constants}
+	spacing		= 25;	  {spacing between pictures}
+
+
 {$define CONFIG.PAS}
 {$endif}
