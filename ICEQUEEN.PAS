@@ -1,6 +1,6 @@
 {
 Ice Queen - Main program
-Copyright (C) 1996-2003,2010 Angelo Bertolli
+Copyright (C) 1996-2010 Angelo Bertolli
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -26,9 +26,9 @@ program IceQueen;
 
 uses
 	{$ifdef Win32}
-	wincrt, graph, graphio;
+	wincrt, graph, graphio, dataio, dice;
 	{$else}
-	crt, graph, graphio;
+	crt, graph, graphio, dataio, dice;
 	{$endif}
 
 {$I config.pas}
@@ -36,14 +36,26 @@ uses
 
 var
 	GAMEOVER	: boolean;
-	x		: integer;
-	y		: integer;
+	x			: integer;
+	y			: integer;
 	nummonsters	: integer;
 	monster		: monsterlist;
 	player		: character_t;
 
-{$I extras.pas}
-{$I dice.pas}
+
+{--------------------------------------------------------------------------}
+function CAPITALIZE(capstring:string):string;
+
+{CAPITALIZE is returned as capstring in all caps.}
+
+var
+   loop        : word;
+
+begin
+     for loop:=1 to length(capstring) do
+          capstring[loop]:=upcase(capstring[loop]);
+     capitalize:=capstring;
+end;
 {---------------------------------------------------------------------------}
 procedure drawmaptile(xpos,ypos:integer;themap:matrix);
 

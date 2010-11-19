@@ -1,7 +1,6 @@
-{$ifndef DICE.PAS}
 {
 Dice functions and procedures
-Copyright (C) 1999-2005 Angelo Bertolli
+Copyright (C) 1999-2010 Angelo Bertolli
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -19,6 +18,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 Angelo Bertolli <angelo.bertoli@gmail.com>
 }
+
+unit Dice;
+
+INTERFACE
+
+function d(dnum:integer):integer;
+function roll(s:string):integer;
+function rollmin(s:string):integer;
+function rollmax(s:string):integer;
+function rollavg(s:string):integer;
+
+IMPLEMENTATION
 
 {--------------------------------------------------------------------------}
 function d(dnum:integer):integer;
@@ -175,5 +186,7 @@ begin
         rollavg:=(rollmin(s) + rollmax(s)) DIV 2;
 end;
 {--------------------------------------------------------------------------}
-{$define DICE.PAS}
-{$endif}
+
+begin
+	randomize;
+end.

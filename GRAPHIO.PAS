@@ -23,9 +23,9 @@ INTERFACE
 
 uses
 	{$ifdef Win32}
-	windows, wincrt, graph;
+	windows, wincrt, graph, fileio;
 	{$else}
-	crt, graph;
+	crt, graph, fileio;
 	{$endif}
 
 const
@@ -46,6 +46,7 @@ var
 	gd	: integer;
 	gm	: integer;
 
+function readarrowkey:char;
 procedure prompt;
 procedure DrawPic(beginx,beginy:integer;dosname:string);
 procedure HOMECURSOR(var x,y:integer);
@@ -58,7 +59,29 @@ procedure closescreen;
 
 IMPLEMENTATION
 
-{$I extras.pas}
+{--------------------------------------------------------------------------}
+function READARROWKEY    :    char;
+
+{This function can be used instead of readkey, returning an arrow key value as
+its keypad counterpart.}
+
+var
+     key            :    char;
+
+begin
+     key:=readkey;
+     if key=#0 then
+          begin
+               key:=readkey;
+               case key of
+                    #72:key:='8';
+                    #77:key:='6';
+                    #75:key:='4';
+                    #80:key:='2';
+               end;
+          end;
+     readarrowkey:=key;
+end;
 {Drawing Functions and Procedures}
 {-------------------------------------------------------------------------}
 procedure DRAWPICTUREBYLINE(beginx,beginy:integer;dosname:string);
