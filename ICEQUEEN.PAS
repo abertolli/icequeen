@@ -351,11 +351,7 @@ begin
 	                  graphwriteln(x,y,tempstring);
 	                  setcolor(white);
 	                  graphwriteln(x,y,'');
-					  {$ifdef WINGRAPH}
-	                  settextstyle(arialfont,horizontal,4);
-					  {$else}
-	                  settextstyle(smallfont,horizontal,4);
-					  {$endif}
+	                  settextstyle(small,horizontal,4);
 	                  graphwriteln(x,y,'Use the arrow keys.');
 	                  graphwriteln(x,y,'Press <Enter> when done.');
 	                  settextstyle(sanseri,horizontal,2);
