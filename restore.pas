@@ -732,7 +732,7 @@ begin
      themap[16,13]:=0;
      themap[16,14]:=0;
      themap[17,1]:=0;
-     themap[17,2]:=0;
+     themap[17,2]:=0;
      themap[17,3]:=0;
      themap[17,4]:=0;
      themap[17,5]:=0;
