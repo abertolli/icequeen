@@ -7,5 +7,3 @@ Copies of this software must be distributed with the LICENSE file.
 Originally developed for Turbo Pascal, Freepascal is now the compiler of choice.
 http://www.freepascal.org/
 
-P.S. Laughing at my graphics is just part of the fun.
-
