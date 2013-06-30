@@ -8,21 +8,12 @@ unit Dice;
 
 INTERFACE
 
-function d(dnum:integer):integer;
 function roll(s:string):integer;
 function rollmin(s:string):integer;
 function rollmax(s:string):integer;
 function rollavg(s:string):integer;
 
 IMPLEMENTATION
-
-{--------------------------------------------------------------------------}
-function d(dnum:integer):integer;
-{ The value of d(dnum) is returned as a random number between 1 and dnum.}
-
-begin
-	d:=random(dnum)+1;
-end;
 
 {--------------------------------------------------------------------------}
 function roll(s:string):integer;
@@ -64,7 +55,7 @@ begin
 		value:=0;
 		for loop:=1 to ndice do
 		begin
-			value:=value + d(nsides);
+			value:=value + random(nsides)+1;
 		end;
 		roll:=value;
 		exit;

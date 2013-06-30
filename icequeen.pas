@@ -16,7 +16,7 @@ uses
 	{$ifdef Win32}
 	wincrt, graph, graphio, dataio, dice;
 	{$else}
-	crt, graph, graphio, dataio, dice;
+	graphio, dataio, dice;
 	{$endif}
 
 const
@@ -122,7 +122,7 @@ begin
       begin
          previouscolor:=getcolor;
          setcolor(lightblue);
-         settextstyle(small,horizontal,4);
+         settextstyle(small,horizontal,1);
          outtextxy(beginx,beginy,dosname);
 	 setcolor(previouscolor);
       end
@@ -312,8 +312,8 @@ begin
 	               str(endurancemax,tempstring);
 	               graphwriteln(x,y,tempstring);
 	               points:=roll('5d6');
-	               strength:=d(6);
-	               dexterity:=d(6);
+	               strength:=roll('1d6');
+	               dexterity:=roll('1d6');
 	               tempint:=MINSCORE - strength;
 	               if (tempint>0) then
 	                  begin
@@ -486,30 +486,6 @@ begin
 	until done;
 end;
 
-{Functions that return the names of items and spells given the enum type.}
-{---------------------------------------------------------------------------}
-function spellstring(thespell:spell):string;
-
-begin
-	case thespell of
-	     icestorm       :spellstring:='ice storm';
-	     fireblast      :spellstring:='fire blast';
-	     web            :spellstring:='web';
-	     callwild       :spellstring:='call wild';
-	     heal           :spellstring:='heal';
-	     courage        :spellstring:='courage';
-	     freeze         :spellstring:='freeze';
-	     obliterate     :spellstring:='obliterate';
-	     icicle         :spellstring:='icicle';
-	     power          :spellstring:='power';
-	     shatter        :spellstring:='shatter';
-	     glacier        :spellstring:='glacier';
-	     dragonbreath   :spellstring:='dragon breath';
-	     resistfire     :spellstring:='resist fire';
-	     resistcold     :spellstring:='resist cold';
-	end;{case}
-end;
-
 {Calc Stats, View Stats, and Drop Item Procedures}
 {---------------------------------------------------------------------------}
 procedure calcstats(var player:character_t);
@@ -521,6 +497,9 @@ procedure calcstats(var player:character_t);
 var
 	tempinteger    :    integer;
 	count          :    integer;
+    tempset        :    set of item;
+    dmgbonus       :    integer;
+    tempstring      :   string;
 
 begin
 	with player do
@@ -528,77 +507,77 @@ begin
 	          if(level=1)and(experience>=2000)then
 	               begin
 	                    level:=level + 1;
-	                    tempinteger:=d(8);
+	                    tempinteger:=roll('1d8');
 	                    endurancemax:=endurancemax+tempinteger;
 	                    endurance:=endurance+tempinteger;
 	               end;
 	          if(level=2)and(experience>=4000)then
 	               begin
 	                    level:=level + 1;
-	                    tempinteger:=d(8);
+	                    tempinteger:=roll('1d8');
 	                    endurancemax:=endurancemax+tempinteger;
 	                    endurance:=endurance+tempinteger;
 	               end;
 	          if(level=3)and(experience>=8000)then
 	               begin
 	                    level:=level + 1;
-	                    tempinteger:=d(8);
+	                    tempinteger:=roll('1d8');
 	                    endurancemax:=endurancemax+tempinteger;
 	                    endurance:=endurance+tempinteger;
 	               end;
 	          if(level=4)and(experience>=16000)then
 	               begin
 	                    level:=level + 1;
-	                    tempinteger:=d(8);
+	                    tempinteger:=roll('1d8');
 	                    endurancemax:=endurancemax+tempinteger;
 	                    endurance:=endurance+tempinteger;
 	               end;
 	          if(level=5)and(experience>=32000)then
 	               begin
 	                    level:=level + 1;
-	                    tempinteger:=d(8);
+	                    tempinteger:=roll('1d8');
 	                    endurancemax:=endurancemax+tempinteger;
 	                    endurance:=endurance+tempinteger;
 	               end;
 	          if(level=6)and(experience>=64000)then
 	               begin
 	                    level:=level + 1;
-	                    tempinteger:=d(8);
+	                    tempinteger:=roll('1d8');
 	                    endurancemax:=endurancemax+tempinteger;
 	                    endurance:=endurance+tempinteger;
 	               end;
 	          if(level=7)and(experience>=120000)then
 	               begin
 	                    level:=level + 1;
-	                    tempinteger:=d(8);
+	                    tempinteger:=roll('1d8');
 	                    endurancemax:=endurancemax+tempinteger;
 	                    endurance:=endurance+tempinteger;
 	               end;
 	          if(level=8)and(experience>=240000)then
 	               begin
 	                    level:=level + 1;
-	                    tempinteger:=d(8);
+	                    tempinteger:=roll('1d8');
 	                    endurancemax:=endurancemax+tempinteger;
 	                    endurance:=endurance+tempinteger;
 	               end;
 	          if(level=9)and(experience>=360000)then
 	               begin
 	                    level:=level + 1;
-	                    tempinteger:=d(8);
+	                    tempinteger:=roll('1d8');
 	                    endurancemax:=endurancemax+tempinteger;
 	                    endurance:=endurance+tempinteger;
 	               end;
 	          if(level=10)and(experience>=480000)then
 	               begin
 	                    level:=level + 1;
-	                    tempinteger:=d(8);
+	                    tempinteger:=roll('1d8');
 	                    endurancemax:=endurancemax+tempinteger;
 	                    endurance:=endurance+tempinteger;
 	               end;
 	          if(level=11)and(experience>=600000)then
 	               begin
 	                    level:=level + 1;
-	                    tempinteger:=d(8);
+	                    tempinteger:=roll('1d8');
 	                    endurancemax:=endurancemax+tempinteger;
 	                    endurance:=endurance+tempinteger;
 	               end;
@@ -628,8 +607,6 @@ begin
 	              19:thac0:=thac0-4;
 	              20:thac0:=thac0-5;
 	          end;{case}
-{ Modify using item_t }
-{
 	          tempset:=[];
 	          for count:=1 to numitems do
 	               tempset:=tempset + [item[count]];
@@ -656,42 +633,41 @@ begin
 	              19:armorclass:=armorclass-4;
 	              20:armorclass:=armorclass-5;
 	          end;
-	          damage.rollnum:=1;
-	          damage.dicetype:=2;
-	          damage.bonus:=0;
+              damage:='1d2';
+              dmgbonus:=0;
 	          if (club in tempset)or(dagger in tempset) then
-	               damage.dicetype:=4;
+	               damage:='1d4';
 	          if (hammer in tempset)or(staff in tempset) then
-	               damage.dicetype:=6;
+	               damage:='1d6';
 	          if (axe in tempset)or(sword in tempset) then
-	               damage.dicetype:=8;
+	               damage:='1d8';
 	          if(magicsword in tempset)then
 	               begin
-	                    damage.dicetype:=8;
-	                    damage.bonus:=3;
+	                    damage:='1d8';
+                        dmgbonus:=dmgbonus+3;
 	                    if not(flamewand in tempset)then
 	                         thac0:=thac0-3;
 	               end;
 	          if (flamewand in tempset) then
-	               begin
-	                    damage.rollnum:=6;
-	                    damage.dicetype:=6;
-	                    damage.bonus:=0;
-	               end;
+                    damage:='6d6';
 	          if not(flamewand in tempset) then
 	               case strength of
-	                    1:damage.bonus:=damage.bonus-5;
-	                    2:damage.bonus:=damage.bonus-4;
-	                    3:damage.bonus:=damage.bonus-3;
-	                 4..5:damage.bonus:=damage.bonus-2;
-	                 6..8:damage.bonus:=damage.bonus-1;
-	               13..15:damage.bonus:=damage.bonus+1;
-	               16..17:damage.bonus:=damage.bonus+2;
-	                   18:damage.bonus:=damage.bonus+3;
-	                   19:damage.bonus:=damage.bonus+4;
-	                   20:damage.bonus:=damage.bonus+5;
+	                    1:dmgbonus:=dmgbonus-5;
+	                    2:dmgbonus:=dmgbonus-4;
+	                    3:dmgbonus:=dmgbonus-3;
+	                 4..5:dmgbonus:=dmgbonus-2;
+	                 6..8:dmgbonus:=dmgbonus-1;
+	               13..15:dmgbonus:=dmgbonus+1;
+	               16..17:dmgbonus:=dmgbonus+2;
+	                   18:dmgbonus:=dmgbonus+3;
+	                   19:dmgbonus:=dmgbonus+4;
+	                   20:dmgbonus:=dmgbonus+5;
 	               end;
-}
+              str(dmgbonus,tempstring);
+              if (dmgbonus<0) then
+                    damage:=damage + tempstring;
+              if (dmgbonus>0) then
+                    damage:=damage + '+' + tempstring;
 	     end;
 end;
 {---------------------------------------------------------------------------}
@@ -717,7 +693,10 @@ begin
 	               for count:=1 to numitems do
 	                    begin
 	                         str(count,tempstring);
+                             {
 	                         tempstring:=tempstring + '. ' + item[count].name;
+                             }
+                             tempstring:=tempstring + '. ' + itemstring(item[count]);
 	                         graphwriteln(x,y,tempstring);
 	                    end;
 	               graphwriteln(x,y,'Drop which one?');
@@ -727,10 +706,13 @@ begin
 	               until (ans in ['1'..tempstring[1]]);
 	               graphwriteln(x,y,'');
 	               val(ans,tempinteger,tempcode);
+                   {
 	               tempstring:=item[tempinteger].name;
+                   }
+	               tempstring:=itemstring(item[tempinteger]);
 	               graphwrite(x,y,tempstring);
 	               graphwriteln(x,y,' will be gone forever.  Drop? (y/n)');
-	               drawpic(280,(numitems+7)*textheight('M'),item[tempinteger].picfile);
+	               drawpic(280,(numitems+7)*textheight('M'),itempicfile(item[tempinteger]));
 	               repeat
 	                    ans:=readarrowkey;
 	               until(ans in ['y','Y','n','N']);
@@ -854,7 +836,10 @@ begin
 	               setcolor(lightblue);
 	               for count:=1 to numitems do
 	                    begin
+                            {
 	                         tempstring:=item[count].name;
+                             }
+                             tempstring:=itemstring(item[count]);
 	                         graphwritelncol2(x,y,tempstring);
 	                    end;
 	               y:=140;
@@ -904,7 +889,7 @@ begin
 	outtextxy(1,80,'      You have died...');
 	settextstyle(sanseri,horizontal,8);
 	repeat
-	     setcolor(d(15));
+	     setcolor(roll('1d15'));
 	     outtextxy(1,240,'   GAME OVER');
 	until keypressed;
 	ch:=readarrowkey;
@@ -918,18 +903,62 @@ procedure rollmonsters(var monster:monsterlist;nummonsters:integer;
 
 var
 
-	pasfile        :    file of monsterrecord;
+	pasfile        :    text;
+    lineoftext     :    string;
 	count          :    integer;
 	tempmonster    :    monsterrecord;
 	loop           :    word;
 
 begin
-	if not(exist(monsterdir+monsterfile)) then
-	     exit;
-	assign(pasfile,monsterdir+monsterfile);
+
+    {reading monster data should be moved to dataio}
+
+	if not(exist('monst.dat')) then
+    begin
+        writeln('Could not find monst.dat');
+	    halt(1);
+    end;
+	assign(pasfile,'monst.dat');
 	reset(pasfile);
-	read(pasfile,tempmonster);
+
+    lineoftext:='';
+    {Find the data}
+    while not ( (eof(pasfile)) or (pos(monsterfile,lineoftext)>0) ) do
+        readln(pasfile,lineoftext);
+
+    if not (pos(monsterfile,lineoftext)>0) then
+    begin
+        writeln('Could not load '+monsterfile);
+        halt(1);
+    end;
+
+    {Load the data}
+    with tempmonster do
+    begin
+        readln(pasfile,name);
+        readln(pasfile,picfile);
+        readln(pasfile,sex);
+        readln(pasfile,alignment);
+        readln(pasfile,hitdice);
+        readln(pasfile,hpbonus);
+        {endurance}
+        {endurancemax}
+        readln(pasfile,armorclass);
+        readln(pasfile,thac0);
+        readln(pasfile,damage);
+        readln(pasfile,attacktype);
+        readln(pasfile,savingthrow);
+        readln(pasfile,morale);
+        readln(pasfile,xpvalue);
+        readln(pasfile,treasure);
+        {coins}
+        readln(pasfile,numspells);
+        for loop:=1 to numspells do
+             readln(pasfile,spell[loop]);
+    end;
 	close(pasfile);
+
+    {roll stats here}
 	for count:=1 to nummonsters do
 	     begin
 	          monster[count]:=tempmonster;
@@ -937,7 +966,7 @@ begin
 	               begin
 	                    endurancemax:=0;
 	                    for loop:=1 to hitdice do
-	                         endurancemax:=endurancemax + d(8);
+	                         endurancemax:=endurancemax + roll('1d8');
 	                    if (hpbonus<0) and (endurancemax<(hpbonus*-1)) then
 	                         endurancemax:=1
 	                    else
@@ -1131,7 +1160,7 @@ begin
 	ac:=themonster.armorclass;
 	if (themonstereffect.glacier) and (ac>4) then
 	     ac:=4;
-	hitroll:=d(20);
+	hitroll:=roll('1d20');
 	if ((hitroll>=(player.thac0-ac))and(hitroll>1))or(hitroll=20) then
 	     begin
 	          graphwriteln(x,y,'');
@@ -1142,7 +1171,7 @@ begin
 	               dmg:=1;
 	          flame:=false;
 	          for loop:=1 to player.numitems do
-	               if (player.item[loop].data[3]=2) then
+	               if (player.item[loop]=flamewand) then
 	                    flame:=true;
 	          if (flame) and (themonstereffect.resistfire) then
 	               dmg:=(dmg DIV 2)+1;
@@ -1184,21 +1213,21 @@ procedure combatuse(var player:character_t;itemnum:integer;
 
 begin
 	y:=360;
-	if (not (player.item[itemnum].item_type in [potion])) then
+	if (not (player.item[itemnum] in [redpotion,bluepotion,greenpotion])) then
 	   begin
 	      graphwriteln(x,y,'        Not usable.');
 	   end;
-	if (player.item[itemnum].item_type in [potion]) then
-	   { potion effects here
+	if (player.item[itemnum] in [redpotion,greenpotion,bluepotion]) then
+       case player.item[itemnum] of
 	         bluepotion:begin
 	                         if not(playereffect.blue) then
 	                              begin
 	                                   graphwriteln(x,y,'     You become faster');
 	                                   graphwriteln(x,y,'       and stronger.');
-	                                   player.strength:=player.strength+d(4);
+	                                   player.strength:=player.strength+roll('1d4');
 	                                   if (player.strength>20) then
 	                                        player.strength:=20;
-	                                   player.dexterity:=player.dexterity+d(4);
+	                                   player.dexterity:=player.dexterity+roll('1d4');
 	                                   if (player.dexterity>20) then
 	                                        player.dexterity:=20;
 	                                   remove(player.numitems,player.item,itemnum);
@@ -1211,7 +1240,7 @@ begin
 	                    end;
 	          redpotion:begin
 	                         graphwriteln(x,y,'    Healing soothes you.');
-	                         player.endurance:=player.endurance+d(6)+1;
+	                         player.endurance:=player.endurance+roll('1d6')+1;
 	                         if (player.endurance>player.endurancemax) then
 	                              player.endurance:=player.endurancemax;
 	                         remove(player.numitems,player.item,itemnum);
@@ -1225,7 +1254,7 @@ begin
 	                         player.dexterity:=20;
 	                         remove(player.numitems,player.item,itemnum);
 	                    end;
-	   }
+       end; {case}
 
 end;
 {---------------------------------------------------------------------------}
@@ -1294,7 +1323,7 @@ begin
 	               end;
 	          heal:begin
 	                    graphwriteln(x,y,'    Healing soothes you.');
-	                    player.endurance:=player.endurance+d(6)+1;
+	                    player.endurance:=player.endurance+roll('1d6')+1;
 	                    if (player.endurance>player.endurancemax) then
 	                         player.endurance:=player.endurancemax;
 	                    settextstyle(sanseri,horizontal,1);
@@ -1305,10 +1334,10 @@ begin
 	                    if not(playereffect.courage) then
 	                         begin
 	                              graphwriteln(x,y,'     You become braver.');
-	                              player.strength:=player.strength+d(4)+1;
+	                              player.strength:=player.strength+roll('1d4')+1;
 	                              if (player.strength>20) then
 	                                   player.strength:=20;
-	                              player.dexterity:=player.dexterity+d(4)+1;
+	                              player.dexterity:=player.dexterity+roll('1d4')+1;
 	                              if (player.dexterity>20) then
 	                                   player.dexterity:=20;
 	                         end
@@ -1351,7 +1380,7 @@ begin
                             dmg:=roll(dmgroll);
 	               end;
 	         power:begin
-	                    powerroll:=d(20);
+	                    powerroll:=roll('1d20');
 	                    case powerroll of
 	                         1..4:begin
 	                                   graphwriteln(x,y,'      You don''t think');
@@ -1360,7 +1389,7 @@ begin
 	                            5:begin
 	                                   graphwriteln(x,y,'       Roland appears');
 	                                   graphwriteln(x,y,'      and punches you!');
-	                                   dmg:=d(4);
+	                                   dmg:=roll('1d4');
 	                                   if (player.endurance<dmg) then
 	                                        player.endurance:=0
 	                                   else
@@ -1382,7 +1411,7 @@ begin
 	                       12..14:begin
 	                                   graphwriteln(x,y,'    You are kissed by a');
 	                                   graphwriteln(x,y,'          faerie.');
-	                                   player.endurance:=player.endurance+d(2);
+	                                   player.endurance:=player.endurance+roll('1d2');
 	                                   if (player.endurance>player.endurancemax) then
 	                                        player.endurance:=player.endurancemax;
 	                              end;
@@ -1450,7 +1479,7 @@ begin
                                            dmgroll:='8d8+8';
                                            dmg:=roll(dmgroll);
 	                                   thespell:=fireblast;
-	                                   case d(6) of
+	                                   case roll('1d6') of
 	                                      2:damagetype:='fire';
 	                                      3:begin
 	                                             damagetype:='cold';
@@ -1570,7 +1599,7 @@ begin
 	                    if (monstereffect[count].resistcold) and
 	                       (damagetype='cold') then
 	                         dmg:=dmg-player.level;
-	                    saveroll:=d(20);
+	                    saveroll:=roll('1d20');
 	                    if ((saveroll>=monster[count].savingthrow)and(saveroll>1))or(saveroll=20) then
 	                         dmg:=dmg DIV 2;
 	                    if (dmg<1) then
@@ -1685,7 +1714,7 @@ begin
 	               graphwriteln(x,y,'');
 	               for count:=1 to player.numitems do
 	                    begin
-	                         if (not(player.item[count].item_type in [potion])) then
+	                         if (not(player.item[count] in [redpotion,greenpotion,bluepotion])) then
 	                              setcolor(cyan)
 	                         else
 	                              setcolor(lightcyan);
@@ -1693,7 +1722,7 @@ begin
 	                         ch:=tempstring[1];
 	                         tempstring:='      ';
 	                         tempstring:=tempstring + ch + '. ';
-	                         tempstring:=tempstring + player.item[count].name;
+	                         tempstring:=tempstring + itemstring(player.item[count]);
 	                         graphwriteln(x,y,tempstring);
 	                    end;
 	               setcolor(lightcyan);
@@ -1711,7 +1740,7 @@ begin
 	                         graphwriteln(x,y,'');
 	                         graphwriteln(x,y,'');
 	                         val(ans,tempint,errcode);
-	                         if (not(player.item[tempint].item_type in [potion])) then
+	                         if (not(player.item[tempint] in [redpotion,greenpotion,bluepotion])) then
 	                              done:=false;
 	                         combatuse(player,tempint,playereffect);
 	                    end;
@@ -1817,8 +1846,8 @@ begin
 	     tempstring:=themonster.name;
 	x:=120-(textwidth(tempstring) DIV 2);
 	graphwriteln(x,y,tempstring);
-	hitroll:=d(20);
-	if ((d(20)>=(themonster.thac0-ac))and(hitroll>1))or(hitroll=20) then
+	hitroll:=roll('1d20');
+	if ((roll('1d20')>=(themonster.thac0-ac))and(hitroll>1))or(hitroll=20) then
 	     begin
 	          tempstring:=themonster.attacktype + ' YOU!';
 	          x:=120-(textwidth(tempstring) DIV 2);
@@ -1925,7 +1954,7 @@ begin
 	               end;
 	          heal:begin
 	                    graphwriteln(x,y,'          is healed');
-	                    themonster.endurance:=themonster.endurance+d(6)+1;
+	                    themonster.endurance:=themonster.endurance+roll('1d6')+1;
 	                    if (themonster.endurance>themonster.endurancemax) then
 	                         themonster.endurance:=themonster.endurancemax;
 	               end;
@@ -1961,7 +1990,7 @@ begin
                             dmg:=roll(dmgroll);
 	               end;
 	         power:begin
-	                    case d(8) of
+	                    case roll('1d8') of
 	                         1..6:begin
 	                                   graphwriteln(x,y,'       tries to cast');
 	                                   graphwriteln(x,y,'      a spell but fails');
@@ -2015,7 +2044,7 @@ begin
                                            dmgroll:='8d8+8';
                                            dmg:=roll(dmgroll);
 	                                   thespell:=fireblast;
-	                                   case d(6) of
+	                                   case roll('1d6') of
 	                                      2:damagetype:='fire';
 	                                      3:begin
 	                                             damagetype:='cold';
@@ -2106,7 +2135,7 @@ begin
 	               dmg:=dmg-themonster.hitdice;
 	          if (playereffect.resistcold) and (damagetype='cold') then
 	               dmg:=dmg-themonster.hitdice;
-	          saveroll:=d(20);
+	          saveroll:=roll('1d20');
 	          if ((saveroll>=player.savingthrow)and(saveroll>1))or(saveroll=20) then
 	               dmg:=dmg DIV 2;
 	          if (dmg<1) then
@@ -2177,12 +2206,12 @@ begin
 	                                   tempint:=(numspells*25)-avgdmg;
 	                                   if (tempint>99) then
 	                                        tempint:=99;
-	                                   if (d(100)<=tempint) then
+	                                   if (roll('1d100')<=tempint) then
 	                                        action:=cast;
 	                              end;
 	                         if (action=cast) then
 	                              begin
-	                                   tempint:=d(numspells);
+	                                   tempint:=random(numspells)+1;
 	                                   case spell[tempint] of
 	                                     courage:if (monstereffect[loop].courage) then
 	                                                  action:=attack;
@@ -2321,7 +2350,7 @@ begin
 	     until (ch in ['f','F','r','R']);
 	     clearcombatmenu;
 	     flee:=(ch in ['r','R']);
-	     if (d(10)<=d(10)) then              {Roll Initiative}
+	     if (roll('1d10')<=roll('1d10')) then              {Roll Initiative}
 	          begin
 	               monsterturn(player,nummonsters,monster,xppool,coinpool,
 	                           playereffect,monstereffect);
@@ -2455,8 +2484,8 @@ begin
 	                    graphwriteln(x,y,'ITEMS');
 	                    for loop:=1 to numitems do
 	                         begin
-	                              x:=midstats(item[loop].name);
-	                              graphwriteln(x,y,item[loop].name);
+	                              x:=midstats(itemstring(item[loop]));
+	                              graphwriteln(x,y,itemstring(item[loop]));
 	                         end;
 	               end
 	          else
@@ -2581,7 +2610,7 @@ end;
 procedure buyequipment(var player:character_t);
 
 var
-	theitem        :    item_t;
+	theitem        :    item;
 	price          :    integer;
 	ans            :    char;
 
@@ -2628,16 +2657,44 @@ begin
 	                    ans:=readarrowkey;
 	               until(ans in ['1'..'9']);
 	               case ans of
-	                    '1':begin
-	                             theitem:=theitem;
-	                             price:=10;
-	                        end;
-	                    '9':begin
-	                             theitem:=theitem;
-	                             price:=5;
-	                        end;
+                        '1':begin
+                        theitem:=sword;
+                        price:=10;
+                        end;
+                        '2':begin
+                        theitem:=shield;
+                        price:=10;
+                        end;
+                        '3':begin
+                        theitem:=axe;
+                        price:=7;
+                        end;
+                        '4':begin
+                        theitem:=chainmail;
+                        price:=40;
+                        end;
+                        '5':begin
+                        theitem:=platemail;
+                        price:=60;
+                        end;
+                        '6':begin
+                        theitem:=dagger;
+                        price:=3;
+                        end;
+                        '7':begin
+                        theitem:=club;
+                        price:=3;
+                        end;
+                        '8':begin
+                        theitem:=staff;
+                        price:=5;
+                        end;
+                        '9':begin
+                        theitem:=hammer;
+                        price:=5;
+                        end;
 	               end;{case}
-	               graphwrite(x,y,theitem.name);
+	               graphwrite(x,y,itemstring(theitem));
 	               graphwrite(x,y,' -- ARE YOU SURE (y/n)');
 	               repeat
 	                    ans:=readarrowkey;
@@ -2679,7 +2736,7 @@ begin
 	               for count:=1 to numitems do
 	                    begin
 	                         str(count,tempstring);
-	                         tempstring:=tempstring + '. ' + item[count].name;
+	                         tempstring:=tempstring + '. ' + itemstring(item[count]);
 	                         graphwriteln(x,y,tempstring);
 	                    end;
 	               graphwriteln(x,y,'Sell which one?');
@@ -2689,12 +2746,31 @@ begin
 	               until (ans in ['1'..tempstring[1]]);
 	               graphwriteln(x,y,'');
 	               val(ans,tempinteger,tempcode);
-	               tempstring:=item[tempinteger].name;
+	               tempstring:=itemstring(item[tempinteger]);
+                   {
 	               price:=item[tempinteger].value DIV 2;
+                   }
+                   case item[tempinteger] of
+                        sword           :price:=5;
+                        shield          :price:=5;
+                        axe             :price:=4;
+                        bluepotion      :price:=50;
+                        redpotion       :price:=50;
+                        greenpotion     :price:=150;
+                        chainmail       :price:=20;
+                        platemail       :price:=30;
+                        dagger          :price:=2;
+                        club            :price:=1;
+                        staff           :price:=2;
+                        hammer          :price:=3;
+                        magicsword      :price:=1500;
+                        magicshield     :price:=1500;
+                        flamewand       :price:=2500;
+                   end; {case}
 	               graphwrite(x,y,'Sell '+ tempstring);
 	               str(price,tempstring);
 	               graphwriteln(x,y,' for ' + tempstring + ' coins? (y/n)');
-	               drawpic(280,(numitems+7)*textheight('M'),item[tempinteger].picfile);
+	               drawpic(280,(numitems+7)*textheight('M'),itempicfile(item[tempinteger]));
 	               repeat
 	                    ans:=readarrowkey;
 	               until(ans in ['y','Y','n','N']);
@@ -2784,7 +2860,7 @@ begin
 	               for count:=1 to numitems do
 	                    begin
 	                         str(count,tempstring);
-	                         tempstring:=tempstring + '. ' + item[count].name;
+	                         tempstring:=tempstring + '. ' + itemstring(item[count]);
 	                         graphwriteln(x,y,tempstring);
 	                    end;
 	               graphwriteln(x,y,'Use which one?');
@@ -2794,16 +2870,16 @@ begin
 	               until (ans in ['1'..tempstring[1]]);
 	               graphwriteln(x,y,'');
 	               val(ans,tempinteger,tempcode);
-	               if not(item[tempinteger].item_type in [potion]) then
+	               if not(item[tempinteger] in [redpotion,greenpotion,bluepotion]) then
 	                    begin
 	                         graphwriteln(x,y,'Cannot be used here!');
 	                    end
 	               else
 	                    begin
-	                         tempstring:=item[tempinteger].name;
+	                         tempstring:=itemstring(item[tempinteger]);
 	                         graphwrite(x,y,tempstring);
 	                         graphwriteln(x,y,' will be used up.  Use? (y/n)');
-	                         drawpic(280,(numitems+7)*textheight('M'),item[tempinteger].picfile);
+	                         drawpic(280,(numitems+7)*textheight('M'),itempicfile(item[tempinteger]));
 	                         repeat
 	                              ans:=readarrowkey;
 	                         until(ans in ['y','Y','n','N']);
@@ -2812,12 +2888,11 @@ begin
 	                                   setcolor(green);
 	                                   cleardevice;
 	                                   settextstyle(sanseri,horizontal,2);
-{ Modify using item_t
 	                                   case item[tempinteger] of
 	                                        bluepotion     :writefile(1,textdir+'blue.txt');
 	                                        redpotion      :begin
 	                                                             writefile(1,textdir+'red.txt');
-	                                                             endurance:=endurance + d(6)+1;
+	                                                             endurance:=endurance + roll('1d6')+1;
 	                                                             if (endurance>endurancemax) then
 	                                                                  endurance:=endurancemax;
 	                                                        end;
@@ -2830,7 +2905,6 @@ begin
 	                                        if (count<>numitems) then
 	                                             item[count]:=item[count + 1];
 	                                   numitems:=numitems - 1;
-}
 	                              end;
 	                    end;
 	               settextstyle(default,horizontal,2);
@@ -2841,9 +2915,7 @@ end;
 procedure magicbuyequipment(var player:character_t);
 
 var
-{ Modify using item_t
 	theitem        :    item;
-}
 	price          :    integer;
 	getring        :    boolean;
 	ans            :    char;
@@ -2881,7 +2953,6 @@ begin
 	                    ans:=readarrowkey;
 	               until(ans in ['1'..'4']);
 	               getring:=false;
-{ Modify using item_t
 	               case ans of
 	                    '1':begin
 	                             theitem:=bluepotion;
@@ -2904,7 +2975,6 @@ begin
 	                    graphwrite(x,y,'Ring of Power')
 	               else
 	                    graphwrite(x,y,itemstring(theitem));
-}
 	               graphwrite(x,y,' -- ARE YOU SURE (y/n)');
 	               repeat
 	                    ans:=readarrowkey;
@@ -2942,11 +3012,9 @@ begin
 	                         end
 	                    else
 	                         begin
-{ Modify using item_t
 	                              numitems:=numitems + 1;
 	                              item[numitems]:=theitem;
 	                              coins:=coins - price;
-}
 	                         end;
 	          end;
 end;
@@ -3227,7 +3295,7 @@ begin
 	                                                 writefile(1,textdir+'007.txt');
 	                              heal:begin
 	                                        writefile(1,textdir+'008.txt');
-	                                        endurance:=endurance + d(6) +1;
+	                                        endurance:=endurance + roll('1d6') +1;
 	                                        if (endurance>endurancemax) then
 	                                             endurance:=endurancemax;
 	                                   end;
@@ -3235,16 +3303,16 @@ begin
 	                                              writefile(1,textdir+'026.txt');
 	   {equal out the unused charge}              charges:=charges+1;
 	                                         end;
-	                              power:case d(20) of
+	                              power:case roll('1d20') of
 	                                  1..3:begin
 	                                            writefile(1,textdir+'009.txt');
-	                                            endurance:=endurance + d(2);
+	                                            endurance:=endurance + roll('1d2');
 	                                            if (endurance>endurancemax) then
 	                                                 endurance:=endurancemax;
 	                                       end;
 	                                  4..6:begin
 	                                            writefile(1,textdir+'010.txt');
-	                                            endurance:=endurance - d(2);
+	                                            endurance:=endurance - roll('1d2');
 	                                       end;
 	                                  7..9:if (area=wilderness) then
 	                                            writefile(1,textdir+'023.txt')
@@ -3392,18 +3460,18 @@ begin
 	               skulldice:=0;
 	               for loop:=1 to 4 do
 	                    begin
-	                         case d(6) of
+	                         case roll('1d6') of
 	                              1:begin
 	                                     blackdice:=blackdice + 1;
-                                             thepicture:='blackdie';
+                                             thepicture:='blackdie.ln1';
 	                                end;
 	                              2,3:begin
 	                                       whitedice:=whitedice + 1;
-                                               thepicture:='whitedie';
+                                               thepicture:='whitedie.ln1';
 	                                  end;
 	                              4,5,6:begin
 	                                         skulldice:=skulldice + 1;
-                                                 thepicture:='skulldie';
+                                                 thepicture:='skulldie.ln1';
 	                                    end;
 	                         end;{case}
 	                         drawpic(loop*115,240,thepicture);
@@ -3489,10 +3557,8 @@ begin
 	                                                  graphwriteln(x,y,'You must decline since you cannot carry anymore.')
 	                                             else
 	                                                  begin
-{ Modify using item_t
 	                                                       numitems:=numitems + 1;
 	                                                       item[numitems]:=greenpotion;
-}
 	                                                  end;
 	                                        end
 	                                   else
@@ -3503,10 +3569,8 @@ begin
 	                                                       graphwriteln(x,y,'You must decline since you cannot carry anymore.')
 	                                                  else
 	                                                       begin
-{ Modify using item_t
 	                                                            numitems:=numitems + 1;
 	                                                            item[numitems]:=bluepotion;
-}
 	                                                       end;
 	                                             end
 	                                        else
@@ -3531,7 +3595,7 @@ begin
 	     begin
 	          coins:=coins - tipprice;
 	          outtextxy(1,140,'You toss Roland a coin and he tells you:  ');
-	          case d(8) of
+	          case roll('1d8') of
 	               1:writefile(240,textdir+'015.txt');
 	               2:writefile(240,textdir+'016.txt');
 	               3:writefile(240,textdir+'017.txt');
@@ -3697,11 +3761,11 @@ begin
 	                    setcolor(cyan);
 	                    coins:=coins - innprice;
 	                    graphwriteln(x,y,'     You sleep the night and gain a little health.');
-	                    endurance:=endurance + d(4);
+	                    endurance:=endurance + roll('1d4');
 	                    if(endurance>endurancemax)then
 	                         endurance:=endurancemax;
 	                    charges:=chargemax;
-	                    if (d(100)<=5) then
+	                    if (roll('1d100')<=5) then
 	                         begin
 	                              graphwriteln(x,y,'');
 	                              graphwriteln(x,y,'');
@@ -3836,7 +3900,7 @@ begin
 	setcolor(lightred);
 	graphwriteln(x,y,'You overhear some gossip...');
 	graphwriteln(x,y,'');
-	case d(8) of
+	case roll('1d8') of
 	   1:writefile(250,textdir+'040.txt');
 	   2:writefile(250,textdir+'041.txt');
 	   3:writefile(250,textdir+'042.txt');
@@ -3942,7 +4006,7 @@ var ans:char;
 
 begin
 	setcolor(lightblue);
-	case d(6) of
+	case roll('1d6') of
 	   1:begin
 	          if not(baltar in player.stages) then
 	               begin
@@ -4074,7 +4138,7 @@ begin
 	          graphwriteln(x,y,'You sit down and have you''re drink.');
 	          player.coins:=player.coins - drinkprice;
 	          graphwriteln(x,y,'');
-	          case d(100) of
+	          case roll('1d100') of
 	              1..20:begin
 	                         writefile(200,textdir+'061.txt');
 	                    end;
@@ -4153,7 +4217,7 @@ begin
 	                    prompt;
 	                    clearesi;
 	                    y:=175;
-	                    if (d(100)<=6) then
+	                    if (roll('1d100')<=6) then
 	                         begin
 	                              writefile(175,textdir+'063.txt');
 	                              prompt;
@@ -4172,7 +4236,7 @@ begin
 	                         begin
 	                              x:=10;
 	                              graphwriteln(x,y,'You enjoy yourselves, but don''t get much rest.');
-	                              player.endurance:=player.endurance + d(2);
+	                              player.endurance:=player.endurance + roll('1d2');
 	                              if (player.endurance>player.endurancemax) then
 	                                   player.endurance:=player.endurancemax;
 	                         end;
@@ -4181,7 +4245,7 @@ begin
 	               begin
 	                    graphwriteln(x,y,'Loud parties and bouts of laughter keep you up half the night,');
 	                    graphwriteln(x,y,'but eventually you get to sleep.');
-	                    player.endurance:=player.endurance + d(3);
+	                    player.endurance:=player.endurance + roll('1d3');
 	                    if (player.endurance>player.endurancemax) then
 	                         player.endurance:=player.endurancemax;
 	               end;
@@ -4195,7 +4259,7 @@ var
 	tempstring     :    string;
 	bet            :    word;
 	errcode        :    integer;
-	roll           :    array[1..2] of integer;
+	die            :    array[1..2] of integer;
 	loop           :    integer;
 	total          :    integer;
 	ans            :    char;
@@ -4244,8 +4308,8 @@ begin
 	          until (ch=' ');
 	          for loop:=1 to 2 do
 	               begin
-	                    roll[loop]:=d(6);
-	                    case roll[loop] of
+	                    die[loop]:=roll('1d6');
+	                    case die[loop] of
                                  1:drawpic(200+((loop-1)*50),200,'die1.ln1');
                                  2:drawpic(200+((loop-1)*50),200,'die2.ln1');
                                  3:drawpic(200+((loop-1)*50),200,'die3.ln1');
@@ -4257,7 +4321,7 @@ begin
 	          setcolor(cyan);
 	          x:=10;
 	          y:=250;
-	          total:=roll[1] + roll[2];
+	          total:=die[1] + die[2];
 	          if (total=2) or (total=12) then
 	               begin
 	                    graphwriteln(x,y,'Sorry, you lose.');
@@ -4278,8 +4342,8 @@ begin
 	          until (ch=' ');
 	          for loop:=1 to 2 do
 	               begin
-	                    roll[loop]:=d(6);
-	                    case roll[loop] of
+	                    die[loop]:=roll('1d6');
+	                    case die[loop] of
                                  1:drawpic(200+((loop-1)*50),300,'die1.ln1');
                                  2:drawpic(200+((loop-1)*50),300,'die2.ln1');
                                  3:drawpic(200+((loop-1)*50),300,'die3.ln1');
@@ -4291,7 +4355,7 @@ begin
 	          setcolor(cyan);
 	          x:=10;
 	          y:=350;
-	          if (total<>(roll[1]+roll[2])) then
+	          if (total<>(die[1]+die[2])) then
 	               begin
 	                    graphwriteln(x,y,'Very unfortunate, you lose.');
 	                    player.coins:=player.coins - bet;
@@ -4308,9 +4372,7 @@ end;
 procedure esi_magic(var player:character_t);
 
 var
-{ Modify using item_t
 	theitem        :    item;
-}
 	price          :    integer;
 	ans            :    char;
 
@@ -4332,7 +4394,6 @@ begin
 	until (ans in ['1'..'4','n','N']);
 	if (ans in ['n','N']) then
 	     exit;
-{ Modify using item_t
 	case ans of
 	     '1':begin
 	              theitem:=redpotion;
@@ -4373,7 +4434,6 @@ begin
 	                   end;
 	         end;
 	end;
-}
 	if (ans in ['1'..'3']) then
 	     begin
 	          if (player.numitems=itemmax) then
@@ -4389,11 +4449,9 @@ begin
 	                    broke;
 	                    exit;
 	               end;
-{ Modify using item_t
 	          player.numitems:=player.numitems+1;
 	          player.item[player.numitems]:=theitem;
 	          player.coins:=player.coins-price;
-}
 	          graphwriteln(x,y,'');
 	          graphwriteln(x,y,'Sold!');
 	          prompt;
@@ -4454,26 +4512,26 @@ begin
 	          graphwriteln(x,y,'Ready.  Set.  Go!  (press space)');
 	          done:=false;
 	          position:=0;
-	          opponent:=d(6)+12;
+	          opponent:=roll('1d6')+12;
 	          repeat
 	               repeat
 	                    ch:=readarrowkey;
 	               until (ch=' ');
 	               case position of
 	                   -1:begin
-	                           if ((d(20)+player.strength-10)>(d(20)+opponent)) then
+	                           if ((roll('1d20')+player.strength-10)>(roll('1d20')+opponent)) then
 	                                position:=0
 	                           else
 	                                position:=-2;
 	                      end;
 	                    0:begin
-	                           if ((d(20)+player.strength)>(d(20)+opponent)) then
+	                           if ((roll('1d20')+player.strength)>(roll('1d20')+opponent)) then
 	                                position:=1
 	                           else
 	                                position:=-1;
 	                      end;
 	                    1:begin
-	                           if ((d(20)+player.strength+10)>(d(20)+opponent)) then
+	                           if ((roll('1d20')+player.strength+10)>(roll('1d20')+opponent)) then
 	                                position:=2
 	                           else
 	                                position:=0;
@@ -4518,7 +4576,7 @@ begin
 	                              graphwriteln(x,y,'''''We don''t like people who bet with no money!''''');
 	                              graphwriteln(x,y,'They attack.');
 	                              prompt;
-	                              nummonsters:=d(4)+2;
+	                              nummonsters:=roll('1d4')+2;
 	                              rollmonsters(monster,nummonsters,'brawler.dat');
 	                              combat(player,nummonsters,monster);
 	                              cleardevice;
@@ -4592,7 +4650,7 @@ begin
 	          setcolor(lightgray);
 	          score[1]:=0;
 	          score[2]:=0;
-	          opponent:=d(6)+12;
+	          opponent:=roll('1d6')+12;
 	          for loop:=1 to 3 do
 	               begin
 	                    clearesi;
@@ -4607,7 +4665,7 @@ begin
 	                    graphwriteln(x,y,'');
 	                    graphwrite(x,y,'He throws...  ');
 	                    setcolor(lightred);
-	                    case (d(20)+opponent) of
+	                    case (roll('1d20')+opponent) of
 	                       38..40:begin
 	                                   graphwriteln(x,y,'BULLSEYE! (20 pts)');
 	                                   score[1]:=score[1] + 20;
@@ -4637,7 +4695,7 @@ begin
 	                         ch:=readarrowkey;
 	                    until (ch=' ');
 	                    setcolor(lightred);
-	                    case (d(20)+player.dexterity) of
+	                    case (roll('1d20')+player.dexterity) of
 	                       38..40:begin
 	                                   graphwriteln(x,y,'BULLSEYE! (20 pts)');
 	                                   score[2]:=score[2] + 20;
@@ -4683,7 +4741,7 @@ begin
 	                              graphwriteln(x,y,'''''Don''t have the money?!''''');
 	                              graphwriteln(x,y,'They attack.');
 	                              prompt;
-	                              nummonsters:=d(6)+2;
+	                              nummonsters:=roll('1d6')+2;
 	                              rollmonsters(monster,nummonsters,'bandit.dat');
 	                              combat(player,nummonsters,monster);
 	                              cleardevice;
@@ -4792,7 +4850,7 @@ begin
                                            drawpic(x,y,'wheel4.ln1');
 	                                   delay(delayvalue);
 	                              until KEYPRESSED;
-	                              ch:=readkey;
+	                              ch:=readarrowkey;
 	                         until (ch=' ');
 	                         y:=350;
 	                         settextstyle(default,horizontal,1);
@@ -4814,7 +4872,7 @@ begin
 	                                   exit;
 	                              end;
 	                         else
-	                              case d(8) of
+	                              case roll('1d8') of
 	                                 1:begin
 	                                        writefile(350,textdir+'068.txt');
                                                 drawpic(165,180,'wheel3.ln1');
@@ -5130,9 +5188,7 @@ begin
 	                                        ch:=tempstring[1];
 	                                        tempstring:='      ';
 	                                        tempstring:=tempstring + ch + '. ';
-{ Modify using item_t
 	                                        tempstring:=tempstring + itemstring(item[loop]);
-}
 	                                        graphwriteln(x,y,tempstring);
 	                                   end;
 	                         graphwriteln(x,y,'     (N)evermind');
@@ -5143,9 +5199,7 @@ begin
 	                         graphwrite(x,y,'You point the ');
 	                         tempstring:=ans;
 	                         val(tempstring,loop,errcode);
-{ Modify using item_t
 	                         tempstring:=itemstring(player.item[loop]);
-}
 	                         graphwrite(x,y,tempstring);
 	                         graphwriteln(x,y,' at the door.');
 	                         graphwriteln(x,y,'It does nothing.');
@@ -5344,7 +5398,7 @@ begin
 	          if (ans in ['Y','y']) then
 	               begin
 	                    player.stages:=player.stages + [treasure];
-	                    player.coins:=player.coins+1000+d(1000);
+	                    player.coins:=player.coins + 1000 + roll('1d1000');
 	               end;
 	          clearmessage;
 	     end;
@@ -5358,7 +5412,7 @@ var
 
 begin
 	tempstring:='';
-	case d(6) of
+	case roll('1d6') of
 	   1:tempstring:='an explosion trap.';
 	   2:tempstring:='a falling block trap.';
 	   3:tempstring:='a gas trap.';
@@ -5371,7 +5425,7 @@ begin
 	homemessage(x,y);
 	settextstyle(default,horizontal,2);
 	setcolor(black);
-	if (d(20)>player.savingthrow) then
+	if (roll('1d20')>player.savingthrow) then
 	     begin
 	          message(x,y,'');
 	          message(x,y,'You are able to avoid');
@@ -5459,10 +5513,8 @@ begin
                             drawpic(x,y,'magicswd.ln1');
 	                    if (player.numitems<itemmax) then
 	                          begin
-{ Modify using item_t
 	                               player.numitems:=player.numitems + 1;
 	                               player.item[player.numitems]:=magicsword;
-}
 	                               setcolor(lightblue);
 	                               graphwriteln(x,y,'     You pick up the magic sword.');
 	                               prompt;
@@ -5477,11 +5529,9 @@ begin
 	                               until(ch in ['n','N','y','Y']);
 	                               if (ch in ['y','Y']) then
 	                                    begin
-{ Modify using item_t
 	                                         dropitem(player);
 	                                         player.numitems:=player.numitems+1;
 	                                         player.item[player.numitems]:=magicsword;
-}
 	                                    end
 	                               else
 	                                    begin
@@ -5544,10 +5594,8 @@ begin
                             drawpic(x,y,'magicshl.ln1');
 	                    if (player.numitems<itemmax) then
 	                          begin
-{ Modify using item_t
 	                               player.numitems:=player.numitems + 1;
 	                               player.item[player.numitems]:=magicshield;
-}
 	                               setcolor(lightblue);
 	                               graphwriteln(x,y,'     You pick up the magic shield.');
 	                               prompt;
@@ -5562,11 +5610,9 @@ begin
 	                               until(ch in ['n','N','y','Y']);
 	                               if (ch in ['y','Y']) then
 	                                    begin
-{ Modify using item_t
 	                                        dropitem(player);
 	                                         player.numitems:=player.numitems+1;
 	                                         player.item[player.numitems]:=magicshield;
-}
 	                                    end
 	                               else
 	                                    begin
@@ -5806,7 +5852,7 @@ begin
 	          begin
 	               drawmaptile(lastx,lasty,dmap);
 	               case dcode[px,py] of
-	                    0:if (d(100)<=dungeonchance) then
+	                    0:if (roll('1d100')<=dungeonchance) then
 	                           begin
 	                                encounter(monsterchart);
 	                                if not(GAMEOVER) then screensetup;
@@ -5933,10 +5979,8 @@ begin
                                       drawpic(x,y,'flamewnd.ln1');
 	                              if (player.numitems<itemmax) then
 	                                   begin
-{ Modify using item_t
 	                                        player.numitems:=player.numitems + 1;
 	                                        player.item[player.numitems]:=flamewand;
-}
 	                                        setcolor(lightblue);
 	                                        graphwriteln(x,y,'     You pick up the Flame Wand as your own.');
 	                                        prompt;
@@ -5951,11 +5995,9 @@ begin
 	                                        until(ch in ['n','N','y','Y']);
 	                                        if (ch in ['y','Y']) then
 	                                             begin
-{ Modify using item_t
 	                                                 dropitem(player);
 	                                                  player.numitems:=player.numitems+1;
 	                                                  player.item[player.numitems]:=flamewand;
-}
 	                                             end
 	                                        else
 	                                             begin
@@ -5999,7 +6041,7 @@ begin
 	settextstyle(triplex,horizontal,6);
 	graphwriteln(x,y,'');
 	repeat
-	    setcolor(d(15));
+	    setcolor(roll('1d15'));
 	    outtextxy(x,y,'     crystal shard');
 	until Keypressed;
 	prompt;
@@ -6317,13 +6359,13 @@ begin
 	          begin
 	               drawmaptile(lastx,lasty,map);
 	               case code[px,py] of
-	                    0:if (d(100)<=wildchance) then
+	                    0:if (roll('1d100')<=wildchance) then
 	                           begin
 	                                encounter(wildchart);
 	                                if not(GAMEOVER) then
 	                                   surfacescreen(map);
 	                           end;
-	                    2:if (d(100)<=roadchance) then
+	                    2:if (roll('1d100')<=roadchance) then
 	                           begin
 	                                encounter(wildchart);
 	                                if not(GAMEOVER) then
@@ -6411,7 +6453,7 @@ begin
 	          'S','s':startgame(player);
 	          'L','l':loadgame(player);
 	          'Q','q':begin
-	                     closegraph;
+	                     closescreen;
 	                     halt;
 	                  end;
 	     end;{case}

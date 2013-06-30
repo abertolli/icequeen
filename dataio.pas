@@ -30,8 +30,9 @@ type
 
 	location	= (town,wilderness,dungeon);
 
+	{
     item		= (weapon,shield,armor,potion);
-	
+
 	item_t		= record
 		name		: string;
 		item_type	: item;
@@ -42,6 +43,11 @@ type
 	end;
 
 	itemarray	= array[1..itemmax] of item_t;
+    }
+
+    item        = (sword,shield,axe,bluepotion,redpotion,greenpotion,chainmail,platemail,dagger,club,staff,hammer,magicsword,magicshield,flamewand);
+
+	itemarray	= array[1..itemmax] of item;
 	
 	character_t	= record
 		name		: string;
@@ -98,10 +104,84 @@ type
 	end;
 
 
+function itempicfile(theitem:item):string;
+function spellstring(thespell:spell):string;
+function itemstring(theitem:item):string;
 function exist(dosname:string):boolean;
 
 IMPLEMENTATION
 
+{---------------------------------------------------------------------------}
+function itempicfile(theitem:item):string;
+
+begin
+    case theitem of
+        sword           :   itempicfile:='sword.ln1';
+        shield          :   itempicfile:='shield.ln1';
+        axe             :   itempicfile:='axe.ln1';
+        bluepotion      :   itempicfile:='potion1.ln1';
+        redpotion       :   itempicfile:='potion2.ln1';
+        greenpotion     :   itempicfile:='potion3.ln1';
+        chainmail       :   itempicfile:='chain.ln1';
+        platemail       :   itempicfile:='plate.ln1';
+        dagger          :   itempicfile:='dagger.ln1';
+        club            :   itempicfile:='club.ln1';
+        staff           :   itempicfile:='staff.ln1';
+        hammer          :   itempicfile:='hammer.ln1';
+        magicsword      :   itempicfile:='magicswd.ln1';
+        magicshield     :   itempicfile:='magicshl.ln1';
+        flamewand       :   itempicfile:='flamewnd.ln1';
+    else
+        itempicfile:='blank.ln1';
+    end;{case}
+
+end;
+
+{---------------------------------------------------------------------------}
+function spellstring(thespell:spell):string;
+
+begin
+	case thespell of
+	     icestorm       :   spellstring:='ice storm';
+	     fireblast      :   spellstring:='fire blast';
+	     web            :   spellstring:='web';
+	     callwild       :   spellstring:='call wild';
+	     heal           :   spellstring:='heal';
+	     courage        :   spellstring:='courage';
+	     freeze         :   spellstring:='freeze';
+	     obliterate     :   spellstring:='obliterate';
+	     icicle         :   spellstring:='icicle';
+	     power          :   spellstring:='power';
+	     shatter        :   spellstring:='shatter';
+	     glacier        :   spellstring:='glacier';
+	     dragonbreath   :   spellstring:='dragon breath';
+	     resistfire     :   spellstring:='resist fire';
+	     resistcold     :   spellstring:='resist cold';
+	end;{case}
+end;
+
+{---------------------------------------------------------------------------}
+function itemstring(theitem:item):string;
+
+begin
+    case theitem of
+        sword           :   itemstring:='sword';
+        shield          :   itemstring:='shield';
+        axe             :   itemstring:='axe';
+        bluepotion      :   itemstring:='blue potion';
+        redpotion       :   itemstring:='red potion';
+        greenpotion     :   itemstring:='green potion';
+        chainmail       :   itemstring:='chain mail';
+        platemail       :   itemstring:='plate mail';
+        dagger          :   itemstring:='dagger';
+        club            :   itemstring:='club';
+        staff           :   itemstring:='staff';
+        hammer          :   itemstring:='hammer';
+        magicsword      :   itemstring:='magic sword';
+        magicshield     :   itemstring:='magic shield';
+        flamewand       :   itemstring:='flame wand';
+    end;{case}
+end;
 {--------------------------------------------------------------------------}
 function exist(dosname:string) : boolean;
 
