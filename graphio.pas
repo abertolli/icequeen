@@ -18,14 +18,6 @@ const
     displayheight   =   480;
     colordepth      =   32;
 
-
-    {legacy text identifiers}
-    default        =    0;
-    triplex        =    1;
-    small          =    2;
-    sanseri        =    3;
-    gothic         =    4;
-
     {legacy fill patterns - not supported}
     solidfill       =   1;
 
@@ -60,11 +52,11 @@ var
     b               :   color_index;
     fgcolor         :   word;
     bgcolor         :   word;
-    textfont        :   word;
     textsize        :   word;
     cursorx         :   word;
     cursory         :   word;
     fontpath        :   string;
+    fontfile        :   string;
     fillpattern     :   word;
     fillcolor       :   word;
 
@@ -86,7 +78,7 @@ function getmaxy:smallint;
 function keypressed:boolean;
 procedure delay(ms:word);
 
-procedure setfont(font,charsize:word);
+procedure setfont(font:string;charsize:word);
 function readarrowkey:char;
 procedure prompt;
 procedure homecursor(var cursorx,cursory:integer);
@@ -140,31 +132,18 @@ begin
     getcolor:=fgcolor;
 end;
 {--------------------------------------------------------------------------}
-procedure setfont(font,charsize:word);
-
-begin
-    if (font in [default..gothic]) then textfont:=font;
-    if (charsize in [0..8]) then textsize:=charsize;
-end;
-{--------------------------------------------------------------------------}
-function getSDLfontfile     :   string;
+procedure setfont(font:string;charsize:word);
 
 var
-    fontfile        :   string;
+    fullpath        :   string;
 
 begin
-
-    case textfont of
-        triplex     :fontfile:='triplex.ttf';
-        small       :fontfile:='small.ttf';
-        sanseri     :fontfile:='sanseri.ttf';
-        gothic      :fontfile:='gothic.ttf';
+    fullpath:=fontpath+'/'+font;
+    if exist(fullpath) then
+        fontfile:=fullpath
     else
-        fontfile:='default.ttf';
-    end;
-    if not(exist(fontfile)) then fontfile:=fontpath+'/'+fontfile;
-    getSDLfontfile:=fontfile;
-
+        writeln('Warning:  '+fullpath+' not found');
+    if (charsize in [0..8]) then textsize:=charsize;
 end;
 {--------------------------------------------------------------------------}
 function getSDLfontsize     :   word;
@@ -185,8 +164,8 @@ procedure openFont(var fontface:pointer);
 {Starts TTF and returns the appropriate font from setfont }
 
 var
-    fontfile        :   string;
     fontsize        :   word;
+    s               :   string; {temporary}
 
 begin
     if (TTF_init < 0) then
@@ -195,9 +174,8 @@ begin
         halt(1);
     end;
     fontsize:=getSDLfontsize;
-    fontfile:=getSDLfontfile;
-    fontfile:=fontfile+#0#0;      {Some trickery because they want a pChar}
-    fontface:=TTF_OpenFont(@fontfile[1],fontsize);
+    s:=fontfile+#0#0;      {Some trickery because they want a pChar}
+    fontface:=TTF_OpenFont(@s[1],fontsize);
     if (fontface = nil) then
     begin
         writeln('Error: error opening font. '+fontfile);
@@ -511,7 +489,7 @@ begin
     begin
         {Write the error to the screen}
         setcolor(lightblue);
-        setfont(default,1);
+        setfont('default.ttf',1);
         outtextxy(beginx,beginy,errormsg);
     end;
 
@@ -864,8 +842,8 @@ Begin {main}
     init_palette;
     fgcolor:=white;
     bgcolor:=black;
-    textfont:=default;
-    textsize:=default;
     fontpath:='fonts';
+    fontfile:=fontpath+'/default.ttf';
+    textsize:=1;
 
 End.  {main}
