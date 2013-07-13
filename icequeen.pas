@@ -186,17 +186,21 @@ procedure titlescreen;
 
 {Ice Queen title screen}
 
+var
+    center      :   integer;
+
 begin
-	settextstyle(gothic,horizontal,6);
-	setcolor(blue);
-	outtextxy(143,383,'The Ice Queen');
-	setcolor(white);
-	outtextxy(140,380,'The Ice Queen');
-	settextstyle(default,horizontal,2);
-        drawpic(120,10,'tcastle.ln1');
-	settextstyle(default,horizontal,1);
-	setcolor(lightgray);
-	prompt;
+    center:=getmaxx DIV 2;
+    settextstyle(gothic,horizontal,8);
+    setcolor(blue);
+    centerwrite(center+3,383,'The Ice Queen');
+    setcolor(white);
+    centerwrite(center,380,'The Ice Queen');
+    settextstyle(default,horizontal,2);
+    drawpic(120,10,'tcastle.ln1');
+    settextstyle(default,horizontal,2);
+    setcolor(lightgray);
+    prompt;
 end;
 {---------------------------------------------------------------------------}
 procedure introduction;
