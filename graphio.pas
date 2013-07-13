@@ -72,7 +72,6 @@ var
 function getpixel(x,y:smallint):word;
 procedure setcolor(color:integer);
 function getcolor:byte;
-procedure settextstyle(font,charsize:word);
 procedure outtextxy(x,y:word;s:string);
 function textwidth(s:string):word;
 function textheight(s:string):word;
@@ -87,6 +86,7 @@ function getmaxy:smallint;
 function keypressed:boolean;
 procedure delay(ms:word);
 
+procedure setfont(font,charsize:word);
 function readarrowkey:char;
 procedure prompt;
 procedure homecursor(var cursorx,cursory:integer);
@@ -140,7 +140,7 @@ begin
     getcolor:=fgcolor;
 end;
 {--------------------------------------------------------------------------}
-procedure settextstyle(font,charsize:word);
+procedure setfont(font,charsize:word);
 
 begin
     if (font in [default..gothic]) then textfont:=font;
@@ -182,7 +182,7 @@ begin
 end;
 {--------------------------------------------------------------------------}
 procedure openFont(var fontface:pointer);
-{Starts TTF and returns the appropriate font from settextstyle }
+{Starts TTF and returns the appropriate font from setfont }
 
 var
     fontfile        :   string;
@@ -511,7 +511,7 @@ begin
     begin
         {Write the error to the screen}
         setcolor(lightblue);
-        settextstyle(default,1);
+        setfont(default,1);
         outtextxy(beginx,beginy,errormsg);
     end;
 
