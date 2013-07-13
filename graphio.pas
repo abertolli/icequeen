@@ -93,7 +93,7 @@ procedure delay(ms:word);
 
 function readarrowkey:char;
 procedure prompt;
-procedure homecursor(var cursorx,cursory:word);
+procedure homecursor(var cursorx,cursory:integer);
 procedure graphwrite(var x,y:integer;s:string);
 procedure graphwriteln(var x,y:integer;s:string);
 procedure graphread(var x,y:integer;var s:string);
@@ -394,7 +394,7 @@ begin
      setcolor(origcolor);
 end;
 {--------------------------------------------------------------------------}
-procedure homecursor(var cursorx,cursory:word);
+procedure homecursor(var cursorx,cursory:integer);
 
 {Sets x and y to the home position.}
 
@@ -453,7 +453,7 @@ begin
                end;
      until(ch=#13);
 end;
-{-------------------------------------------------------------------------}
+{--------------------------------------------------------------------------}
 procedure drawpicturebyline(beginx,beginy:integer;dosname:string);
 
 {dosname            =    name of the file, including extention
@@ -544,7 +544,7 @@ begin
                     begin
                          prompt;
                          cleardevice;
-                         homecursor(cursorx,cursory);
+                         homecursor(x,y);
                          numlines:=(screen^.h+1-y) DIV (textheight('M')+2) - 1;
                     end;
           end;
