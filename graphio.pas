@@ -535,25 +535,32 @@ var
      lineoftext     :    string[100];
      x              :    integer;
      y              :    integer;
+     doprompt       :    boolean;
 
 begin
      x:=10;
      y:=beginy;
+     doprompt:=false;
      numlines:=(screen^.h+1-y) DIV (textheight('M')+2) - 1;
      assign(pasfile,dosname);
      reset(pasfile);
      while not eof(pasfile) do
           begin
                readln(pasfile,lineoftext);
-               graphwriteln(x,y,lineoftext);
-               numlines:=numlines - 1;
-               if(numlines=0)then
-                    begin
-                         prompt;
-                         cleardevice;
-                         homecursor(x,y);
-                         numlines:=(screen^.h+1-y) DIV (textheight('M')+2) - 1;
-                    end;
+               doprompt:=(pos('{prompt}',lineoftext) = 1);
+               if not(doprompt) then
+               begin
+                    graphwriteln(x,y,lineoftext);
+                    numlines:=numlines - 1;
+               end;
+               doprompt:=( doprompt or (numlines=0));
+               if doprompt then
+               begin
+                    prompt;
+                    cleardevice;
+                    homecursor(x,y);
+                    numlines:=(screen^.h+1-y) DIV (textheight('M')+2) - 1;
+               end;
           end;
      close(pasfile);
 end;

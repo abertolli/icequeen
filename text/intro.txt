@@ -15,8 +15,7 @@ for disease and depression to set in among the people.
 from the north.  You know the cause of these happenings all
 too well...
 
-
-
+{prompt}
    You are summoned by the Council of Wizards.  Most of them
 are stricken with disease and unable to meet you.  The young
 Gandalph still looks well and he greets you.  "As you know," he
@@ -28,8 +27,6 @@ over the Ice Queen so many years ago.  "Since you have
 battled her before, we now ask for your help in defeating the
 Ice Queen and saving this noble city from her raging blizzard
 that now approaches from the north."
-
-
 
    Of course, being the great person you are, you accept
 the mission and the reward.  What reward?  Why fame and

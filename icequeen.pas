@@ -203,39 +203,6 @@ begin
     prompt;
 end;
 {---------------------------------------------------------------------------}
-procedure introduction;
-
-{Write the introduction to the screen.}
-
-begin
-	cleardevice;
-	homecursor(x,y);
-	settextstyle(sanseri,horizontal,2);
-	setcolor(lightblue);
-	writefile(y,textdir+'intro.txt');
-	prompt;
-end;
-{---------------------------------------------------------------------------}
-procedure menuscreen;
-
-{Header for the main menu.}
-
-begin
-	cleardevice;
-	homecursor(x,y);
-	settextstyle(triplex,horizontal,5);
-	setcolor(lightgray);
-	graphwriteln(x,y,'       The Ice Queen');
-	graphwriteln(x,y,'');
-	settextstyle(default,horizontal,1);
-	setcolor(lightmagenta);
-	graphwriteln(x,y,'                                Welcome');
-	graphwriteln(x,y,'                       Please make your selection.');
-	settextstyle(default,horizontal,3);
-	drawpic(60,225,'msoldier.ln1');
-	drawpic(460,240,'landon.ln1');
-end;
-{---------------------------------------------------------------------------}
 procedure startgame(var player:character_t);
 
 {Starts you off by creating a character.}
@@ -6380,10 +6347,13 @@ var
 begin
     center:=getmaxx DIV 2;
 	repeat
-	     menuscreen;
+	     cleardevice;
+	     settextstyle(gothic,horizontal,8);
+	     setcolor(lightgray);
+	     centerwrite(center,10,'The Ice Queen');
 	     ans:='I';
 	     repeat
-	          settextstyle(small,horizontal,10);
+	          settextstyle(small,horizontal,5);
 	          setcolor(lightblue);
 	          centerwrite(center,120,'Introduction');
 	          centerwrite(center,180,'Start');
@@ -6413,8 +6383,16 @@ begin
 	          end;
 	          if ((ch=#13) and (ans in ['I']) or (ch in ['i','I']))then
               begin
-	                introduction;
-	                menuscreen;
+	                cleardevice;
+	                homecursor(x,y);
+	                settextstyle(small,horizontal,2);
+	                setcolor(lightblue);
+	                writefile(y,textdir+'intro.txt');
+	                prompt;
+	                cleardevice;
+	                settextstyle(gothic,horizontal,8);
+	                setcolor(lightgray);
+	                centerwrite(center,10,'The Ice Queen');
 	          end;
 	     until ((ch=#13) and (ans in ['S','L','Q'])) or
 	           (ch in ['s','S','l','L','q','Q']);
