@@ -198,7 +198,7 @@ begin
     centerwrite(center,380,'The Ice Queen');
     settextstyle(default,horizontal,2);
     drawpic(120,10,'tcastle.ln1');
-    settextstyle(default,horizontal,2);
+    settextstyle(small,horizontal,2);
     setcolor(lightgray);
     prompt;
 end;
