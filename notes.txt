@@ -1,2 +1,0 @@
-Might need to go through graphio and see if everything in there should be in there.  For example, DrawPic always tries to draw a bmp file.  However, it could be smart and base it on file extension.
-
