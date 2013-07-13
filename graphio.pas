@@ -26,9 +26,6 @@ const
     sanseri        =    3;
     gothic         =    4;
 
-    horizontal     =    0;
-    vertical       =    1;
-
     {legacy fill patterns - not supported}
     solidfill       =   1;
 
@@ -64,7 +61,6 @@ var
     fgcolor         :   word;
     bgcolor         :   word;
     textfont        :   word;
-    textdirection   :   word;
     textsize        :   word;
     cursorx         :   word;
     cursory         :   word;
@@ -76,7 +72,7 @@ var
 function getpixel(x,y:smallint):word;
 procedure setcolor(color:integer);
 function getcolor:byte;
-procedure settextstyle(font,direction,charsize:word);
+procedure settextstyle(font,charsize:word);
 procedure outtextxy(x,y:word;s:string);
 function textwidth(s:string):word;
 function textheight(s:string):word;
@@ -144,12 +140,10 @@ begin
     getcolor:=fgcolor;
 end;
 {--------------------------------------------------------------------------}
-procedure settextstyle(font,direction,charsize:word);
+procedure settextstyle(font,charsize:word);
 
 begin
     if (font in [default..gothic]) then textfont:=font;
-    if (direction in [horizontal..vertical]) then textdirection:=direction;
-    if (direction = vertical) then writeln('Warning: vertical text not supported.');
     if (charsize in [0..8]) then textsize:=charsize;
 end;
 {--------------------------------------------------------------------------}
@@ -517,7 +511,7 @@ begin
     begin
         {Write the error to the screen}
         setcolor(lightblue);
-        settextstyle(default,horizontal,1);
+        settextstyle(default,1);
         outtextxy(beginx,beginy,errormsg);
     end;
 
@@ -871,7 +865,6 @@ Begin {main}
     fgcolor:=white;
     bgcolor:=black;
     textfont:=default;
-    textdirection:=default;
     textsize:=default;
     fontpath:='fonts';
 

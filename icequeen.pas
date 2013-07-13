@@ -122,7 +122,7 @@ begin
       begin
          previouscolor:=getcolor;
          setcolor(lightblue);
-         settextstyle(small,horizontal,1);
+         settextstyle(small,1);
          outtextxy(beginx,beginy,dosname);
 	 setcolor(previouscolor);
       end
@@ -191,14 +191,14 @@ var
 
 begin
     center:=getmaxx DIV 2;
-    settextstyle(gothic,horizontal,8);
+    settextstyle(gothic,8);
     setcolor(blue);
     centerwrite(center+3,383,'The Ice Queen');
     setcolor(white);
     centerwrite(center,380,'The Ice Queen');
-    settextstyle(default,horizontal,2);
+    settextstyle(default,2);
     drawpic(120,10,'tcastle.ln1');
-    settextstyle(small,horizontal,2);
+    settextstyle(small,2);
     setcolor(lightgray);
     prompt;
 end;
@@ -224,7 +224,7 @@ var
 	ans            :    char;
 
 begin
-	settextstyle(sanseri,horizontal,2);
+	settextstyle(sanseri,2);
 	repeat
 	     cleardevice;
 	     homecursor(x,y);
@@ -303,10 +303,10 @@ begin
 	                  graphwriteln(x,y,tempstring);
 	                  setcolor(white);
 	                  graphwriteln(x,y,'');
-	                  settextstyle(small,horizontal,4);
+	                  settextstyle(small,4);
 	                  graphwriteln(x,y,'Use the arrow keys.');
 	                  graphwriteln(x,y,'Press <Enter> when done.');
-	                  settextstyle(sanseri,horizontal,2);
+	                  settextstyle(sanseri,2);
 	                  validchange:=false;
 	                  repeat
 	                     ch:=readarrowkey;
@@ -395,16 +395,16 @@ begin
 	     cleardevice;
 	     homecursor(x,y);
 	     setcolor(lightgray);
-	     settextstyle(sanseri,horizontal,3);
+	     settextstyle(sanseri,3);
 	     graphwriteln(x,y,'[default: '+savedefault+']');
 	     graphwriteln(x,y,'');
-	     settextstyle(sanseri,horizontal,4);
+	     settextstyle(sanseri,4);
 	     graphwrite(x,y,'Enter File Name: ');
 	     setcolor(lightblue);
 	     graphread(x,y,dosname);
 	     if (dosname='') then
 	          dosname:=savedefault;
-	     settextstyle(sanseri,horizontal,5);
+	     settextstyle(sanseri,5);
 	     graphwriteln(x,y,'');
 	     graphwriteln(x,y,'');
 	     setcolor(lightgray);
@@ -421,7 +421,7 @@ begin
 	          begin
 	               setcolor(red);
 	               graphwriteln(x,y,'  Sorry, file does not exist.');
-	               settextstyle(sanseri,horizontal,3);
+	               settextstyle(sanseri,3);
 	               setcolor(lightgray);
 	               x:=10;
 	               y:=300;
@@ -635,7 +635,7 @@ var
 begin
 	cleardevice;
 	homecursor(x,y);
-	settextstyle(sanseri,horizontal,3);
+	settextstyle(sanseri,3);
 	with player do
 	     if (numitems>0) then
 	          begin
@@ -717,13 +717,13 @@ begin
 	     with player do
 	          begin
 	               drawpic(20,20,picfile);
-	               settextstyle(triplex,horizontal,4);
+	               settextstyle(triplex,4);
 	               setcolor(white);
 	               x:=240;
 	               y:=25;
 	               graphwriteln(x,y,name);
 	               graphwriteln(x,y,'');
-	               settextstyle(sanseri,horizontal,2);
+	               settextstyle(sanseri,2);
 	               x:=200;
 	               str(level,tempstring);
 	               tempstring:='level: ' + tempstring;
@@ -804,7 +804,7 @@ begin
 	                    end;
 	               if (ring in stages) then
 	                    begin
-	                         settextstyle(sanseri,horizontal,1);
+	                         settextstyle(sanseri,1);
 	                         graphwritelncol3(x,y,'');
 	                         str(charges,tempstring);
 	                         tempstring:='Ring Charges: ' + tempstring;
@@ -814,7 +814,7 @@ begin
 	                    end;
 	          end;
 	     setcolor(lightgreen);
-	     settextstyle(triplex,horizontal,3);
+	     settextstyle(triplex,3);
 	     y:=420;
 	     x:=320 - (textwidth('(D)rop or (E)xit') DIV 2);
 	     graphwriteln(x,y,'(D)rop or (E)xit');
@@ -837,9 +837,9 @@ var
 begin
 	cleardevice;
 	setcolor(darkgray);
-	settextstyle(gothic,horizontal,6);
+	settextstyle(gothic,6);
 	outtextxy(1,80,'      You have died...');
-	settextstyle(sanseri,horizontal,8);
+	settextstyle(sanseri,8);
 	repeat
 	     setcolor(roll('1d15'));
 	     outtextxy(1,240,'   GAME OVER');
@@ -939,7 +939,7 @@ var ch:char;
 
 begin
 	y:=450;
-	settextstyle(default,horizontal,1);
+	settextstyle(default,1);
 	graphwriteln(x,y,'       <press space>');
 	ch:=readarrowkey;
 end;
@@ -1034,7 +1034,7 @@ var
 
 begin
 	cleardevice;
-	settextstyle(default,horizontal,1);
+	settextstyle(default,1);
 
 	{draw the monsters & write names}
 	row1width:=(nummonsters * 120) + ((nummonsters - 1) * spacing);
@@ -1084,7 +1084,7 @@ begin
 	                    x:=x+120+spacing;
 	               end;
 	     end;
-	settextstyle(sanseri,horizontal,1);
+	settextstyle(sanseri,1);
 	clearcombatmenu;           {Create the combat menu window on the left}
 	combatstats(player);       {Create the combat stats window on the right}
 	x:=(640 DIV 2) - 60;   {Draw the player in the center}
@@ -1106,7 +1106,7 @@ var
 
 begin
 	clearcombatmenu;
-	settextstyle(sanseri,horizontal,1);
+	settextstyle(sanseri,1);
 	y:=300;
 	graphwriteln(x,y,'');
 	ac:=themonster.armorclass;
@@ -1278,9 +1278,9 @@ begin
 	                    player.endurance:=player.endurance+roll('1d6')+1;
 	                    if (player.endurance>player.endurancemax) then
 	                         player.endurance:=player.endurancemax;
-	                    settextstyle(sanseri,horizontal,1);
+	                    settextstyle(sanseri,1);
 	                    combatstats(player);
-	                    settextstyle(default,horizontal,1);
+	                    settextstyle(default,1);
 	               end;
 	       courage:begin
 	                    if not(playereffect.courage) then
@@ -1608,7 +1608,7 @@ begin
 	done:=false;
 	repeat
 	     clearcombatmenu;
-	     settextstyle(sanseri,horizontal,1);
+	     settextstyle(sanseri,1);
 	     y:=300;
 	     graphwriteln(x,y,'');
 	     graphwriteln(x,y,'     (A)ttack');
@@ -1634,7 +1634,7 @@ begin
 	        'c','C':action:=cast;
 	     end;{case}
 	     clearcombatmenu;
-	     settextstyle(default,horizontal,1);
+	     settextstyle(default,1);
 	     y:=300;
 	     graphwriteln(x,y,'');
 	     graphwriteln(x,y,'');
@@ -1784,7 +1784,7 @@ var
 	hitroll   :    integer;
 
 begin
-	settextstyle(default,horizontal,1);
+	settextstyle(default,1);
 	ac:=player.armorclass;
 	if (playereffect.glacier) and (ac>4) then
 	     ac:=4;
@@ -1855,7 +1855,7 @@ var
 	saveroll       :    integer;
 
 begin
-	settextstyle(default,horizontal,1);
+	settextstyle(default,1);
 	y:=340;
 	if (nummonsters>1) then
 	     begin
@@ -2127,7 +2127,7 @@ var
 
 begin
 	y:=300;
-	settextstyle(sanseri,horizontal,1);
+	settextstyle(sanseri,1);
 	setcolor(lightcyan);
 	clearcombatmenu;
 	graphwriteln(x,y,'');
@@ -2207,9 +2207,9 @@ begin
 	                    monsterattack(player,loop,monster[loop],
 	                                  playereffect);
 	               end;
-	          settextstyle(sanseri,horizontal,1);
+	          settextstyle(sanseri,1);
 	          combatstats(player);
-	          settextstyle(default,horizontal,1);
+	          settextstyle(default,1);
 	          combatmenuprompt;
 	          if (player.endurance=0) then
 	             begin
@@ -2244,7 +2244,7 @@ procedure writeflee;
 
 begin
 	setcolor(lightcyan);
-	settextstyle(sanseri,horizontal,1);
+	settextstyle(sanseri,1);
 	outtextxy(40,360,'  You run away...');
 end;
 {---------------------------------------------------------------------------}
@@ -2288,7 +2288,7 @@ begin
 	     calcstats(player);
 	     combatscreen(player,nummonsters,monster);
 	     setcolor(lightcyan);
-	     settextstyle(sanseri,horizontal,3);
+	     settextstyle(sanseri,3);
 	     y:=300;
 	     graphwriteln(x,y,'');
 	     graphwriteln(x,y,'      (F)ight');
@@ -2345,7 +2345,7 @@ begin
 	          experience:=experience + xppool;
 	          coins:=coins + coinpool;
 	          setcolor(white);
-	          settextstyle(default,horizontal,1);
+	          settextstyle(default,1);
 	          y:=460;
 	          graphwriteln(x,y,'');
 	          graphwrite(x,y,'You gain:');
@@ -2417,12 +2417,12 @@ begin
 	setcolor(lightred);
 	with player do
 	     begin
-	          settextstyle(sanseri,horizontal,2);
+	          settextstyle(sanseri,2);
 	          tempstring:=name;
 	          while (textwidth(tempstring)>120) do
 	               delete(tempstring,length(tempstring),1);
 	          outtextxy(midstats(tempstring),50,tempstring);
-	          settextstyle(default,horizontal,1);
+	          settextstyle(default,1);
 	          outtextxy(midstats('ENDURANCE'),80,'ENDURANCE');
 	          str(endurance,tempstring);
 	          thestring:=tempstring;
@@ -2489,7 +2489,7 @@ procedure surfacemessage;
 begin
 	clearmessage;
 	homemessage(x,y);
-	settextstyle(default,horizontal,2);
+	settextstyle(default,2);
 	setcolor(black);
 	message(x,y,' Use arrow keys or keypad to move');
 	message(x,y,'');
@@ -2511,10 +2511,10 @@ begin
 	cleardevice;
 	homecursor(x,y);
 	setcolor(lightgray);
-	settextstyle(sanseri,horizontal,3);
+	settextstyle(sanseri,3);
 	graphwriteln(x,y,'[default: '+savedefault+']');
 	graphwriteln(x,y,'');
-	settextstyle(sanseri,horizontal,4);
+	settextstyle(sanseri,4);
 	graphwrite(x,y,'Enter Save File Name: ');
 	setcolor(lightblue);
 	graphread(x,y,dosname);
@@ -2545,7 +2545,7 @@ begin
 	          graphwriteln(x,y,'');
 	          graphwriteln(x,y,'');
 	          graphwriteln(x,y,'Saved.');
-	          settextstyle(default,horizontal,2);
+	          settextstyle(default,2);
 	          prompt;
 	     end;
 end;
@@ -2553,9 +2553,9 @@ end;
 procedure broke;
 
 begin
-	settextstyle(sanseri,horizontal,5);
+	settextstyle(sanseri,5);
 	outtextxy(1,200,'  You do not have the funds!!');
-	settextstyle(default,horizontal,2);
+	settextstyle(default,2);
 	prompt;
 end;
 {---------------------------------------------------------------------------}
@@ -2568,7 +2568,7 @@ var
 
 begin
 	setcolor(black);
-	settextstyle(triplex,horizontal,3);
+	settextstyle(triplex,3);
 	outtextxy(10,420,'               (B)uy, (S)ell, or (E)xit');
 	setcolor(white);
 	with player do
@@ -2576,12 +2576,12 @@ begin
 	          begin
 	               setcolor(lightgray);
 	               outtextxy(10,420,'  Sorry, but you don''t have room in your pack!');
-	               settextstyle(default,horizontal,2);
+	               settextstyle(default,2);
 	               prompt;
 	          end
 	     else
 	          begin
-	               settextstyle(default,horizontal,1);
+	               settextstyle(default,1);
 	               outtextxy(120,160,'(1) SWORD');
 	               outtextxy(120,170,'   10 coins');
 	               outtextxy(120,260,'(2) SHIELD');
@@ -2600,7 +2600,7 @@ begin
 	               outtextxy(420,270,'    5 coins');
 	               outtextxy(420,360,'(9) HAMMER OF WAR');
 	               outtextxy(420,370,'    5 coins');
-	               settextstyle(sanseri,horizontal,2);
+	               settextstyle(sanseri,2);
 	               setcolor(lightgray);
 	               x:=10;
 	               y:=420;
@@ -2678,7 +2678,7 @@ var
 begin
 	cleardevice;
 	homecursor(x,y);
-	settextstyle(sanseri,horizontal,3);
+	settextstyle(sanseri,3);
 	with player do
 	     if (numitems>0) then
 	          begin
@@ -2745,18 +2745,18 @@ var
 begin
 	repeat
 	     cleardevice;
-	     settextstyle(gothic,horizontal,5);
+	     settextstyle(gothic,5);
 	     homecursor(x,y);
 	     setcolor(darkgray);
 	     outtextxy(x+3,y+3,'    Ye Olde Equipment Shop');
 	     setcolor(lightgray);
 	     outtextxy(x,y,'    Ye Olde Equipment Shop');
 	     graphwriteln(x,y,'');
-	     settextstyle(triplex,horizontal,3);
+	     settextstyle(triplex,3);
 	     y:=420;
 	     graphwriteln(x,y,'               (B)uy, (S)ell, or (E)xit');
 	     str(player.coins,tempstring);
-	     settextstyle(default,horizontal,1);
+	     settextstyle(default,1);
 	     setcolor(white);
 	     outtextxy(240,400,('You have ' + tempstring + ' coins'));
 
@@ -2793,14 +2793,14 @@ var
 begin
 	cleardevice;
 	homecursor(x,y);
-	settextstyle(sanseri,horizontal,3);
+	settextstyle(sanseri,3);
 	with player do
 	     if (numitems=0) then
 	          begin
 	               cleardevice;
-	               settextstyle(sanseri,horizontal,5);
+	               settextstyle(sanseri,5);
 	               outtextxy(150,150,'You have no items');
-	               settextstyle(default,horizontal,2);
+	               settextstyle(default,2);
 	               prompt;
 	          end;
 	with player do
@@ -2839,7 +2839,7 @@ begin
 	                              begin
 	                                   setcolor(green);
 	                                   cleardevice;
-	                                   settextstyle(sanseri,horizontal,2);
+	                                   settextstyle(sanseri,2);
 	                                   case item[tempinteger] of
 	                                        bluepotion     :writefile(1,textdir+'blue.txt');
 	                                        redpotion      :begin
@@ -2859,7 +2859,7 @@ begin
 	                                   numitems:=numitems - 1;
 	                              end;
 	                    end;
-	               settextstyle(default,horizontal,2);
+	               settextstyle(default,2);
 	               prompt;
 	          end;
 end;
@@ -2874,7 +2874,7 @@ var
 
 begin
 	setcolor(black);
-	settextstyle(triplex,horizontal,3);
+	settextstyle(triplex,3);
 	outtextxy(10,420,'            (B)uy, (S)ell, (L)earn or (E)xit');
 	setcolor(white);
 	with player do
@@ -2882,12 +2882,12 @@ begin
 	          begin
 	               setcolor(lightgray);
 	               outtextxy(10,420,'  Sorry, but you don''t have room in your pack!');
-	               settextstyle(default,horizontal,2);
+	               settextstyle(default,2);
 	               prompt;
 	          end
 	     else
 	          begin
-	               settextstyle(default,horizontal,1);
+	               settextstyle(default,1);
 	               outtextxy(110,160,'(1) BLUE POTION');
 	               outtextxy(110,170,'    100 coins');
 	               outtextxy(110,260,'(2) RED POTION');
@@ -2896,7 +2896,7 @@ begin
 	               outtextxy(110,370,'    300 coins');
 	               outtextxy(340,340,'(4) RING OF POWER');
 	               outtextxy(340,350,'     800 coins');
-	               settextstyle(sanseri,horizontal,2);
+	               settextstyle(sanseri,2);
 	               setcolor(red);
 	               x:=10;
 	               y:=420;
@@ -2944,9 +2944,9 @@ begin
 	                                   begin
 	                                        setfillstyle(solidfill,black);
 	                                        bar(1,420,640,480);
-	                                        settextstyle(triplex,horizontal,3);
+	                                        settextstyle(triplex,3);
 	                                        outtextxy(200,420,'You already have one.');
-	                                        settextstyle(default,horizontal,2);
+	                                        settextstyle(default,2);
 	                                        prompt;
 	                                   end
 	                              else
@@ -2982,7 +2982,7 @@ var
 
 begin
 	setcolor(black);
-	settextstyle(triplex,horizontal,3);
+	settextstyle(triplex,3);
 	outtextxy(10,420,'            (B)uy, (S)ell, (L)earn or (E)xit');
 	setcolor(white);
 	with player do
@@ -2993,14 +2993,14 @@ begin
 	                    outtextxy(80,420,'Sorry, you can''t learn any more spells.')
 	               else
 	                    outtextxy(100,420,'You need a ring to store your spells.');
-	               settextstyle(default,horizontal,2);
+	               settextstyle(default,2);
 	               prompt;
 	          end
 	     else
 	          begin
 	               setfillstyle(solidfill,black);
 	               bar(380,280,460,360);
-	               settextstyle(default,horizontal,1);
+	               settextstyle(default,1);
 	               outtextxy(360,240,'(1) CALL WILD');
 	               outtextxy(360,250,'   100 coins');
 	               outtextxy(360,270,'(2) COURAGE');
@@ -3011,7 +3011,7 @@ begin
 	               outtextxy(360,340,'   500 coins');
 	               outtextxy(360,360,'(5) FIRE BLAST');
 	               outtextxy(360,370,'   600 coins');
-	               settextstyle(sanseri,horizontal,2);
+	               settextstyle(sanseri,2);
 	               setcolor(red);
 	               x:=10;
 	               y:=420;
@@ -3060,9 +3060,9 @@ begin
 	                         if (present) then
 	                              begin
 	                                   setcolor(lightgreen);
-	                                   settextstyle(sanseri,horizontal,5);
+	                                   settextstyle(sanseri,5);
 	                                   outtextxy(1,200,'    You already know that!!');
-	                                   settextstyle(default,horizontal,2);
+	                                   settextstyle(default,2);
 	                                   prompt;
 	                              end
 	                         else
@@ -3090,18 +3090,18 @@ var
 begin
 	repeat
 	     cleardevice;
-	     settextstyle(gothic,horizontal,5);
+	     settextstyle(gothic,5);
 	     homecursor(x,y);
 	     setcolor(magenta);
 	     outtextxy(x+3,y+3,'          Magic Shop');
 	     setcolor(cyan);
 	     outtextxy(x,y,'          Magic Shop');
 	     graphwriteln(x,y,'');
-	     settextstyle(triplex,horizontal,3);
+	     settextstyle(triplex,3);
 	     y:=420;
 	     graphwriteln(x,y,'            (B)uy, (S)ell, (L)earn or (E)xit');
 	     str(player.coins,tempstring);
-	     settextstyle(default,horizontal,1);
+	     settextstyle(default,1);
 	     setcolor(white);
 	     outtextxy(240,400,('You have ' + tempstring + ' coins'));
              drawpic(20,280,'wizard.ln1');
@@ -3129,7 +3129,7 @@ var ch:char;
 begin
 	cleardevice;
 	setcolor(red);
-	settextstyle(sanseri,horizontal,4);
+	settextstyle(sanseri,4);
 	outtextxy(1,200,'You must now battle the Great Demon...');
 	prompt;
 	cleardevice;
@@ -3138,7 +3138,7 @@ begin
 	x:=(getmaxx DIV 2) - 60;
 	drawpic(x,300,player.picfile);
 	setcolor(red);
-	settextstyle(sanseri,horizontal,2);
+	settextstyle(sanseri,2);
 	x:=(getmaxx DIV 2) - (textwidth('(A)ttack or (R)un') DIV 2);
 	outtextxy(x,240,'(A)ttack or (R)un');
 	repeat
@@ -3158,11 +3158,11 @@ begin
 	     end;
 	ch:=readarrowkey;
 	bar(1,240,640,300);
-	settextstyle(sanseri,horizontal,2);
+	settextstyle(sanseri,2);
 	outtextxy(1,240,'The Great Demon decimates you for 9999 points of damage!');
 	ch:=readarrowkey;
 	bar(1,240,640,300);
-	settextstyle(sanseri,horizontal,4);
+	settextstyle(sanseri,4);
 	outtextxy(100,240,'Everything starts to go black...');
 	player.endurance:=1;
 end;
@@ -3179,14 +3179,14 @@ var
 begin
 	cleardevice;
 	homecursor(x,y);
-	settextstyle(sanseri,horizontal,3);
+	settextstyle(sanseri,3);
 	with player do
 	     if (numspells=0) then
 	          begin
 	               cleardevice;
-	               settextstyle(sanseri,horizontal,5);
+	               settextstyle(sanseri,5);
 	               outtextxy(150,150,'You have no spells');
-	               settextstyle(default,horizontal,2);
+	               settextstyle(default,2);
 	               prompt;
 	          end;
 	with player do
@@ -3218,7 +3218,7 @@ begin
 	               if(charges<1)then
 	                    begin
 	                         setcolor(lightblue);
-	                         settextstyle(sanseri,horizontal,3);
+	                         settextstyle(sanseri,3);
 	                         graphwriteln(x,y,'');
 	                         graphwriteln(x,y,'  Your ring is out of power for today.');
 	                         graphwriteln(x,y,'  Sleep and try again tomorrow.');
@@ -3228,13 +3228,13 @@ begin
 	                    begin
 	                         setcolor(green);
 	                         cleardevice;
-	                         settextstyle(sanseri,horizontal,2);
+	                         settextstyle(sanseri,2);
 	                         case spell[tempinteger] of
 	                              icestorm,fireblast,icicle
 	                                      :begin
-	                                            settextstyle(sanseri,horizontal,4);
+	                                            settextstyle(sanseri,4);
 	                                            outtextxy(120,180,'That''s a battle-time spell');
-	                                            settextstyle(default,horizontal,2);
+	                                            settextstyle(default,2);
 	   {equal out the unused charge}            charges:=charges+1;
 	                                       end;
 	                              web:writefile(1,textdir+'027.txt');
@@ -3333,11 +3333,11 @@ begin
 	graphwriteln(x,y,'');
 	graphwriteln(x,y,'      "Our special drink is the Beholder''s Spit."');
 	str(coins,tempstring);
-	settextstyle(default,horizontal,1);
+	settextstyle(default,1);
 	setcolor(white);
 	outtextxy(240,400,('You have ' + tempstring + ' coins'));
 	setcolor(lightmagenta);
-	settextstyle(sanseri,horizontal,3);
+	settextstyle(sanseri,3);
 	graphwriteln(x,y,'');
 	graphwriteln(x,y,'                 What do you take?');
 	repeat
@@ -3353,7 +3353,7 @@ begin
 	else
 	     begin
 	          clearpub;
-	          settextstyle(sanseri,horizontal,4);
+	          settextstyle(sanseri,4);
 	          setcolor(red);
 	          case ans of
 	             '1','2','3':outtextxy(1,180,'      Hey, that''s not bad.  (Burp)');
@@ -3361,7 +3361,7 @@ begin
 	             '5':outtextxy(1,220,' Whoa!  It really burns as it goes down!');
 	          end;{case}
 	          coins:=coins - drinkprice;
-	          settextstyle(default,horizontal,2);
+	          settextstyle(default,2);
 	          prompt;
 	     end;
 end;
@@ -3387,11 +3387,11 @@ begin
 	tempstring:='   It will cost '+tempstring+' coins to play a game of Skull Dice';
 	outtextxy(1,180,tempstring);
 	str(player.coins,tempstring);
-	settextstyle(default,horizontal,1);
+	settextstyle(default,1);
 	setcolor(white);
 	outtextxy(240,400,('You have ' + tempstring + ' coins'));
 	setcolor(lightmagenta);
-	settextstyle(sanseri,horizontal,3);
+	settextstyle(sanseri,3);
 	outtextxy(1,420,'                  Go ahead? (y/n)');
 	repeat
 	     ans:=readarrowkey;
@@ -3431,13 +3431,13 @@ begin
 	               x:=10;
 	               y:=300;
 	               setcolor(yellow);
-	               settextstyle(sanseri,horizontal,3);
+	               settextstyle(sanseri,3);
 	               if (skulldice=4) then
 	                    begin
 	                         graphwriteln(x,y,'"Ha, ha!  You lose!  And now the game begins,"  with');
 	                         graphwriteln(x,y,'that Roland pulls out his french fry wand.  You quickly');
 	                         graphwriteln(x,y,'dodge his attacks.  Then, Roland just obliterates you.');
-	                         settextstyle(default,horizontal,2);
+	                         settextstyle(default,2);
 	                         prompt;
 	                         died;
 	                         exit;
@@ -3527,7 +3527,7 @@ begin
 	                                             end
 	                                        else
 	                                             graphwriteln(x,y,'                "Sorry, no prize."');
-	               settextstyle(default,horizontal,2);
+	               settextstyle(default,2);
 	               prompt;
 	          end;
 end;
@@ -3557,7 +3557,7 @@ begin
 	               7:writefile(240,textdir+'021.txt');
 	               8:writefile(240,textdir+'022.txt');
 	          end;
-	          settextstyle(default,horizontal,2);
+	          settextstyle(default,2);
 	          prompt;
 	     end;
 end;
@@ -3574,7 +3574,7 @@ begin
 	     begin
 	          cleardevice;
 	          setcolor(red);
-	          settextstyle(triplex,horizontal,3);
+	          settextstyle(triplex,3);
 	          homecursor(x,y);
 	          graphwriteln(x,y,'');
 	          graphwriteln(x,y,'');
@@ -3598,7 +3598,7 @@ begin
 	cleardevice;
         drawpic(2,1,'pub.ln1');
         drawpic(40,160,'dwarf.ln1');
-	settextstyle(sanseri,horizontal,3);
+	settextstyle(sanseri,3);
 	setcolor(magenta);
 	x:=210;
 	y:=200;
@@ -3619,34 +3619,34 @@ begin
 	     begin
 	          graphwriteln(x,y,'"Sorry, no password, no entrance,"  Bobo shoves');
 	          graphwriteln(x,y,'you off.');
-	          settextstyle(default,horizontal,2);
+	          settextstyle(default,2);
 	          prompt;
 	     end
 	else
 	     begin
 	          graphwriteln(x,y,'"Great!  Come on in!"  You enter the Metallic Beholder');
 	          graphwriteln(x,y,'Pub.');
-	          settextstyle(default,horizontal,2);
+	          settextstyle(default,2);
 	          prompt;
 	          repeat
 	               clearpub;
                        drawpic(240,140,'roland.ln1');
-	               settextstyle(sanseri,horizontal,3);
+	               settextstyle(sanseri,3);
 	               setcolor(lightmagenta);
 	               outtextxy(1,280,'      "So, what''ll it be," asks Roland McDoland');
-	               settextstyle(triplex,horizontal,3);
+	               settextstyle(triplex,3);
 	               homecursor(x,y);
 	               y:=420;
 	               graphwriteln(x,y,'            (B)uy, (P)lay, (T)ip or (E)xit');
 	               str(player.coins,tempstring);
-	               settextstyle(default,horizontal,1);
+	               settextstyle(default,1);
 	               setcolor(white);
 	               outtextxy(240,400,('You have ' + tempstring + ' coins'));
 	               repeat
 	                    ans:=readarrowkey;
 	               until (ans in ['e','E','b','B','p','P','t','T','*']);
 	               clearpub;
-	               settextstyle(sanseri,horizontal,3);
+	               settextstyle(sanseri,3);
 	               setcolor(magenta);
 	               homecursor(x,y);
 	               case ans of
@@ -3672,23 +3672,23 @@ var
 
 begin
 	cleardevice;
-	settextstyle(gothic,horizontal,5);
+	settextstyle(gothic,5);
 	homecursor(x,y);
 	setcolor(darkgray);
 	outtextxy(x+1,y+1,'     The Eagle Talon Inn');
 	setcolor(cyan);
 	outtextxy(x,y,'     The Eagle Talon Inn');
         drawpic(420,120,'innkeep.ln1');
-	settextstyle(sanseri,horizontal,3);
+	settextstyle(sanseri,3);
 	setcolor(lightblue);
 	str(innprice,tempstring);
 	outtextxy(1,160,'    "We charge '+ tempstring + ' coins a night."');
 	str(player.coins,tempstring);
-	settextstyle(default,horizontal,1);
+	settextstyle(default,1);
 	setcolor(white);
 	outtextxy(240,400,('You have ' + tempstring + ' coins'));
 	setcolor(lightcyan);
-	settextstyle(sanseri,horizontal,3);
+	settextstyle(sanseri,3);
 	outtextxy(1,420,'             Do you stay the night? (y/n)');
 	repeat
 	     ans:=readarrowkey;
@@ -3722,12 +3722,12 @@ begin
 	                              graphwriteln(x,y,'');
 	                              graphwriteln(x,y,'');
 	                              setcolor(blue);
-	                              settextstyle(triplex,horizontal,2);
+	                              settextstyle(triplex,2);
 	                              graphwrite(x,y,'You find a small note under ');
 	                              graphwriteln(x,y,'your pillow that says, "the');
 	                              graphwriteln(x,y,'password is... crystal shard"');
 	                         end;
-	                    settextstyle(default,horizontal,2);
+	                    settextstyle(default,2);
 	                    prompt;
 	               end;
 end;
@@ -3738,12 +3738,12 @@ var ans:char;
 
 begin
 	setcolor(lightblue);
-	settextstyle(default,horizontal,3);
+	settextstyle(default,3);
 	x:=10;
 	y:=100;
 	graphwriteln(x,y,'      Town Options');
 	graphwriteln(x,y,'');
-	settextstyle(default,horizontal,2);
+	settextstyle(default,2);
 	graphwriteln(x,y,'');
 	setcolor(lightcyan);
 	graphwrite(x,y,'            V');
@@ -3803,7 +3803,7 @@ begin
 	if (not(endgame in player.stages))and(iceq in player.stages) then
 	     begin
 	          cleardevice;
-	          settextstyle(triplex,horizontal,3);
+	          settextstyle(triplex,3);
 	          setcolor(red);
 	          writefile(1,textdir+'081.txt');
 	          prompt;
@@ -3814,7 +3814,7 @@ begin
 	repeat
 	     cleardevice;
              drawpic(45,45,'thetown.ln1');
-	     settextstyle(default,horizontal,1);
+	     settextstyle(default,1);
 	     setcolor(white);
 	     x:=10;
 	     y:=410;
@@ -3900,7 +3900,7 @@ begin
 	                    combat(player,nummonsters,monster);
 	                    cleardevice;
                             drawpic(70,10,'esi.ln1');
-	                    settextstyle(small,horizontal,6);
+	                    settextstyle(small,6);
 	                    setcolor(green);
 	                    y:=175;
 	                    graphwriteln(x,y,'');
@@ -3986,7 +3986,7 @@ begin
 	                                        combat(player,nummonsters,monster);
 	                                        cleardevice;
                                                 drawpic(70,10,'esi.ln1');
-	                                        settextstyle(small,horizontal,6);
+	                                        settextstyle(small,6);
 	                                        setcolor(lightblue);
 	                                        y:=175;
 	                                        graphwriteln(x,y,'');
@@ -4047,11 +4047,11 @@ begin
 	graphwriteln(x,y,'     (9) Gorgon''s Milk   (5 coins)');
 	graphwriteln(x,y,'     (N) No thanks');
 	str(player.coins,tempstring);
-	settextstyle(default,horizontal,1);
+	settextstyle(default,1);
 	setcolor(white);
 	outtextxy(250,460,('You have ' + tempstring + ' coins'));
 	setcolor(yellow);
-	settextstyle(small,horizontal,6);
+	settextstyle(small,6);
 	graphwriteln(x,y,'');
 	graphwriteln(x,y,'What do you take?');
 	repeat
@@ -4061,7 +4061,7 @@ begin
 	     begin
 	          setcolor(lightblue);
 	          graphwriteln(x,y,'                         Ahab grumbles');
-	          settextstyle(small,horizontal,6);
+	          settextstyle(small,6);
 	          prompt;
 	          exit;
 	     end;
@@ -4113,7 +4113,7 @@ begin
 	                         esi_encounter(player);
 	                    end;
 	           end;{case}
-	          settextstyle(small,horizontal,6);
+	          settextstyle(small,6);
 	          prompt;
 	     end;
 
@@ -4178,7 +4178,7 @@ begin
 	                              combat(player,nummonsters,monster);
 	                              cleardevice;
                                       drawpic(70,10,'esi.ln1');
-	                              settextstyle(small,horizontal,6);
+	                              settextstyle(small,6);
 	                              x:=10;
 	                              y:=175;
 	                              setcolor(magenta);
@@ -4534,7 +4534,7 @@ begin
 	                              cleardevice;
 	                              if GAMEOVER then exit;
                                       drawpic(70,10,'esi.ln1');
-	                              settextstyle(small,horizontal,6);
+	                              settextstyle(small,6);
 	                              x:=10;
 	                              y:=175;
 	                              setcolor(lightgreen);
@@ -4698,7 +4698,7 @@ begin
 	                              combat(player,nummonsters,monster);
 	                              cleardevice;
                                       drawpic(70,10,'esi.ln1');
-	                              settextstyle(small,horizontal,6);
+	                              settextstyle(small,6);
 	                              x:=10;
 	                              y:=175;
 	                              setcolor(lightgray);
@@ -4756,7 +4756,7 @@ begin
 	               x:=10;
 	               y:=175;
 	               setcolor(red);
-	               settextstyle(small,horizontal,6);
+	               settextstyle(small,6);
 	               graphwriteln(x,y,'Welcome to Roland McDoland''s');
 	               graphwriteln(x,y,'    Wheel of Fortune!');
 	               graphwriteln(x,y,'');
@@ -4805,7 +4805,7 @@ begin
 	                              ch:=readarrowkey;
 	                         until (ch=' ');
 	                         y:=350;
-	                         settextstyle(default,horizontal,1);
+	                         settextstyle(default,1);
 	                         setcolor(white);
 	                         case (roll('4d8')) of
 	                            4:begin
@@ -4907,7 +4907,7 @@ begin
 	cleardevice;
         drawpic(70,10,'esi.ln1');
 	setcolor(yellow);
-	settextstyle(small,horizontal,5);
+	settextstyle(small,5);
 	writefile(180,textdir+'039.txt');
 	prompt;
 	repeat
@@ -4915,7 +4915,7 @@ begin
 	     homecursor(x,y);
 	     y:=240;
 	     setcolor(yellow);
-	     settextstyle(small,horizontal,6);
+	     settextstyle(small,6);
 	     graphwriteln(x,y,'     1) Look around');
 	     graphwriteln(x,y,'     2) Order a drink');
 	     graphwriteln(x,y,'     3) Rent a room');
@@ -4933,7 +4933,7 @@ begin
 	     graphwriteln(x,y,'                       (V)iew your stats');
 	     graphwriteln(x,y,'                    (E)xit the Elf Skull Inn');
 	     str(player.coins,tempstring);
-	     settextstyle(default,horizontal,1);
+	     settextstyle(default,1);
 	     setcolor(white);
 	     outtextxy(240,460,('You have ' + tempstring + ' coins'));
 	     repeat
@@ -4941,7 +4941,7 @@ begin
 	     until (ans in ['1'..'8','e','E','v','V']);
 	     clearesi;
 	     setcolor(yellow);
-	     settextstyle(small,horizontal,6);
+	     settextstyle(small,6);
 	     homecursor(x,y);
 	     case ans of
 	       'e','E':exit;
@@ -4952,7 +4952,7 @@ begin
 	               end;
 	           '1':begin
 	                    setcolor(yellow);
-	                    settextstyle(small,horizontal,5);
+	                    settextstyle(small,5);
 	                    writefile(180,textdir+'039.txt');
 	                    prompt;
 	               end;
@@ -4999,7 +4999,7 @@ var
 begin
 	clearmessage;
 	homemessage(x,y);
-	settextstyle(default,horizontal,2);
+	settextstyle(default,2);
 	setcolor(black);
 	message(x,y,'           You encounter');
 	message(x,y,'');
@@ -5047,12 +5047,12 @@ var ans:char;
 begin
 	cleardevice;
 	setcolor(magenta);
-	settextstyle(default,horizontal,3);
+	settextstyle(default,3);
 	x:=10;
 	y:=100;
 	graphwriteln(x,y,'    Dungeon Options');
 	graphwriteln(x,y,'');
-	settextstyle(default,horizontal,2);
+	settextstyle(default,2);
 	graphwriteln(x,y,'');
 	setcolor(lightmagenta);
 	graphwrite(x,y,'            V');
@@ -5113,7 +5113,7 @@ begin
 	          setcolor(lightmagenta);
 	          x:=10;
 	          y:=300;
-	          settextstyle(sanseri,horizontal,2);
+	          settextstyle(sanseri,2);
 	          graphwriteln(x,y,'You come across a locked door.');
 	          graphwriteln(x,y,'(A)ttack it');
 	          graphwriteln(x,y,'(U)se an item');
@@ -5235,7 +5235,7 @@ procedure cave_staircase;
 begin
 	clearmessage;
 	homemessage(x,y);
-	settextstyle(default,horizontal,2);
+	settextstyle(default,2);
 	setcolor(black);
 	message(x,y,'    You are on a staircase that');
 	message(x,y,'      descends to the north.');
@@ -5246,7 +5246,7 @@ procedure secret_passage;
 begin
 	clearmessage;
 	homemessage(x,y);
-	settextstyle(default,horizontal,2);
+	settextstyle(default,2);
 	setcolor(black);
 	message(x,y,'');
 	message(x,y,'   You are in a secret passage.');
@@ -5257,7 +5257,7 @@ procedure castle_courtyard;
 begin
 	clearmessage;
 	homemessage(x,y);
-	settextstyle(default,horizontal,2);
+	settextstyle(default,2);
 	setcolor(black);
 	message(x,y,'');
 	message(x,y,' You are in the castle courtyard.');
@@ -5268,7 +5268,7 @@ procedure castle_guest;
 begin
 	clearmessage;
 	homemessage(x,y);
-	settextstyle(default,horizontal,2);
+	settextstyle(default,2);
 	setcolor(black);
 	message(x,y,'');
 	message(x,y,' This appears to be a guest room.');
@@ -5279,7 +5279,7 @@ procedure castle_banquet;
 begin
 	clearmessage;
 	homemessage(x,y);
-	settextstyle(default,horizontal,2);
+	settextstyle(default,2);
 	setcolor(black);
 	message(x,y,'');
 	message(x,y,'   This is a vast banquet hall.');
@@ -5290,7 +5290,7 @@ procedure castle_master;
 begin
 	clearmessage;
 	homemessage(x,y);
-	settextstyle(default,horizontal,2);
+	settextstyle(default,2);
 	setcolor(black);
 	message(x,y,'');
 	message(x,y,'       The Queen''s bedroom.');
@@ -5301,7 +5301,7 @@ procedure castle_kitchen;
 begin
 	clearmessage;
 	homemessage(x,y);
-	settextstyle(default,horizontal,2);
+	settextstyle(default,2);
 	setcolor(black);
 	message(x,y,'');
 	message(x,y,'        An empty kitchen.');
@@ -5316,7 +5316,7 @@ begin
 	     begin
 	          clearmessage;
 	          homemessage(x,y);
-	          settextstyle(default,horizontal,2);
+	          settextstyle(default,2);
 	          setcolor(black);
 	          message(x,y,'          You find a key.');
 	          message(x,y,'');
@@ -5339,7 +5339,7 @@ begin
 	     begin
 	          clearmessage;
 	          homemessage(x,y);
-	          settextstyle(default,horizontal,2);
+	          settextstyle(default,2);
 	          setcolor(black);
 	          message(x,y,'     You find some treasure.');
 	          message(x,y,'');
@@ -5375,7 +5375,7 @@ begin
 	dmg:=roll('2d6');
 	clearmessage;
 	homemessage(x,y);
-	settextstyle(default,horizontal,2);
+	settextstyle(default,2);
 	setcolor(black);
 	if (roll('1d20')>player.savingthrow) then
 	     begin
@@ -5408,7 +5408,7 @@ var ans:char;
 begin
 	clearmessage;
 	homemessage(x,y);
-	settextstyle(default,horizontal,2);
+	settextstyle(default,2);
 	setcolor(black);
 	message(x,y,'You find a massive book on a podium.');
 	message(x,y,'');
@@ -5420,7 +5420,7 @@ begin
 	     begin
 	          cleardevice;
 	          setcolor(magenta);
-	          settextstyle(sanseri,horizontal,2);
+	          settextstyle(sanseri,2);
 	          writefile(1,textdir+'076.txt');
 	          prompt;
 	          died;
@@ -5435,7 +5435,7 @@ var ch:char;
 begin
 	cleardevice;
 	setcolor(brown);
-	settextstyle(triplex,horizontal,3);
+	settextstyle(triplex,3);
 	homecursor(x,y);
 	if not(msword in player.stages) then
 	     begin
@@ -5454,7 +5454,7 @@ begin
 	                    player.stages:=player.stages + [msword];
 	                    cleardevice;
 	                    setcolor(lightblue);
-	                    settextstyle(triplex,horizontal,3);
+	                    settextstyle(triplex,3);
 	                    homecursor(x,y);
 	                    graphwriteln(x,y,'');
 	                    graphwriteln(x,y,'');
@@ -5516,7 +5516,7 @@ var ch:char;
 begin
 	cleardevice;
 	setcolor(darkgray);
-	settextstyle(triplex,horizontal,3);
+	settextstyle(triplex,3);
 	homecursor(x,y);
 	if not(mshield in player.stages) then
 	     begin
@@ -5535,7 +5535,7 @@ begin
 	                    player.stages:=player.stages + [mshield];
 	                    cleardevice;
 	                    setcolor(lightblue);
-	                    settextstyle(triplex,horizontal,3);
+	                    settextstyle(triplex,3);
 	                    homecursor(x,y);
 	                    graphwriteln(x,y,'');
 	                    graphwriteln(x,y,'');
@@ -5593,7 +5593,7 @@ procedure dungeon_lizard(var player:character_t;var px,py:integer;lastx,lasty:in
 begin
 	cleardevice;
 	setcolor(lightblue);
-	settextstyle(triplex,horizontal,3);
+	settextstyle(triplex,3);
 	homecursor(x,y);
 	if not(lizard in player.stages) then
 	     begin
@@ -5622,7 +5622,7 @@ procedure castle_barracks;
 begin
 	clearmessage;
 	homemessage(x,y);
-	settextstyle(default,horizontal,2);
+	settextstyle(default,2);
 	setcolor(black);
 	message(x,y,'');
 	message(x,y,'You find yourself in the barracks.');
@@ -5637,7 +5637,7 @@ procedure castle_knight(var player:character_t;var px,py:integer;lastx,lasty:int
 begin
 	cleardevice;
 	setcolor(cyan);
-	settextstyle(triplex,horizontal,3);
+	settextstyle(triplex,3);
 	homecursor(x,y);
 	if not(knight in player.stages) then
 	     begin
@@ -5666,7 +5666,7 @@ procedure castle_throne(var player:character_t;var px,py:integer;lastx,lasty:int
 begin
 	cleardevice;
 	setcolor(blue);
-	settextstyle(triplex,horizontal,3);
+	settextstyle(triplex,3);
 	homecursor(x,y);
 	if not(iceq in player.stages) then
 	     begin
@@ -5689,7 +5689,7 @@ begin
 	                    player.stages:=player.stages + [iceq];
 	                    cleardevice;
 	                    setcolor(yellow);
-	                    settextstyle(triplex,horizontal,3);
+	                    settextstyle(triplex,3);
 	                    writefile(1,textdir+'080.txt');
 	                    prompt;
 	               end
@@ -5713,7 +5713,7 @@ procedure stair_up;
 begin
 	clearmessage;
 	homemessage(x,y);
-	settextstyle(default,horizontal,2);
+	settextstyle(default,2);
 	setcolor(black);
 	message(x,y,'');
 	message(x,y,'  There are stairs going up here.');
@@ -5823,7 +5823,7 @@ begin
 begin
 	clearmessage;
 	homemessage(x,y);
-	settextstyle(default,horizontal,2);
+	settextstyle(default,2);
 	setcolor(black);
 	message(x,y,' There are stairs going down here.');
 	message(x,y,'');
@@ -5852,7 +5852,7 @@ end;
 	                    begin
 	                         clearmessage;
 	                         homemessage(x,y);
-	                         settextstyle(default,horizontal,2);
+	                         settextstyle(default,2);
 	                         setcolor(black);
 	                         message(x,y,'');
 	                         message(x,y,'            Exit? (y/n)');
@@ -5877,7 +5877,7 @@ var ch:char;
 begin
 	cleardevice;
 	setcolor(red);
-	settextstyle(triplex,horizontal,3);
+	settextstyle(triplex,3);
 	homecursor(x,y);
 	if not(dragon in player.stages) then
 	     begin
@@ -5919,7 +5919,7 @@ begin
 	                              player.stages:=player.stages + [dragon];
 	                              cleardevice;
 	                              setcolor(lightblue);
-	                              settextstyle(triplex,horizontal,3);
+	                              settextstyle(triplex,3);
 	                              homecursor(x,y);
 	                              graphwriteln(x,y,'');
 	                              graphwriteln(x,y,'');
@@ -5983,14 +5983,14 @@ procedure thepassword;
 begin
 	cleardevice;
 	homecursor(x,y);
-	settextstyle(sanseri,horizontal,4);
+	settextstyle(sanseri,4);
 	setcolor(lightblue);
 	graphwriteln(x,y,'');
 	graphwriteln(x,y,'');
 	graphwriteln(x,y,'   In the side of the icy rock');
 	graphwriteln(x,y,'mountains you see something written');
 	graphwriteln(x,y,'etched in the stone.  It says:');
-	settextstyle(triplex,horizontal,6);
+	settextstyle(triplex,6);
 	graphwriteln(x,y,'');
 	repeat
 	    setcolor(roll('1d15'));
@@ -6007,7 +6007,7 @@ var ans:char;
 begin
 	clearmessage;
 	homemessage(x,y);
-	settextstyle(default,horizontal,2);
+	settextstyle(default,2);
 	setcolor(black);
 	message(x,y,'');
 	message(x,y,' The Elf Skull Inn -- enter? (y/n)');
@@ -6027,7 +6027,7 @@ var ans:char;
 begin
 	clearmessage;
 	homemessage(x,y);
-	settextstyle(default,horizontal,2);
+	settextstyle(default,2);
 	setcolor(black);
 	message(x,y,'');
 	message(x,y,'   Gilantry City -- enter? (y/n)');
@@ -6047,7 +6047,7 @@ var ans:char;
 begin
 	clearmessage;
 	homemessage(x,y);
-	settextstyle(default,horizontal,2);
+	settextstyle(default,2);
 	setcolor(black);
 	message(x,y,'');
 	message(x,y,'       A Cave -- enter? (y/n)');
@@ -6077,7 +6077,7 @@ begin
         drawpic(120,1,'tcastle.ln1');
 	setcolor(white);
 	message(x,y,'');
-	settextstyle(sanseri,horizontal,2);
+	settextstyle(sanseri,2);
 	graphwriteln(x,y,'You approach the ice castle.  A cold wind blows.');
 	if (endgame in player.stages) then
 	     begin
@@ -6216,12 +6216,12 @@ var ans:char;
 begin
 	cleardevice;
 	setcolor(green);
-	settextstyle(default,horizontal,3);
+	settextstyle(default,3);
 	x:=10;
 	y:=100;
 	graphwriteln(x,y,'   Wilderness Options');
 	graphwriteln(x,y,'');
-	settextstyle(default,horizontal,2);
+	settextstyle(default,2);
 	graphwriteln(x,y,'');
 	setcolor(lightgreen);
 	graphwrite(x,y,'            V');
@@ -6348,12 +6348,12 @@ begin
     center:=getmaxx DIV 2;
 	repeat
 	     cleardevice;
-	     settextstyle(gothic,horizontal,8);
+	     settextstyle(gothic,8);
 	     setcolor(lightgray);
 	     centerwrite(center,10,'The Ice Queen');
 	     ans:='I';
 	     repeat
-	          settextstyle(small,horizontal,5);
+	          settextstyle(small,5);
 	          setcolor(lightblue);
 	          centerwrite(center,120,'Introduction');
 	          centerwrite(center,180,'Start');
@@ -6385,12 +6385,12 @@ begin
               begin
 	                cleardevice;
 	                homecursor(x,y);
-	                settextstyle(small,horizontal,2);
+	                settextstyle(small,2);
 	                setcolor(lightblue);
 	                writefile(y,textdir+'intro.txt');
 	                prompt;
 	                cleardevice;
-	                settextstyle(gothic,horizontal,8);
+	                settextstyle(gothic,8);
 	                setcolor(lightgray);
 	                centerwrite(center,10,'The Ice Queen');
 	          end;
