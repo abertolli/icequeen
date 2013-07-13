@@ -94,6 +94,7 @@ procedure delay(ms:word);
 function readarrowkey:char;
 procedure prompt;
 procedure homecursor(var cursorx,cursory:integer);
+procedure centerwrite(x,y:integer;s:string);
 procedure graphwrite(var x,y:integer;s:string);
 procedure graphwriteln(var x,y:integer;s:string);
 procedure graphread(var x,y:integer;var s:string);
@@ -401,6 +402,12 @@ procedure homecursor(var cursorx,cursory:integer);
 begin
      cursorx:=xhome;
      cursory:=yhome;
+end;
+{--------------------------------------------------------------------------}
+procedure centerwrite(x,y:integer;s:string);
+
+begin
+    outtextxy(x-(textwidth(s) DIV 2),y,s);
 end;
 {--------------------------------------------------------------------------}
 procedure graphwrite(var x,y:integer;s:string);
