@@ -6369,26 +6369,28 @@ end;
 procedure mainmenu;
 
 var
-   ans      :  char;
-   ch       :  char;
+   ans          :   char;
+   ch           :   char;
+   center       :   integer;
 
 begin
+    center:=getmaxx DIV 2;
 	repeat
 	     menuscreen;
 	     ans:='I';
 	     repeat
 	          settextstyle(small,horizontal,10);
 	          setcolor(lightblue);
-	          outtextxy(160,150,'Introduction');
-	          outtextxy(240,250,'Start');
-	          outtextxy(250,300,'Load');
-	          outtextxy(250,350,'Quit');
+	          centerwrite(center,120,'Introduction');
+	          centerwrite(center,180,'Start');
+	          centerwrite(center,240,'Load');
+	          centerwrite(center,300,'Quit');
 	          setcolor(white);
 	          case ans of
-	               'I':outtextxy(160,150,'Introduction');
-	               'S':outtextxy(240,250,'Start');
-	               'L':outtextxy(250,300,'Load');
-	               'Q':outtextxy(250,350,'Quit');
+	               'I':centerwrite(center,120,'Introduction');
+	               'S':centerwrite(center,180,'Start');
+	               'L':centerwrite(center,240,'Load');
+	               'Q':centerwrite(center,300,'Quit');
 	          end;
 	          ch:=readarrowkey;
 	          case ch of
