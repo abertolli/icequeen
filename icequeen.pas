@@ -122,7 +122,7 @@ begin
       begin
          previouscolor:=getcolor;
          setcolor(lightblue);
-         setfont('small.ttf',1);
+         setfont('default.ttf',1);
          outtextxy(beginx,beginy,dosname);
 	 setcolor(previouscolor);
       end
@@ -198,7 +198,7 @@ begin
     centerwrite(center,380,'The Ice Queen');
     setfont('default.ttf',2);
     drawpic(120,10,'tcastle.ln1');
-    setfont('small.ttf',2);
+    setfont('default.ttf',2);
     setcolor(lightgray);
     prompt;
 end;
@@ -303,7 +303,7 @@ begin
 	                  graphwriteln(x,y,tempstring);
 	                  setcolor(white);
 	                  graphwriteln(x,y,'');
-	                  setfont('small.ttf',4);
+	                  setfont('default.ttf',4);
 	                  graphwriteln(x,y,'Use the arrow keys.');
 	                  graphwriteln(x,y,'Press <Enter> when done.');
 	                  setfont('sanseri.ttf',2);
@@ -3900,7 +3900,7 @@ begin
 	                    combat(player,nummonsters,monster);
 	                    cleardevice;
                             drawpic(70,10,'esi.ln1');
-	                    setfont('small.ttf',6);
+	                    setfont('default.ttf',6);
 	                    setcolor(green);
 	                    y:=175;
 	                    graphwriteln(x,y,'');
@@ -3986,7 +3986,7 @@ begin
 	                                        combat(player,nummonsters,monster);
 	                                        cleardevice;
                                                 drawpic(70,10,'esi.ln1');
-	                                        setfont('small.ttf',6);
+	                                        setfont('default.ttf',6);
 	                                        setcolor(lightblue);
 	                                        y:=175;
 	                                        graphwriteln(x,y,'');
@@ -4051,7 +4051,7 @@ begin
 	setcolor(white);
 	outtextxy(250,460,('You have ' + tempstring + ' coins'));
 	setcolor(yellow);
-	setfont('small.ttf',6);
+	setfont('default.ttf',6);
 	graphwriteln(x,y,'');
 	graphwriteln(x,y,'What do you take?');
 	repeat
@@ -4061,7 +4061,7 @@ begin
 	     begin
 	          setcolor(lightblue);
 	          graphwriteln(x,y,'                         Ahab grumbles');
-	          setfont('small.ttf',6);
+	          setfont('default.ttf',6);
 	          prompt;
 	          exit;
 	     end;
@@ -4113,7 +4113,7 @@ begin
 	                         esi_encounter(player);
 	                    end;
 	           end;{case}
-	          setfont('small.ttf',6);
+	          setfont('default.ttf',6);
 	          prompt;
 	     end;
 
@@ -4178,7 +4178,7 @@ begin
 	                              combat(player,nummonsters,monster);
 	                              cleardevice;
                                       drawpic(70,10,'esi.ln1');
-	                              setfont('small.ttf',6);
+	                              setfont('default.ttf',6);
 	                              x:=10;
 	                              y:=175;
 	                              setcolor(magenta);
@@ -4534,7 +4534,7 @@ begin
 	                              cleardevice;
 	                              if GAMEOVER then exit;
                                       drawpic(70,10,'esi.ln1');
-	                              setfont('small.ttf',6);
+	                              setfont('default.ttf',6);
 	                              x:=10;
 	                              y:=175;
 	                              setcolor(lightgreen);
@@ -4698,7 +4698,7 @@ begin
 	                              combat(player,nummonsters,monster);
 	                              cleardevice;
                                       drawpic(70,10,'esi.ln1');
-	                              setfont('small.ttf',6);
+	                              setfont('default.ttf',6);
 	                              x:=10;
 	                              y:=175;
 	                              setcolor(lightgray);
@@ -4756,7 +4756,7 @@ begin
 	               x:=10;
 	               y:=175;
 	               setcolor(red);
-	               setfont('small.ttf',6);
+	               setfont('default.ttf',6);
 	               graphwriteln(x,y,'Welcome to Roland McDoland''s');
 	               graphwriteln(x,y,'    Wheel of Fortune!');
 	               graphwriteln(x,y,'');
@@ -4907,7 +4907,7 @@ begin
 	cleardevice;
         drawpic(70,10,'esi.ln1');
 	setcolor(yellow);
-	setfont('small.ttf',5);
+	setfont('default.ttf',5);
 	writefile(180,textdir+'039.txt');
 	prompt;
 	repeat
@@ -4915,7 +4915,7 @@ begin
 	     homecursor(x,y);
 	     y:=240;
 	     setcolor(yellow);
-	     setfont('small.ttf',6);
+	     setfont('default.ttf',6);
 	     graphwriteln(x,y,'     1) Look around');
 	     graphwriteln(x,y,'     2) Order a drink');
 	     graphwriteln(x,y,'     3) Rent a room');
@@ -4941,7 +4941,7 @@ begin
 	     until (ans in ['1'..'8','e','E','v','V']);
 	     clearesi;
 	     setcolor(yellow);
-	     setfont('small.ttf',6);
+	     setfont('default.ttf',6);
 	     homecursor(x,y);
 	     case ans of
 	       'e','E':exit;
@@ -4952,7 +4952,7 @@ begin
 	               end;
 	           '1':begin
 	                    setcolor(yellow);
-	                    setfont('small.ttf',5);
+	                    setfont('default.ttf',5);
 	                    writefile(180,textdir+'039.txt');
 	                    prompt;
 	               end;
@@ -6353,7 +6353,7 @@ begin
 	     centerwrite(center,10,'The Ice Queen');
 	     ans:='I';
 	     repeat
-	          setfont('small.ttf',5);
+	          setfont('default.ttf',5);
 	          setcolor(lightblue);
 	          centerwrite(center,120,'Introduction');
 	          centerwrite(center,180,'Start');
@@ -6385,7 +6385,7 @@ begin
               begin
 	                cleardevice;
 	                homecursor(x,y);
-	                setfont('small.ttf',2);
+	                setfont('default.ttf',2);
 	                setcolor(lightblue);
 	                writefile(y,textdir+'intro.txt');
 	                prompt;
