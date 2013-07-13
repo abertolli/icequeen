@@ -212,25 +212,6 @@ begin
 	prompt;
 end;
 {---------------------------------------------------------------------------}
-procedure credits;
-
-{Write the credits to the screen.}
-
-begin
-	cleardevice;
-	settextstyle(sanseri,horizontal,2);
-        drawpic(80,60,'credits.ln1');
-	setcolor(white);
-	prompt;
-{
-	cleardevice;
-	setcolor(white);
-	homecursor(x,y);
-	writefile(y,textdir+'credits.txt');
-	prompt;
-}
-end;
-{---------------------------------------------------------------------------}
 procedure menuscreen;
 
 {Header for the main menu.}
@@ -6394,19 +6375,17 @@ var
 begin
 	repeat
 	     menuscreen;
-	     ans:='C';
+	     ans:='I';
 	     repeat
 	          settextstyle(small,horizontal,10);
 	          setcolor(lightblue);
 	          outtextxy(160,150,'Introduction');
-	          outtextxy(220,200,'Credits');
 	          outtextxy(240,250,'Start');
 	          outtextxy(250,300,'Load');
 	          outtextxy(250,350,'Quit');
 	          setcolor(white);
 	          case ans of
 	               'I':outtextxy(160,150,'Introduction');
-	               'C':outtextxy(220,200,'Credits');
 	               'S':outtextxy(240,250,'Start');
 	               'L':outtextxy(250,300,'Load');
 	               'Q':outtextxy(250,350,'Quit');
@@ -6415,35 +6394,22 @@ begin
 	          case ch of
 	               '8':case ans of
 	                        'I':ans:='Q';
-	                        'C':ans:='I';
-	                        'S':ans:='C';
+	                        'S':ans:='I';
 	                        'L':ans:='S';
 	                        'Q':ans:='L';
 	                   end;
 	               '2':case ans of
-	                        'I':ans:='C';
-	                        'C':ans:='S';
+	                        'I':ans:='S';
 	                        'S':ans:='L';
 	                        'L':ans:='Q';
 	                        'Q':ans:='I';
 	                   end;
 	          end;
-	          if (ch=#13) and (ans in ['I','C']) then
-	               begin
-	                    case ans of
-	                         'I':introduction;
-	                         'C':credits;
-	                    end;
-	                    menuscreen;
-	               end;
-	          if (ch in ['i','I','C','c'])then
-	               begin
-	                    case ch of
-	                         'I','i':introduction;
-	                         'C','c':credits;
-	                    end;
-	                    menuscreen;
-	               end;
+	          if ((ch=#13) and (ans in ['I']) or (ch in ['i','I']))then
+              begin
+	                introduction;
+	                menuscreen;
+	          end;
 	     until ((ch=#13) and (ans in ['S','L','Q'])) or
 	           (ch in ['s','S','l','L','q','Q']);
 	     if (ch in ['s','S','l','L','q','Q']) then
