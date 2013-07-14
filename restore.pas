@@ -2528,19 +2528,30 @@ end;
 {--------------------------------------------------------------------------}
 procedure createcharts;
 
-type
-
-     chartrecord    =    record
-                              diceroll  :    string; {dice}
-                              value     :    array[1..20,1..2] of byte;
-                              number    :    array[1..20] of string; {dice}
-                              monsterid :    array[1..20] of string;
-                         end;
 var
      thechart       :    chartrecord;
      error          :    boolean;
      savefile       :    file;
 
+{++++++++++++++++++++++++++++++++++++++++++++++++++++++++++}
+procedure clearchart(var chart:chartrecord);
+
+var
+    loop        :   integer;
+
+begin
+    with chart do
+    begin
+        diceroll:='0';
+        for loop:=1 to 20 do
+        begin
+            value[loop,1]:=0;
+            value[loop,2]:=0;
+            number[loop]:='0';
+            monsterid[loop]:='none';
+        end;
+    end;
+end;
 {++++++++++++++++++++++++++++++++++++++++++++++++++++++++++}
 procedure savechart(chartid:string;thechart:chartrecord);
 
@@ -2580,7 +2591,7 @@ begin
     end;
     close(savefile);
 
-     {wild.dat}
+    clearchart(thechart);
      with thechart do
           begin
                diceroll:='2d10';
@@ -2687,7 +2698,7 @@ begin
           end;
      savechart('wilderness',thechart);
 
-     {cave.dat}
+    clearchart(thechart);
      with thechart do
           begin
                diceroll:='1d12';
@@ -2754,7 +2765,7 @@ begin
           end;
      savechart('cave',thechart);
 
-     {castle.dat}
+    clearchart(thechart);
      with thechart do
           begin
                diceroll:='1';
@@ -2766,7 +2777,7 @@ begin
           end;
      savechart('castle',thechart);
 
-     {dungeon.dat}
+    clearchart(thechart);
      with thechart do
           begin
                diceroll:='1d8';

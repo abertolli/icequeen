@@ -24,7 +24,6 @@
 	savedir		= 'save/';
 	itemdir		= 'item';
 	monsterdata	= 'game/monst.dat';
-	chartdata	= 'game/chart.dat';
 
 	{used for text columns}
 	col1	= 20;	 {column 1 for viewing stats}

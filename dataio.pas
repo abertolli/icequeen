@@ -16,6 +16,8 @@ const
 	itemmax		= 9;
 	spellmax	= 8;	{number of spells that can be in the ring}
 
+    chartdata   = 'game/chart.dat';
+
 type
 	spell		= (icestorm,fireblast,web,callwild,heal,courage,
 				freeze,obliterate,icicle,power,shatter,glacier,
@@ -97,10 +99,10 @@ type
 	end;
 
 	chartrecord    = record
-		value		: array[1..20,1..2] of byte;
-		filename	: array[1..20] of string;
-		number		: array[1..20] of string; {roll}
 		diceroll	: string; {roll}
+		value		: array[1..20,1..2] of byte;
+		number		: array[1..20] of string; {roll}
+		monsterid	: array[1..20] of string;
 	end;
 
 
@@ -108,6 +110,7 @@ function itempicfile(theitem:item):string;
 function spellstring(thespell:spell):string;
 function itemstring(theitem:item):string;
 function exist(dosname:string):boolean;
+function getchart(chartid:string):chartrecord;
 
 IMPLEMENTATION
 
@@ -197,6 +200,55 @@ begin
      close(pasfile);
      {$I+}
      exist:=(IoResult=0);
+end;
+{--------------------------------------------------------------------------}
+function getchart(chartid:string):chartrecord;
+
+var
+    pasfile         :   text;
+    chart           :   chartrecord;
+    lineoftext      :   string;
+    search          :   string;
+    loop            :   integer;
+    ch              :   char;
+
+begin
+    
+    if not(exist(chartdata)) then
+    begin
+        writeln('Could not open '+chartdata);
+        halt(1);
+    end;
+    assign(pasfile,chartdata);
+    reset(pasfile);
+
+    lineoftext:='';
+    search:='~'+chartid;
+    while not ( (eof(pasfile)) or (pos(search,lineoftext)>0) ) do
+        readln(pasfile,lineoftext);
+
+    if not (pos(search,lineoftext)>0) then
+    begin
+        writeln('Could not find '+chartid);
+        halt(1);
+    end;
+
+    with chart do
+    begin
+        readln(pasfile,diceroll);
+        for loop:=1 to 20 do
+        begin
+            read(pasfile,value[loop,1]);
+            read(pasfile,value[loop,2]);
+            read(pasfile,ch);
+            readln(pasfile,number[loop]);
+            readln(pasfile,monsterid[loop]);
+        end;
+    end;
+	close(pasfile);
+
+    getchart:=chart;
+
 end;
 {--------------------------------------------------------------------------}
 

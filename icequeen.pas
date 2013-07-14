@@ -794,7 +794,7 @@ end;
 {Combat Functions and Procedures}
 {---------------------------------------------------------------------------}
 procedure rollmonsters(var monster:monsterlist;nummonsters:integer;
-	                  monsterfile:string);
+	                  monsterid:string);
 
 var
 
@@ -818,12 +818,12 @@ begin
 
     lineoftext:='';
     {Find the data}
-    while not ( (eof(pasfile)) or (pos(monsterfile,lineoftext)>0) ) do
+    while not ( (eof(pasfile)) or (pos('~'+monsterid,lineoftext)>0) ) do
         readln(pasfile,lineoftext);
 
-    if not (pos(monsterfile,lineoftext)>0) then
+    if not (pos('~'+monsterid,lineoftext)>0) then
     begin
-        writeln('Could not load '+monsterfile);
+        writeln('Could not find '+monsterid);
         halt(1);
     end;
 
@@ -1153,6 +1153,31 @@ begin
 
 end;
 {---------------------------------------------------------------------------}
+procedure rollchart(chartid:string;var num:integer;var id:string);
+
+{ returns a chart result - number of monsters, and monster id }
+
+var
+    chart   :   chartrecord;
+    theroll :   integer;
+    loop    :   integer;
+
+begin
+    chart:=getchart(chartid);
+    with chart do
+    begin
+        theroll:=roll(diceroll);
+        for loop:=1 to 20 do
+        begin
+            if (theroll in [value[loop,1]..value[loop,2]]) then
+            begin
+                num:=roll(number[loop]);
+                id:=monsterid[loop];
+            end;
+        end;
+    end;
+end;
+{---------------------------------------------------------------------------}
 procedure combatcast(var player:character_t;spellnum:integer;
 	                var nummonsters:integer;var monster:monsterlist;
 	                var playereffect:effectrecord;var monstereffect:effectlist);
@@ -1168,12 +1193,7 @@ var
 	errcode        :    integer;
 	thespell       :    spell;
 	powerroll      :    integer;
-	monsterchart   :    chartrecord;
-	pasfile        :    file of chartrecord;
-	theroll        :    integer;
-	val1           :    integer;
-	val2           :    integer;
-	monsterfile    :    string;
+	monsterid      :    string;
 	newmonster     :    monsterlist;
 	numnewmonster  :    integer;
 	saveroll       :    integer;
@@ -1332,39 +1352,19 @@ begin
 	                                        end
 	                                   else
 	                                        begin
-	                                             {------roll monster-----}
-	                                             if not(exist(chartdir+wildchart)) then
-	                                                  exit;
-	                                             assign(pasfile,chartdir+wildchart);
-	                                             reset(pasfile);
-	                                             read(pasfile,monsterchart);
-	                                             close(pasfile);
-	                                             with monsterchart do
-	                                                begin
-	                                                   theroll:=roll(diceroll);
-	                                                   for count:=1 to 20 do
-	                                                      begin
-	                                                         val1:=value[count,1];
-	                                                         val2:=value[count,2];
-	                                                         if (theroll in [val1..val2]) then
-	                                                            begin
-	                                                               monsterfile:=filename[count];
-	                                                               numnewmonster:=1;
-	                                                            end;
-	                                                      end;
-	                                                end;
-	                                             rollmonsters(newmonster,numnewmonster,monsterfile);
-	                                             {-----------------------}
-	                                             nummonsters:=nummonsters+1;
-	                                             monster[nummonsters]:=newmonster[1];
-	                                             tempstring:=monster[nummonsters].name;
-	                                             tempstring:=capitalize(tempstring);
-	                                             x:=120-(textwidth(tempstring) DIV 2);
-	                                             graphwriteln(x,y,tempstring);
-	                                             graphwriteln(x,y,'');
-	                                             tempstring:='appears';
-	                                             x:=120-(textwidth(tempstring) DIV 2);
-	                                             graphwriteln(x,y,tempstring);
+                                                rollchart('wilderness',numnewmonster,monsterid);
+                                                numnewmonster:=1;
+	                                            rollmonsters(newmonster,numnewmonster,monsterid);
+	                                            nummonsters:=nummonsters+1;
+	                                            monster[nummonsters]:=newmonster[1];
+	                                            tempstring:=monster[nummonsters].name;
+	                                            tempstring:=capitalize(tempstring);
+	                                            x:=120-(textwidth(tempstring) DIV 2);
+	                                            graphwriteln(x,y,tempstring);
+	                                            graphwriteln(x,y,'');
+	                                            tempstring:='appears';
+	                                            x:=120-(textwidth(tempstring) DIV 2);
+	                                            graphwriteln(x,y,tempstring);
 	                                        end;
 	                              end;
 	                           20:begin
@@ -1786,14 +1786,8 @@ var
 	damagetype     :    string;
 	dmgroll        :    string; {dice}
 	dmg            :    integer;
-	count          :    integer;
-	monsterchart   :    chartrecord;
-	pasfile        :    file of chartrecord;
-	theroll        :    integer;
-	val1           :    integer;
-	val2           :    integer;
 	newmonster     :    monsterlist;
-	monsterfile    :    string;
+	monsterid      :    string;
 	numnewmonster  :    integer;
 	saveroll       :    integer;
 
@@ -1899,39 +1893,19 @@ begin
 	                                        end
 	                                   else
 	                                        begin
-	                                             {------roll monster-----}
-	                                             if not(exist(chartdir+wildchart)) then
-	                                                  exit;
-	                                             assign(pasfile,chartdir+wildchart);
-	                                             reset(pasfile);
-	                                             read(pasfile,monsterchart);
-	                                             close(pasfile);
-	                                             with monsterchart do
-	                                                begin
-	                                                   theroll:=roll(diceroll);
-	                                                   for count:=1 to 20 do
-	                                                      begin
-	                                                         val1:=value[count,1];
-	                                                         val2:=value[count,2];
-	                                                         if (theroll in [val1..val2]) then
-	                                                            begin
-	                                                               monsterfile:=filename[count];
-	                                                               numnewmonster:=1;
-	                                                            end;
-	                                                      end;
-	                                                end;
-	                                             rollmonsters(newmonster,numnewmonster,monsterfile);
-	                                             {-----------------------}
-	                                             nummonsters:=nummonsters+1;
-	                                             monster[nummonsters]:=newmonster[1];
-	                                             tempstring:=monster[nummonsters].name;
-	                                             tempstring:=capitalize(tempstring);
-	                                             x:=120-(textwidth(tempstring) DIV 2);
-	                                             graphwriteln(x,y,tempstring);
-	                                             graphwriteln(x,y,'');
-	                                             tempstring:='appears';
-	                                             x:=120-(textwidth(tempstring) DIV 2);
-	                                             graphwriteln(x,y,tempstring);
+                                                rollchart('wilderness',numnewmonster,monsterid);
+                                                numnewmonster:=1;
+	                                            rollmonsters(newmonster,numnewmonster,monsterid);
+	                                            nummonsters:=nummonsters+1;
+	                                            monster[nummonsters]:=newmonster[1];
+	                                            tempstring:=monster[nummonsters].name;
+	                                            tempstring:=capitalize(tempstring);
+	                                            x:=120-(textwidth(tempstring) DIV 2);
+	                                            graphwriteln(x,y,tempstring);
+	                                            graphwriteln(x,y,'');
+	                                            tempstring:='appears';
+	                                            x:=120-(textwidth(tempstring) DIV 2);
+	                                            graphwriteln(x,y,tempstring);
 	                                        end;
 	                              end;
 	                            8:begin
@@ -3509,7 +3483,7 @@ procedure attack_roland(var player:character_t);
 
 begin
 	nummonsters:=1;
-	rollmonsters(monster,nummonsters,'roland.dat');
+	rollmonsters(monster,nummonsters,'roland');
 	monster[1].endurance:=200;
 	monster[1].endurancemax:=200;
 	combat(player,nummonsters,monster);
@@ -3820,13 +3794,13 @@ begin
 	          if (ans in ['a','A']) then
 	               begin
 	                    nummonsters:=1;
-	                    rollmonsters(tempmonster,nummonsters,'dilvish.dat');
+	                    rollmonsters(tempmonster,nummonsters,'dilvish');
 	                    monster[1]:=tempmonster[1];
-	                    rollmonsters(tempmonster,nummonsters,'prudence.dat');
+	                    rollmonsters(tempmonster,nummonsters,'prudence');
 	                    monster[2]:=tempmonster[1];
-	                    rollmonsters(tempmonster,nummonsters,'spirit.dat');
+	                    rollmonsters(tempmonster,nummonsters,'spirit');
 	                    monster[3]:=tempmonster[1];
-	                    rollmonsters(tempmonster,nummonsters,'marcus.dat');
+	                    rollmonsters(tempmonster,nummonsters,'marcus');
 	                    monster[4]:=tempmonster[1];
 	                    nummonsters:=4;
 	                    combat(player,nummonsters,monster);
@@ -3914,7 +3888,7 @@ begin
 	                              else
 	                                   begin
 	                                        nummonsters:=1;
-	                                        rollmonsters(monster,nummonsters,'baltar.dat');
+	                                        rollmonsters(monster,nummonsters,'baltar');
 	                                        combat(player,nummonsters,monster);
 	                                        cleardevice;
                                                 drawpic(70,10,'esi.ln1');
@@ -4106,7 +4080,7 @@ begin
 	                              writefile(175,textdir+'063.txt');
 	                              prompt;
 	                              nummonsters:=1;
-	                              rollmonsters(monster,nummonsters,'succubus.dat');
+	                              rollmonsters(monster,nummonsters,'succubus');
 	                              combat(player,nummonsters,monster);
 	                              cleardevice;
                                       drawpic(70,10,'esi.ln1');
@@ -4461,7 +4435,7 @@ begin
 	                              graphwriteln(x,y,'They attack.');
 	                              prompt;
 	                              nummonsters:=roll('1d4')+2;
-	                              rollmonsters(monster,nummonsters,'brawler.dat');
+	                              rollmonsters(monster,nummonsters,'brawler');
 	                              combat(player,nummonsters,monster);
 	                              cleardevice;
 	                              if GAMEOVER then exit;
@@ -4626,7 +4600,7 @@ begin
 	                              graphwriteln(x,y,'They attack.');
 	                              prompt;
 	                              nummonsters:=roll('1d6')+2;
-	                              rollmonsters(monster,nummonsters,'bandit.dat');
+	                              rollmonsters(monster,nummonsters,'bandit');
 	                              combat(player,nummonsters,monster);
 	                              cleardevice;
                                       drawpic(70,10,'esi.ln1');
@@ -4916,17 +4890,11 @@ end;
 
 
 {---------------------------------------------------------------------------}
-procedure encounter(chartfile:string);
+procedure encounter(chartid:string);
 
 var
-	monsterchart   :    chartrecord;
-	pasfile        :    file of chartrecord;
-	theroll        :    integer;
-	count          :    integer;
-	val1           :    integer;
-	val2           :    integer;
-	monsterfile    :    string;
-	monmax         :    integer;
+	monsterid      :    string;
+	nummonsters    :    integer;
 
 begin
 	clearmessage;
@@ -4937,36 +4905,10 @@ begin
 	message(x,y,'');
 	message(x,y,'             MONSTERS!');
 	prompt;
-	if not(exist(chartdir+chartfile)) then
-	     exit;
-	assign(pasfile,chartdir+chartfile);
-	reset(pasfile);
-	read(pasfile,monsterchart);
-	close(pasfile);
 
-	with monsterchart do
-	     begin
-	          theroll:=roll(diceroll);
-	          monmax:=rollmax(diceroll);
-	          for count:=1 to monmax do
-	               begin
-	                    val1:=value[count,1];
-	                    val2:=value[count,2];
-	                    if (theroll in [val1..val2]) then
-	                         begin
-	                              monsterfile:=filename[count];
-	                              nummonsters:=roll(number[count]);
-	                              if (nummonsters>monstermax) then
-	                                   nummonsters:=monstermax;
-	                              if (nummonsters<1) then
-	                                   nummonsters:=1;
-	                         end;
-	               end;
-	     end;
-
-	rollmonsters(monster,nummonsters,monsterfile);
+    rollchart(chartid,nummonsters,monsterid);
+	rollmonsters(monster,nummonsters,monsterid);
 	combat(player,nummonsters,monster);
-
 end;
 
 {Dungeon/Cave/Castle Engine}
@@ -5379,7 +5321,7 @@ begin
                   drawpic(200,200,'manticor.ln1');
 	          prompt;
 	          nummonsters:=1;
-	          rollmonsters(monster,nummonsters,'manticor.dat');
+	          rollmonsters(monster,nummonsters,'manticor');
 	          combat(player,nummonsters,monster);
 	          if (nummonsters=0) then
 	               begin
@@ -5460,7 +5402,7 @@ begin
                   drawpic(200,200,'displace.ln1');
 	          prompt;
 	          nummonsters:=1;
-	          rollmonsters(monster,nummonsters,'displace.dat');
+	          rollmonsters(monster,nummonsters,'displace');
 	          combat(player,nummonsters,monster);
 	          if (nummonsters=0) then
 	               begin
@@ -5536,7 +5478,7 @@ begin
                   drawpic(200,200,'salamand.ln1');
 	          prompt;
 	          nummonsters:=1;
-	          rollmonsters(monster,nummonsters,'salamand.dat');
+	          rollmonsters(monster,nummonsters,'salamand');
 	          combat(player,nummonsters,monster);
 	          if (nummonsters=0) then
 	               player.stages:=player.stages + [lizard]
@@ -5560,7 +5502,7 @@ begin
 	message(x,y,'You find yourself in the barracks.');
 	message(x,y,'    The soldiers here attack!');
 	prompt;
-	encounter(castlechart);
+	encounter('castle');
 	screensetup;
 end;
 {---------------------------------------------------------------------------}
@@ -5580,7 +5522,7 @@ begin
                   drawpic(200,200,'knight.ln1');
 	          prompt;
 	          nummonsters:=1;
-	          rollmonsters(monster,nummonsters,'knight.dat');
+	          rollmonsters(monster,nummonsters,'knight');
 	          combat(player,nummonsters,monster);
 	          if (nummonsters=0) then
 	               player.stages:=player.stages + [knight]
@@ -5613,7 +5555,7 @@ begin
                   drawpic(210,300,'icequeen.ln1');
 	          prompt;
 	          nummonsters:=1;
-	          rollmonsters(monster,nummonsters,'icequeen.dat');
+	          rollmonsters(monster,nummonsters,'icequeen');
 	          monster[1].endurance:=40;
 	          combat(player,nummonsters,monster);
 	          if (nummonsters=0) then
@@ -5764,7 +5706,7 @@ begin
 	     ans:=readarrowkey;
 	until (ans in ['y','Y','n','N']);
 	if (ans in ['y','Y']) then
-	     dungeon_engine(player,dungeonmap,dungeoncode,dungeonchart,px,py);
+	     dungeon_engine(player,dungeonmap,dungeoncode,'dungeon',px,py);
 	screensetup;
 end;
 
@@ -5842,7 +5784,7 @@ begin
 	                    graphwriteln(x,y,'     You enter the dragon''s lair...');
 	                    prompt;
 	                    nummonsters:=1;
-	                    rollmonsters(monster,nummonsters,'dragon.dat');
+	                    rollmonsters(monster,nummonsters,'dragon');
 	                    monster[1].endurance:=80;
 	                    monster[1].endurancemax:=80;
 	                    combat(player,nummonsters,monster);
@@ -5987,7 +5929,7 @@ begin
 	     ans:=readarrowkey;
 	until (ans in ['y','Y','n','N']);
 	if (ans in ['Y','y']) then
-	     dungeon_engine(player,cavemap,cavecode,cavechart,20,8)
+	     dungeon_engine(player,cavemap,cavecode,'cave',20,8)
 	else
 	     surfacemessage;
 end;
@@ -6076,7 +6018,7 @@ begin
 	                                        graphwriteln(x,y,'and you hoist yourself upon it.  It flies you');
 	                                        graphwriteln(x,y,'over the wall.  The roc leaves and the guards attack.');
 	                                        prompt;
-	                                        encounter(castlechart);
+	                                        encounter('castle');
 	                                        done:=true;
 	                                        enter:=true;
 	                                   end
@@ -6086,7 +6028,7 @@ begin
 	                                        graphwriteln(x,y,'Upon seeing this some of the guards make a run');
 	                                        graphwriteln(x,y,'for it.  The others attack...');
 	                                        prompt;
-	                                        encounter(castlechart);
+	                                        encounter('castle');
 	                                        done:=true;
 	                                        enter:=true;
 	                                   end;
@@ -6102,7 +6044,7 @@ begin
 	     end;{case}
 	until done;
 	if (enter) then
-	     dungeon_engine(player,castlemap,castlecode,castlechart,10,13);
+	     dungeon_engine(player,castlemap,castlecode,'castle',10,13);
 
 end;
 {---------------------------------------------------------------------------}
@@ -6245,13 +6187,13 @@ begin
 	               case code[px,py] of
 	                    0:if (roll('1d100')<=wildchance) then
 	                           begin
-	                                encounter(wildchart);
+	                                encounter('wilderness');
 	                                if not(GAMEOVER) then
 	                                   surfacescreen(map);
 	                           end;
 	                    2:if (roll('1d100')<=roadchance) then
 	                           begin
-	                                encounter(wildchart);
+	                                encounter('wilderness');
 	                                if not(GAMEOVER) then
 	                                   surfacescreen(map);
 	                           end;
