@@ -79,6 +79,7 @@ function keypressed:boolean;
 procedure delay(ms:word);
 
 procedure setfont(font:string;charsize:word);
+procedure getfont(var font:string;var charsize:word);
 function readarrowkey:char;
 procedure prompt;
 procedure homecursor(var cursorx,cursory:integer);
@@ -130,6 +131,13 @@ function getcolor:byte;
 
 begin
     getcolor:=fgcolor;
+end;
+{--------------------------------------------------------------------------}
+procedure getfont(var font:string;var charsize:word);
+
+begin
+    font:=fontfile;
+    charsize:=textsize;
 end;
 {--------------------------------------------------------------------------}
 procedure setfont(font:string;charsize:word);

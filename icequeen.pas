@@ -224,18 +224,19 @@ var
 	ans            :    char;
 
 begin
-	setfont('sanseri.ttf',2);
 	repeat
 	     cleardevice;
 	     homecursor(x,y);
-	     setcolor(blue);
-	     graphwriteln(x,y,'            CREATE YOUR CHARACTER');
+         setfont('gothic.ttf',7);
+	     setcolor(lightgray);
+	     centerwrite(getmaxx DIV 2,y,'Start a New Character');
+	     graphwriteln(x,y,'');
+         setfont('default.ttf',2);
 	     graphwriteln(x,y,'');
 	     setcolor(white);
 	     with player do
 	          begin
-	               graphwrite(x,y,'Enter name:  ');
-
+	               graphwrite(x,y,'Character name:  ');
 	               graphread(x,y,tempstring);
 	               name:=tempstring;
 	               if (name='') then
@@ -244,23 +245,22 @@ begin
 	                         name:='Landon';
 	                    end;
 	               graphwriteln(x,y,'');
-	               graphwriteln(x,y,'');
-	               graphwrite(x,y,'Sex (M/F)  ');
+	               graphwrite(x,y,'     Sex (M/F):  ');
 	               repeat
 	                    sex:=readarrowkey;
 	               until (sex in ['m','M','f','F']);
 	               outtextxy(x,y,sex);
-	               if (sex in ['m','M']) then
-                            drawpic(x+200,y,'mplayer.ln1')
-	               else
-                            drawpic(x+200,y,'fplayer.ln1');
 	               graphwriteln(x,y,'');
+	               if (sex in ['m','M']) then
+                            drawpic(getmaxx DIV 2,y,'mplayer.ln1')
+	               else
+                            drawpic(getmaxx DIV 2,y,'fplayer.ln1');
 	               setcolor(white);
 	               level:=1;
 	               experience:=0;
 	               endurancemax:=8;
 	               endurance:=endurancemax;
-	               graphwrite(x,y,'Endurance: ');
+	               graphwrite(x,y,'     Endurance:  ');
 	               str(endurancemax,tempstring);
 	               graphwriteln(x,y,tempstring);
 	               points:=roll('5d6');
@@ -278,7 +278,6 @@ begin
 	                     dexterity:=dexterity + tempint;
 	                     points:=points - tempint;
 	                  end;
-	               graphwriteln(x,y,'');
 	               graphwriteln(x,y,'Modify your stats:');
 	               current:=true;
 	               done:=false;
@@ -288,12 +287,12 @@ begin
 	                  setfillstyle(solidfill,black);
 	                  bar(0,200,300,300);
 	                  y:=200;
-	                  graphwrite(x,y,'Points: ');
+	                  graphwriteln(x,y,'Use the arrow keys to assign points');
+	                  graphwrite(x,y,'   Points: ');
 	                  str(points,tempstring);
 	                  graphwriteln(x,y,tempstring);
-	                  graphwriteln(x,y,'');
 	                  if (current) then setcolor(lightcyan);
-	                  graphwrite(x,y,'Strength: ');
+	                  graphwrite(x,y,' Strength: ');
 	                  str(strength,tempstring);
 	                  graphwriteln(x,y,tempstring);
 	                  setcolor(white);
@@ -303,10 +302,7 @@ begin
 	                  graphwriteln(x,y,tempstring);
 	                  setcolor(white);
 	                  graphwriteln(x,y,'');
-	                  setfont('default.ttf',4);
-	                  graphwriteln(x,y,'Use the arrow keys.');
 	                  graphwriteln(x,y,'Press <Enter> when done.');
-	                  setfont('sanseri.ttf',2);
 	                  validchange:=false;
 	                  repeat
 	                     ch:=readarrowkey;
@@ -358,7 +354,7 @@ begin
 	               until (done);
 	               coins:=(roll('3d6')+(points*10)) * 10;
 	               graphwriteln(x,y,'');
-	               graphwrite(x,y,'Coins: ');
+	               graphwrite(x,y,'       Coins: ');
 	               str(coins,tempstring);
 	               graphwriteln(x,y,tempstring);
 	               if (sex in ['m','M']) then
@@ -394,17 +390,20 @@ begin
 	repeat
 	     cleardevice;
 	     homecursor(x,y);
+         setcolor(white);
+         setfont('gothic.ttf',7);
+         centerwrite(getmaxx DIV 2,y,'Load Game');
+         graphwriteln(x,y,'');
+         graphwriteln(x,y,'');
 	     setcolor(lightgray);
-	     setfont('sanseri.ttf',3);
-	     graphwriteln(x,y,'[default: '+savedefault+']');
+	     setfont('default.ttf',3);
+	     graphwriteln(x,y,'(default: '+savedefault+')');
 	     graphwriteln(x,y,'');
-	     setfont('sanseri.ttf',4);
 	     graphwrite(x,y,'Enter File Name: ');
 	     setcolor(lightblue);
 	     graphread(x,y,dosname);
 	     if (dosname='') then
 	          dosname:=savedefault;
-	     setfont('sanseri.ttf',5);
 	     graphwriteln(x,y,'');
 	     graphwriteln(x,y,'');
 	     setcolor(lightgray);
@@ -420,12 +419,9 @@ begin
 	     else
 	          begin
 	               setcolor(red);
-	               graphwriteln(x,y,'  Sorry, file does not exist.');
-	               setfont('sanseri.ttf',3);
+	               graphwriteln(x,y,'Saved game not found.');
 	               setcolor(lightgray);
-	               x:=10;
-	               y:=300;
-	               graphwriteln(x,y,'                 (L)oad or (S)tart');
+	               centerwrite(getmaxx DIV 2,300,'(L)oad or (S)tart');
 	               repeat
 	                    ans:=readarrowkey;
 	               until (ans in ['l','L','s','S']);
@@ -3738,50 +3734,42 @@ var ans:char;
 
 begin
 	setcolor(lightblue);
-	setfont('default.ttf',3);
+	setfont('default.ttf',6);
 	x:=10;
-	y:=100;
-	graphwriteln(x,y,'      Town Options');
-	graphwriteln(x,y,'');
-	setfont('default.ttf',2);
+	y:=40;
+	centerwrite(getmaxx DIV 2,y,'Town Options');
+    graphwriteln(x,y,'');
+	setfont('default.ttf',4);
 	graphwriteln(x,y,'');
 	setcolor(lightcyan);
-	graphwrite(x,y,'            V');
+	graphwrite(x,y,'              V');
 	setcolor(lightblue);
 	graphwriteln(x,y,'iew Stats');
-	graphwriteln(x,y,'');
 	setcolor(lightcyan);
-	graphwrite(x,y,'            U');
+	graphwrite(x,y,'              U');
 	setcolor(lightblue);
 	graphwriteln(x,y,'se Item');
-	graphwriteln(x,y,'');
 	setcolor(lightcyan);
-	graphwrite(x,y,'            C');
+	graphwrite(x,y,'              C');
 	setcolor(lightblue);
 	graphwriteln(x,y,'ast Spell');
-	graphwriteln(x,y,'');
 	setcolor(lightcyan);
-	graphwrite(x,y,'            L');
+	graphwrite(x,y,'              L');
 	setcolor(lightblue);
 	graphwriteln(x,y,'eave Town');
-	graphwriteln(x,y,'');
 	setcolor(lightcyan);
-	graphwrite(x,y,'            S');
+	graphwrite(x,y,'              S');
 	setcolor(lightblue);
 	graphwriteln(x,y,'ave Game');
-	graphwriteln(x,y,'');
 	setcolor(lightcyan);
-	graphwrite(x,y,'            Q');
+	graphwrite(x,y,'              Q');
 	setcolor(lightblue);
 	graphwriteln(x,y,'uit Game');
 	graphwriteln(x,y,'');
 	graphwriteln(x,y,'');
-	setcolor(lightcyan);
-	graphwrite(x,y,'  ** ');
-	setcolor(lightblue);
-	graphwrite(x,y,'any other key--Back to Town');
-	setcolor(lightcyan);
-	graphwriteln(x,y,' **');
+	setcolor(white);
+    setfont('default.ttf',2);
+	centerwrite(getmaxx DIV 2,y,'Press any other key to go back to town');
 	ans:=readarrowkey;
 	case ans of
 	 'v','V':viewstats(player);
@@ -3813,14 +3801,11 @@ begin
 	leavetown:=false;
 	repeat
 	     cleardevice;
-             drawpic(45,45,'thetown.ln1');
-	     setfont('default.ttf',1);
+         drawpic(45,45,'thetown.ln1');
+	     setfont('default.ttf',2);
 	     setcolor(white);
-	     x:=10;
-	     y:=410;
-	     graphwriteln(x,y,'                        choose a place to visit (1-4)');
-	     graphwriteln(x,y,'');
-	     graphwriteln(x,y,'                          press <SPACE> for options');
+	     centerwrite(getmaxx DIV 2,400,'Choose a door (1-4) or');
+	     centerwrite(getmaxx DIV 2,425,'press <SPACE> for other options');
 	     repeat
 	          ans:=readarrowkey;
 	     until (ans in ['1'..'4',' ']);
@@ -6351,19 +6336,19 @@ begin
 	     setfont('gothic.ttf',8);
 	     setcolor(lightgray);
 	     centerwrite(center,10,'The Ice Queen');
-	     ans:='I';
+	     ans:='L';
 	     repeat
 	          setfont('default.ttf',5);
 	          setcolor(lightblue);
 	          centerwrite(center,120,'Introduction');
-	          centerwrite(center,180,'Start');
-	          centerwrite(center,240,'Load');
+	          centerwrite(center,180,'Start New Game');
+	          centerwrite(center,240,'Load Game');
 	          centerwrite(center,300,'Quit');
 	          setcolor(white);
 	          case ans of
 	               'I':centerwrite(center,120,'Introduction');
-	               'S':centerwrite(center,180,'Start');
-	               'L':centerwrite(center,240,'Load');
+	               'S':centerwrite(center,180,'Start New Game');
+	               'L':centerwrite(center,240,'Load Game');
 	               'Q':centerwrite(center,300,'Quit');
 	          end;
 	          ch:=readarrowkey;
