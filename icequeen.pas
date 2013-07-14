@@ -808,12 +808,12 @@ begin
 
     {reading monster data should be moved to dataio}
 
-	if not(exist('monst.dat')) then
+	if not(exist(monsterdata)) then
     begin
-        writeln('Could not find monst.dat');
+        writeln('Could not find '+monsterdata);
 	    halt(1);
     end;
-	assign(pasfile,'monst.dat');
+	assign(pasfile,monsterdata);
 	reset(pasfile);
 
     lineoftext:='';
