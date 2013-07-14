@@ -151,7 +151,8 @@ begin
         fontfile:=fullpath
     else
         writeln('Warning:  '+fullpath+' not found');
-    if (charsize in [0..8]) then textsize:=charsize;
+    textsize:=charsize;
+    if textsize > 24 then textsize:=24;
 end;
 {--------------------------------------------------------------------------}
 function getSDLfontsize     :   word;

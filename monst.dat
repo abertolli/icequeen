@@ -1,4 +1,4 @@
-~monst/ant.dat
+id=ant.dat
 giant ant
 ant.bmp
 M
@@ -15,7 +15,7 @@ bites
 0
 0
 ~
-~monst/baboon.dat
+id=baboon.dat
 rock baboon
 baboon.bmp
 M
@@ -32,7 +32,7 @@ scratches
 1d4
 0
 ~
-~monst/baltar.dat
+id=baltar.dat
 Baltar
 baltar.bmp
 M
@@ -49,7 +49,7 @@ slices
 3d10
 0
 ~
-~monst/bandit.dat
+id=bandit.dat
 bandit
 bandit.bmp
 M
@@ -66,7 +66,7 @@ attacks
 3d8+8
 0
 ~
-~monst/bee.dat
+id=bee.dat
 giant bee
 bee.bmp
 M
@@ -83,7 +83,7 @@ stings
 0
 0
 ~
-~monst/beetle.dat
+id=beetle.dat
 fire beetle
 beetle.bmp
 M
@@ -100,7 +100,7 @@ bites
 0
 0
 ~
-~monst/berserke.dat
+id=berserke.dat
 berserker
 berserke.bmp
 M
@@ -117,7 +117,7 @@ smashes
 2d6
 0
 ~
-~monst/brawler.dat
+id=brawler.dat
 Brawler
 brawler.bmp
 M
@@ -134,7 +134,7 @@ punches
 1d10
 0
 ~
-~monst/centaur.dat
+id=centaur.dat
 centaur
 centaur.bmp
 M
@@ -151,7 +151,7 @@ kicks
 2d6
 0
 ~
-~monst/centiped.dat
+id=centiped.dat
 gnt centipede
 centiped.bmp
 M
@@ -168,7 +168,7 @@ bites
 0
 0
 ~
-~monst/dilvish.dat
+id=dilvish.dat
 Dilvish
 dilvish.bmp
 M
@@ -187,7 +187,7 @@ slashes
 web
 fireblast
 ~
-~monst/displace.dat
+id=displace.dat
 displacer
 displace.bmp
 M
@@ -204,7 +204,7 @@ swipes
 1d20
 0
 ~
-~monst/dragon.dat
+id=dragon.dat
 Red Dragon
 dragon.bmp
 M
@@ -223,7 +223,7 @@ claws
 dragonbreath
 dragonbreath
 ~
-~monst/gargoyle.dat
+id=gargoyle.dat
 gargoyle
 gargoyle.bmp
 M
@@ -240,7 +240,7 @@ claws
 1d4
 0
 ~
-~monst/ghoul.dat
+id=ghoul.dat
 ghoul
 ghoul.bmp
 M
@@ -257,7 +257,7 @@ gropes
 1d6
 0
 ~
-~monst/giant.dat
+id=giant.dat
 hill giant
 giant.bmp
 M
@@ -274,7 +274,7 @@ decimates
 1000
 0
 ~
-~monst/goblin.dat
+id=goblin.dat
 goblin
 goblin.bmp
 M
@@ -291,7 +291,7 @@ spears
 3d6
 0
 ~
-~monst/icequeen.dat
+id=icequeen.dat
 Ice Queen
 icequeen.bmp
 F
@@ -314,7 +314,7 @@ freeze
 icicle
 glacier
 ~
-~monst/knight.dat
+id=knight.dat
 Ice Knight
 knight.bmp
 M
@@ -331,7 +331,7 @@ strikes
 4d8
 0
 ~
-~monst/kobold.dat
+id=kobold.dat
 kobold
 kobold.bmp
 M
@@ -348,7 +348,7 @@ pokes
 4d10
 0
 ~
-~monst/manticor.dat
+id=manticor.dat
 manticore
 manticor.bmp
 M
@@ -365,7 +365,7 @@ punctures
 1d100
 0
 ~
-~monst/marcus.dat
+id=marcus.dat
 Marcus
 marcus.bmp
 M
@@ -382,7 +382,7 @@ attacks
 5d10
 0
 ~
-~monst/minotaur.dat
+id=minotaur.dat
 minotaur
 minotaur.bmp
 M
@@ -399,7 +399,7 @@ gores
 2d8
 0
 ~
-~monst/ogre.dat
+id=ogre.dat
 ogre
 ogre.bmp
 M
@@ -416,7 +416,7 @@ clubs
 4d8
 0
 ~
-~monst/ooze.dat
+id=ooze.dat
 purple ooze
 ooze.bmp
 M
@@ -433,7 +433,7 @@ attacks
 1d4
 0
 ~
-~monst/orc.dat
+id=orc.dat
 orc
 orc.bmp
 M
@@ -450,7 +450,7 @@ slashes
 3d6
 0
 ~
-~monst/prudence.dat
+id=prudence.dat
 Prudence
 prudence.bmp
 F
@@ -467,7 +467,7 @@ spears
 1d10
 0
 ~
-~monst/roland.dat
+id=roland.dat
 Roland McDoland
 roland.bmp
 M
@@ -485,7 +485,7 @@ kicks
 1
 obliterate
 ~
-~monst/salamand.dat
+id=salamand.dat
 frost lizard
 salamand.bmp
 F
@@ -503,7 +503,7 @@ claws
 1
 resistcold
 ~
-~monst/shadow.dat
+id=shadow.dat
 shadow
 shadow.bmp
 M
@@ -520,7 +520,7 @@ attacks
 0
 0
 ~
-~monst/skeleton.dat
+id=skeleton.dat
 skeleton
 skeleton.bmp
 M
@@ -537,7 +537,7 @@ slashes
 1d6
 0
 ~
-~monst/slime.dat
+id=slime.dat
 green slime
 slime.bmp
 M
@@ -554,7 +554,7 @@ attacks
 0
 0
 ~
-~monst/soldier.dat
+id=soldier.dat
 Winter Soldier
 soldier.bmp
 M
@@ -571,7 +571,7 @@ spears
 2d6
 0
 ~
-~monst/spider.dat
+id=spider.dat
 crab spider
 spider.bmp
 M
@@ -588,7 +588,7 @@ bites
 0
 0
 ~
-~monst/spirit.dat
+id=spirit.dat
 Spirit
 spirit.bmp
 F
@@ -606,7 +606,7 @@ hits
 1
 heal
 ~
-~monst/succubus.dat
+id=succubus.dat
 Succubus
 succubus.bmp
 F
@@ -623,7 +623,7 @@ claws
 1d10+10
 0
 ~
-~monst/troll.dat
+id=troll.dat
 troll
 troll.bmp
 M
@@ -640,7 +640,7 @@ attacks
 3d6
 0
 ~
-~monst/werewolf.dat
+id=werewolf.dat
 werewolf
 werewolf.bmp
 M
@@ -657,7 +657,7 @@ swipes
 2d6
 0
 ~
-~monst/wolf.dat
+id=wolf.dat
 wolf
 wolf.bmp
 M
@@ -674,7 +674,7 @@ bites
 0
 0
 ~
-~monst/wraith.dat
+id=wraith.dat
 wraith
 wraith.bmp
 M
@@ -691,7 +691,7 @@ attacks
 0
 0
 ~
-~monst/wyvern.dat
+id=wyvern.dat
 wyvern
 wyvern.bmp
 M

@@ -192,8 +192,8 @@ var
 begin
     center:=getmaxx DIV 2;
     setfont('gothic.ttf',8);
-    setcolor(blue);
-    centerwrite(center+3,383,'The Ice Queen');
+    setcolor(lightblue);
+    centerwrite(center+5,385,'The Ice Queen');
     setcolor(white);
     centerwrite(center,380,'The Ice Queen');
     setfont('default.ttf',2);
@@ -831,14 +831,14 @@ var
 
 begin
 	cleardevice;
-	setcolor(darkgray);
+	setcolor(lightgray);
 	setfont('gothic.ttf',6);
-	outtextxy(1,80,'      You have died...');
-	setfont('sanseri.ttf',8);
-	repeat
-	     setcolor(roll('1d15'));
-	     outtextxy(1,240,'   GAME OVER');
-	until keypressed;
+	centerwrite(getmaxx DIV 2,80,'You have died...');
+	setfont('gothic.ttf',10);
+	setcolor(lightblue);
+    centerwrite(getmaxx DIV 2 + 5,225,'Game Over');
+	setcolor(white);
+    centerwrite(getmaxx DIV 2,220,'Game Over');
 	ch:=readarrowkey;
 	GAMEOVER:=TRUE;
 end;
