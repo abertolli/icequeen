@@ -394,11 +394,10 @@ begin
          setfont('gothic.ttf',7);
          centerwrite(getmaxx DIV 2,y,'Load Game');
          graphwriteln(x,y,'');
-         graphwriteln(x,y,'');
 	     setcolor(lightgray);
 	     setfont('default.ttf',3);
+         graphwriteln(x,y,'');
 	     graphwriteln(x,y,'(default: '+savedefault+')');
-	     graphwriteln(x,y,'');
 	     graphwrite(x,y,'Enter File Name: ');
 	     setcolor(lightblue);
 	     graphread(x,y,dosname);
@@ -2506,12 +2505,15 @@ begin
 	goahead:=false;
 	cleardevice;
 	homecursor(x,y);
+    setcolor(white);
+    setfont('gothic.ttf',7);
+    centerwrite(getmaxx DIV 2,y,'Save Game');
+    graphwriteln(x,y,'');
 	setcolor(lightgray);
-	setfont('sanseri.ttf',3);
-	graphwriteln(x,y,'[default: '+savedefault+']');
-	graphwriteln(x,y,'');
-	setfont('sanseri.ttf',4);
-	graphwrite(x,y,'Enter Save File Name: ');
+	setfont('default.ttf',3);
+    graphwriteln(x,y,'');
+	graphwriteln(x,y,'(default: '+savedefault+')');
+	graphwrite(x,y,'Enter File Name: ');
 	setcolor(lightblue);
 	graphread(x,y,dosname);
 	if (dosname='') then
@@ -2537,9 +2539,6 @@ begin
 	          rewrite(pasfile);
 	          write(pasfile,player);
 	          close(pasfile);
-	          graphwriteln(x,y,'');
-	          graphwriteln(x,y,'');
-	          graphwriteln(x,y,'');
 	          graphwriteln(x,y,'Saved.');
 	          setfont('default.ttf',2);
 	          prompt;
