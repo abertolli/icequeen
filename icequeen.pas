@@ -4707,7 +4707,7 @@ begin
 	                                   delay(delayvalue);
                                            drawpic(x,y,'wheel4.ln1');
 	                                   delay(delayvalue);
-	                              until KEYPRESSED;
+	                              until keypressed;
 	                              ch:=readarrowkey;
 	                         until (ch=' ');
 	                         y:=350;
@@ -5869,7 +5869,7 @@ begin
 	repeat
 	    setcolor(roll('1d15'));
 	    outtextxy(x,y,'     crystal shard');
-	until Keypressed;
+	until keypressed;
 	prompt;
 end;
 {---------------------------------------------------------------------------}

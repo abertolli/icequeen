@@ -75,6 +75,7 @@ procedure rectangle(x1,y1,x2,y2:smallint);
 procedure fillellipse(x1,y1:smallint;xradius,yradius:word);
 function getmaxx:smallint;
 function getmaxy:smallint;
+function keypressed:boolean;
 procedure delay(ms:word);
 
 procedure setfont(font:string;charsize:word);
@@ -281,6 +282,13 @@ end;
 function getmaxy:smallint;
 begin
     getmaxy:=screen^.h;
+end;
+{--------------------------------------------------------------------------}
+function keypressed         :   boolean;
+
+begin
+    SDL_PumpEvents;
+    keypressed:=(SDL_PeepEvents(nil,1,SDL_PEEKEVENT,SDL_KEYDOWNMASK) >= 1);
 end;
 {--------------------------------------------------------------------------}
 procedure delay(ms:word);
