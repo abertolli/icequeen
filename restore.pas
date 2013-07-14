@@ -10,18 +10,15 @@ program Restore;
 {This program resets all defaults, creating monster files, map and code files,
 wandering monster charts, and the config.dat file to go with them.}
 
-uses crt;
+uses crt, dataio, dice;
 
-{$I config.pas}
-{$I datadef.pas}
+const
+    {$I const.inc}
 
 var
      ch             :    char;
      ans            :    char;
      loop           :    integer;
-
-{$I extras.pas}
-{$I dice.pas}
 {--------------------------------------------------------------------------}
 procedure createmonster(
                name           :    string;
@@ -2778,13 +2775,13 @@ begin
 
 
 end;
-{--------------------------------------------------------------------------}
+
+{
 procedure createsavegame;
 
 var
      player    :    character_t;
 
-{++++++++++++++++++++++++++++++++++++++++++++++++++++++++++}
 procedure savegame(filename:string;player:character_t);
 
 var
@@ -2797,7 +2794,6 @@ begin
      close(savefile);
      writeln(filename);
 end;
-{++++++++++++++++++++++++++++++++++++++++++++++++++++++++++}
 
 
 begin
@@ -2885,13 +2881,15 @@ begin
      savegame(savedir+'/'+savedefault,player);
 
 end;
-{--------------------------------------------------------------------------}
+
+}
+
+{
 procedure createitems;
 
 var
      item      :    item_t;
 
-{++++++++++++++++++++++++++++++++++++++++++++++++++++++++++}
 procedure saveitem(filename:string;item:item_t);
 
 var
@@ -2904,11 +2902,9 @@ begin
      close(savefile);
      writeln(filename);
 end;
-{++++++++++++++++++++++++++++++++++++++++++++++++++++++++++}
 
 begin
 
-{weapons}
 
    with item do
       begin
@@ -3050,7 +3046,6 @@ begin
       end;
    saveitem(itemdir+'/chaos.dat',item);
 
-{armor}
 
    with item do
       begin
@@ -3112,7 +3107,6 @@ begin
       end;
    saveitem(itemdir+'/shield.dat',item);
 
-{potions}
 
    with item do
       begin
@@ -3155,8 +3149,7 @@ begin
 
 
 end;
-{--------------------------------------------------------------------------}
-
+}
 begin {main}
 
      clrscr;
@@ -3183,8 +3176,8 @@ begin {main}
                createmonsters;
                createmaps;
                createcharts;
-               createsavegame;
-               createitems;
+               {createsavegame;}
+               {createitems;}
                writeln;
                writeln('Press any key to continue.');
           end;
