@@ -14,13 +14,6 @@
 	castlecode	= 'castle.cod';
 	dungeonmap	= 'dungeon.map';
 	dungeoncode	= 'dungeon.cod';
-        {
-        charts - wandering monster charts
-        }
-	wildchart	= 'wild.dat';
-	cavechart	= 'cave.dat';
-	castlechart	= 'castle.dat';
-	dungeonchart= 'dungeon.dat';
 
 	chartile	= 'chartile.ln1';
 	savedefault	= 'game.sav';
@@ -28,11 +21,10 @@
 	textdir		= 'text/';
 	imagedir	= 'img/';
 	mapdir		= 'map/';
-	chartdir	= 'chart/';
 	savedir		= 'save/';
 	itemdir		= 'item';
-	monsterdata	= 'monst.dat';
-	chartdata	= 'chart.dat';
+	monsterdata	= 'game/monst.dat';
+	chartdata	= 'game/chart.dat';
 
 	{used for text columns}
 	col1	= 20;	 {column 1 for viewing stats}

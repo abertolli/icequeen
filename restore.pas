@@ -21,8 +21,8 @@ var
      loop           :    integer;
 {--------------------------------------------------------------------------}
 procedure createmonster(
+               monsterid      :    string;
                name           :    string;
-               filename       :    string;
                picfile        :    string;
                sex            :    char;
                alignment      :    char;
@@ -45,16 +45,16 @@ var
 
 
 {++++++++++++++++++++++++++++++++++++++++++++++++++++++++++}
-procedure savemonster(filename:string;monster:monsterrecord);
+procedure savemonster(monsterid:string;monster:monsterrecord);
 
 var
         savefile        : text;
         loop            : integer;
 
 begin
-     assign(savefile,filename);
-     rewrite(savefile);
-     writeln(savefile,'~'+filename);
+     assign(savefile,monsterdata);
+     append(savefile);
+     writeln(savefile,'~'+monsterid);
      with monster do
         begin
         writeln(savefile,name);
@@ -80,7 +80,7 @@ begin
         end;
      writeln(savefile,'~');
      close(savefile);
-     writeln(filename);
+     writeln(monsterid);
 end;
 {++++++++++++++++++++++++++++++++++++++++++++++++++++++++++}
 
@@ -130,13 +130,29 @@ begin
      monster.numspells:=numspells;
      monster.spell:=spell;
 
-     savemonster(monsterdir+'/'+filename,monster);
+     savemonster(monsterid,monster);
 
 end;
 {--------------------------------------------------------------------------}
 procedure createmonsters;
 
+var
+    savefile    :   file;
+
+
 begin
+
+    assign(savefile,monsterdata);
+    if exist(monsterdata) then
+    begin
+        reset(savefile);
+        truncate(savefile);
+    end
+    else
+    begin
+        rewrite(savefile);
+    end;
+    close(savefile);
 
 {name,file,picture,gender,alignment,HD,+HD,AC,DMG,attack,save,morale,basexpv,coins,numspells,spells}
 {
@@ -147,47 +163,47 @@ begin
 'D':dragonbreath    'E':resistfire      'F':resistcold
 }
 
-createmonster('wyvern','wyvern.dat','wyvern.bmp','M','C',7,0,3,'3d8','thrashes',14,9,850,'2d8',0,'');
-createmonster('centaur','centaur.dat','centaur.bmp','M','N',4,0,5,'1d6','kicks',14,8,75,'2d6',0,'');
-createmonster('crab spider','spider.dat','spider.bmp','M','N',2,0,7,'1d8','bites',16,7,25,'0',0,'');
-createmonster('werewolf','werewolf.dat','werewolf.bmp','M','C',4,0,5,'2d4','swipes',14,8,125,'2d6',0,'');
-createmonster('giant ant','ant.dat','ant.bmp','M','N',4,0,3,'2d6','bites',16,12,125,'0',0,'');
-createmonster('fire beetle','beetle.dat','beetle.bmp','M','N',1,2,4,'2d4','bites',16,7,15,'0',0,'');
-createmonster('wolf','wolf.dat','wolf.bmp','M','N',2,2,7,'1d6','bites',16,8,25,'0',0,'');
-createmonster('berserker','berserke.dat','berserke.bmp','M','C',1,1,7,'1d10+2','smashes',16,12,19,'2d6',0,'');
-createmonster('goblin','goblin.dat','goblin.bmp','M','C',1,-1,6,'1d6','spears',17,6,5,'3d6',0,'');
-createmonster('kobold','kobold.dat','kobold.bmp','M','C',1,-4,7,'1d4-1','pokes',17,4,1,'4d10',0,'');
-createmonster('orc','orc.dat','orc.bmp','M','C',1,0,6,'1d8','slashes',16,8,10,'3d6',0,'');
-createmonster('bandit','bandit.dat','bandit.bmp','M','C',1,-2,6,'1d6','attacks',15,6,5,'3d8+8',0,'');
-createmonster('ogre','ogre.dat','ogre.bmp','M','C',4,1,5,'1d8+2','clubs',14,10,125,'4d8',0,'');
-createmonster('rock baboon','baboon.dat','baboon.bmp','M','N',2,0,6,'1d4','scratches',16,8,20,'1d4',0,'');
-createmonster('giant bee','bee.dat','bee.bmp','M','N',1,-4,7,'1d3','stings',16,9,1,'0',0,'');
-createmonster('gnt centipede','centiped.dat','centiped.bmp','M','N',1,-4,9,'1d3','bites',17,7,1,'0',0,'');
-createmonster('minotaur','minotaur.dat','minotaur.bmp','M','C',6,0,6,'2d6','gores',14,12,275,'2d8',0,'');
-createmonster('troll','troll.dat','troll.bmp','M','C',6,3,4,'2d6+2','attacks',14,10,650,'3d6',0,'');
-createmonster('hill giant','giant.dat','giant.bmp','M','C',8,0,4,'2d8','decimates',12,8,650,'1000',0,'');
-createmonster('displacer','displace.dat','displace.bmp','M','N',6,0,4,'3d4','swipes',14,8,500,'1d20',0,'');
-createmonster('manticore','manticor.dat','manticor.bmp','M','C',6,1,4,'3d6','punctures',14,9,650,'1d100',0,'');
-createmonster('frost lizard','salamand.dat','salamand.bmp','F','C',12,0,3,'4d6','claws',10,9,2125,'1d10+200',1,'F');
-createmonster('Winter Soldier','soldier.dat','soldier.bmp','M','N',2,1,3,'1d6+1','spears',16,10,25,'2d6',0,'');
-createmonster('Red Dragon','dragon.dat','dragon.bmp','M','C',10,0,-1,'4d8','claws',10,12,2500,'10d100+5000',2,'DDDE');
-createmonster('Ice Queen','icequeen.dat','icequeen.bmp','F','C',12,0,9,'1d4+1','stabs',10,12,6500,'10d10+10',6,'11179C');
-createmonster('Roland McDoland','roland.dat','roland.bmp','M','C',20,20,-10,'2d6+3','kicks',1,12,18500,'100d100+100',1,'8');
-createmonster('green slime','slime.dat','slime.bmp','M','N',2,0,20,'1d4','attacks',16,7,30,'0',0,'');
-createmonster('shadow','shadow.dat','shadow.bmp','M','C',2,2,7,'1d4','attacks',16,12,35,'0',0,'');
-createmonster('skeleton','skeleton.dat','skeleton.bmp','M','C',1,0,7,'1d8','slashes',16,12,10,'1d6',0,'');
-createmonster('gargoyle','gargoyle.dat','gargoyle.bmp','M','C',4,0,5,'2d4','claws',12,11,175,'1d4',0,'');
-createmonster('ghoul','ghoul.dat','ghoul.bmp','M','C',2,0,6,'2d3','gropes',16,9,25,'1d6',0,'');
-createmonster('purple ooze','ooze.dat','ooze.bmp','M','N',1,0,9,'1d4','attacks',16,5,10,'1d4',0,'');
-createmonster('wraith','wraith.dat','wraith.bmp','M','C',4,0,3,'1d6','attacks',14,11,175,'0',0,'');
-createmonster('Dilvish','dilvish.dat','dilvish.bmp','M','N',4,0,1,'1d8+2','slashes',11,10,125,'2d10',2,'32');
-createmonster('Prudence','prudence.dat','prudence.bmp','F','L',5,5,4,'1d6+2','spears',14,12,175,'1d10',0,'');
-createmonster('Spirit','spirit.dat','spirit.bmp','F','N',4,0,3,'1d6','hits',15,10,125,'1d10',1,'5');
-createmonster('Marcus','marcus.dat','marcus.bmp','M','N',5,0,4,'1d6+3','attacks',13,8,175,'5d10',0,'');
-createmonster('Baltar','baltar.dat','baltar.bmp','M','C',5,5,2,'1d8+3','slices',14,10,175,'3d10',0,'');
-createmonster('Succubus','succubus.dat','succubus.bmp','F','C',6,0,0,'1d6','claws',14,12,500,'1d10+10',0,'');
-createmonster('Brawler','brawler.dat','brawler.bmp','M','N',2,1,9,'1d2+1','punches',16,8,25,'1d10',0,'');
-createmonster('Ice Knight','knight.dat','knight.bmp','M','C',6,6,2,'1d8+1','strikes',14,11,350,'4d8',0,'');
+createmonster('wyvern','wyvern','wyvern.bmp','M','C',7,0,3,'3d8','thrashes',14,9,850,'2d8',0,'');
+createmonster('centaur','centaur','centaur.bmp','M','N',4,0,5,'1d6','kicks',14,8,75,'2d6',0,'');
+createmonster('spider','crab spider','spider.bmp','M','N',2,0,7,'1d8','bites',16,7,25,'0',0,'');
+createmonster('werewolf','werewolf','werewolf.bmp','M','C',4,0,5,'2d4','swipes',14,8,125,'2d6',0,'');
+createmonster('ant','giant ant','ant.bmp','M','N',4,0,3,'2d6','bites',16,12,125,'0',0,'');
+createmonster('beetle','fire beetle','beetle.bmp','M','N',1,2,4,'2d4','bites',16,7,15,'0',0,'');
+createmonster('wolf','wolf','wolf.bmp','M','N',2,2,7,'1d6','bites',16,8,25,'0',0,'');
+createmonster('berserker','berserker','berserke.bmp','M','C',1,1,7,'1d10+2','smashes',16,12,19,'2d6',0,'');
+createmonster('goblin','goblin','goblin.bmp','M','C',1,-1,6,'1d6','spears',17,6,5,'3d6',0,'');
+createmonster('kobold','kobold','kobold.bmp','M','C',1,-4,7,'1d4-1','pokes',17,4,1,'4d10',0,'');
+createmonster('orc','orc','orc.bmp','M','C',1,0,6,'1d8','slashes',16,8,10,'3d6',0,'');
+createmonster('bandit','bandit','bandit.bmp','M','C',1,-2,6,'1d6','attacks',15,6,5,'3d8+8',0,'');
+createmonster('ogre','ogre','ogre.bmp','M','C',4,1,5,'1d8+2','clubs',14,10,125,'4d8',0,'');
+createmonster('baboon','rock baboon','baboon.bmp','M','N',2,0,6,'1d4','scratches',16,8,20,'1d4',0,'');
+createmonster('bee','giant bee','bee.bmp','M','N',1,-4,7,'1d3','stings',16,9,1,'0',0,'');
+createmonster('centipede','gnt centipede','centiped.bmp','M','N',1,-4,9,'1d3','bites',17,7,1,'0',0,'');
+createmonster('minotaur','minotaur','minotaur.bmp','M','C',6,0,6,'2d6','gores',14,12,275,'2d8',0,'');
+createmonster('troll','troll','troll.bmp','M','C',6,3,4,'2d6+2','attacks',14,10,650,'3d6',0,'');
+createmonster('giant','hill giant','giant.bmp','M','C',8,0,4,'2d8','decimates',12,8,650,'1000',0,'');
+createmonster('displacer','displacer','displace.bmp','M','N',6,0,4,'3d4','swipes',14,8,500,'1d20',0,'');
+createmonster('manticore','manticore','manticor.bmp','M','C',6,1,4,'3d6','punctures',14,9,650,'1d100',0,'');
+createmonster('salamander','frost lizard','salamand.bmp','F','C',12,0,3,'4d6','claws',10,9,2125,'1d10+200',1,'F');
+createmonster('soldier','Winter Soldier','soldier.bmp','M','N',2,1,3,'1d6+1','spears',16,10,25,'2d6',0,'');
+createmonster('dragon','Red Dragon','dragon.bmp','M','C',10,0,-1,'4d8','claws',10,12,2500,'10d100+5000',2,'DDDE');
+createmonster('icequeen','Ice Queen','icequeen.bmp','F','C',12,0,9,'1d4+1','stabs',10,12,6500,'10d10+10',6,'11179C');
+createmonster('roland','Roland McDoland','roland.bmp','M','C',20,20,-10,'2d6+3','kicks',1,12,18500,'100d100+100',1,'8');
+createmonster('slime','green slime','slime.bmp','M','N',2,0,20,'1d4','attacks',16,7,30,'0',0,'');
+createmonster('shadow','shadow','shadow.bmp','M','C',2,2,7,'1d4','attacks',16,12,35,'0',0,'');
+createmonster('skeleton','skeleton','skeleton.bmp','M','C',1,0,7,'1d8','slashes',16,12,10,'1d6',0,'');
+createmonster('gargoyle','gargoyle','gargoyle.bmp','M','C',4,0,5,'2d4','claws',12,11,175,'1d4',0,'');
+createmonster('ghoul','ghoul','ghoul.bmp','M','C',2,0,6,'2d3','gropes',16,9,25,'1d6',0,'');
+createmonster('ooze','purple ooze','ooze.bmp','M','N',1,0,9,'1d4','attacks',16,5,10,'1d4',0,'');
+createmonster('wraith','wraith','wraith.bmp','M','C',4,0,3,'1d6','attacks',14,11,175,'0',0,'');
+createmonster('dilvish','Dilvish','dilvish.bmp','M','N',4,0,1,'1d8+2','slashes',11,10,125,'2d10',2,'32');
+createmonster('prudence','Prudence','prudence.bmp','F','L',5,5,4,'1d6+2','spears',14,12,175,'1d10',0,'');
+createmonster('spirit','Spirit','spirit.bmp','F','N',4,0,3,'1d6','hits',15,10,125,'1d10',1,'5');
+createmonster('marcus','Marcus','marcus.bmp','M','N',5,0,4,'1d6+3','attacks',13,8,175,'5d10',0,'');
+createmonster('baltar','Baltar','baltar.bmp','M','C',5,5,2,'1d8+3','slices',14,10,175,'3d10',0,'');
+createmonster('succubus','Succubus','succubus.bmp','F','C',6,0,0,'1d6','claws',14,12,500,'1d10+10',0,'');
+createmonster('brawler','Brawler','brawler.bmp','M','N',2,1,9,'1d2+1','punches',16,8,25,'1d10',0,'');
+createmonster('knight','Ice Knight','knight.bmp','M','C',6,6,2,'1d8+1','strikes',14,11,350,'4d8',0,'');
 
 end;
 {--------------------------------------------------------------------------}
@@ -2515,31 +2531,54 @@ procedure createcharts;
 type
 
      chartrecord    =    record
-                              value     :    array[1..20,1..2] of byte;
-                              filename  :    array[1..20] of string;
-                              number    :    array[1..20] of string; {dice}
                               diceroll  :    string; {dice}
+                              value     :    array[1..20,1..2] of byte;
+                              number    :    array[1..20] of string; {dice}
+                              monsterid :    array[1..20] of string;
                          end;
 var
      thechart       :    chartrecord;
      error          :    boolean;
+     savefile       :    file;
 
 {++++++++++++++++++++++++++++++++++++++++++++++++++++++++++}
-procedure savechart(filename:string;thechart:chartrecord);
+procedure savechart(chartid:string;thechart:chartrecord);
 
 var
-     savefile   :    file of chartrecord;
+     savefile   :    text;
+     loop       :    integer;
 
 begin
-     assign(savefile,filename);
-     rewrite(savefile);
-     write(savefile,thechart);
+     assign(savefile,chartdata);
+     append(savefile);
+     writeln(savefile,'~'+chartid);
+     with thechart do
+     begin
+        writeln(savefile,diceroll);
+        for loop:=1 to 20 do
+        begin
+            writeln(savefile,value[loop,1],' ',value[loop,2],' ',number[loop]);
+            writeln(savefile,monsterid[loop]);
+        end;
+        writeln(savefile,'~');
+     end;
      close(savefile);
-     writeln(filename);
+     writeln(chartid);
 end;
 {++++++++++++++++++++++++++++++++++++++++++++++++++++++++++}
 
 begin
+    assign(savefile,chartdata);
+    if exist(chartdata) then
+    begin
+        reset(savefile);
+        truncate(savefile);
+    end
+    else
+    begin
+        rewrite(savefile);
+    end;
+    close(savefile);
 
      {wild.dat}
      with thechart do
@@ -2548,106 +2587,105 @@ begin
 
                value[1,1]:=1;
                value[1,2]:=1;
-               filename[1]:='roland.dat';
                number[1]:='1';
+               monsterid[1]:='roland';
 
                value[2,1]:=2;
                value[2,2]:=2;
-               filename[2]:='wyvern.dat';
                number[2]:='1';
+               monsterid[2]:='wyvern';
 
                value[3,1]:=3;
                value[3,2]:=3;
-               filename[3]:='centaur.dat';
                number[3]:='1d3';
+               monsterid[3]:='centaur';
 
                value[4,1]:=4;
                value[4,2]:=4;
-               filename[4]:='spider.dat';
                number[4]:='1d4';
+               monsterid[4]:='spider';
 
                value[5,1]:=5;
                value[5,2]:=5;
-               filename[5]:='ant.dat';
                number[5]:='1d6';
+               monsterid[5]:='ant';
 
                value[6,1]:=6;
                value[6,2]:=6;
-               filename[6]:='beetle.dat';
                number[6]:='1d4';
+               monsterid[6]:='beetle';
 
                value[7,1]:=7;
                value[7,2]:=7;
-               filename[7]:='berserke.dat';
                number[7]:='1d3';
+               monsterid[7]:='berserker';
 
                value[8,1]:=8;
                value[8,2]:=8;
-               filename[8]:='orc.dat';
                number[8]:='1d6';
+               monsterid[8]:='orc';
 
                value[9,1]:=9;
                value[9,2]:=9;
-               filename[9]:='goblin.dat';
                number[9]:='1d6';
+               monsterid[9]:='goblin';
 
                value[10,1]:=10;
                value[10,2]:=10;
-               filename[10]:='kobold.dat';
                number[10]:='1d8';
+               monsterid[10]:='kobold';
 
                value[11,1]:=11;
                value[11,2]:=11;
-               filename[11]:='kobold.dat';
                number[11]:='1d8';
+               monsterid[11]:='kobold';
 
                value[12,1]:=12;
                value[12,2]:=12;
-               filename[12]:='kobold.dat';
                number[12]:='1d8';
+               monsterid[12]:='kobold';
 
                value[13,1]:=13;
                value[13,2]:=13;
-               filename[13]:='goblin.dat';
                number[13]:='1d6';
+               monsterid[13]:='goblin';
 
                value[14,1]:=14;
                value[14,2]:=14;
-               filename[14]:='orc.dat';
                number[14]:='1d6';
+               monsterid[14]:='orc';
 
                value[15,1]:=15;
                value[15,2]:=15;
-               filename[15]:='wolf.dat';
                number[15]:='1d4';
+               monsterid[15]:='wolf';
 
                value[16,1]:=16;
                value[16,2]:=16;
-               filename[16]:='bee.dat';
                number[16]:='1d6';
+               monsterid[16]:='bee';
 
                value[17,1]:=17;
                value[17,2]:=17;
-               filename[17]:='centiped.dat';
                number[17]:='1d6';
+               monsterid[17]:='centipede';
 
                value[18,1]:=18;
                value[18,2]:=18;
-               filename[18]:='bandit.dat';
                number[18]:='1d4';
+               monsterid[18]:='bandit';
 
                value[19,1]:=19;
                value[19,2]:=19;
-               filename[19]:='ogre.dat';
                number[19]:='1d2';
+               monsterid[19]:='ogre';
 
                value[20,1]:=20;
                value[20,2]:=20;
-               filename[20]:='giant.dat';
                number[20]:='1';
+               monsterid[20]:='giant';
           end;
-
-     savechart(chartdir+'/wild.dat',thechart);
+     savechart('wilderness',thechart);
 
      {cave.dat}
      with thechart do
@@ -2656,66 +2694,65 @@ begin
 
                value[1,1]:=1;
                value[1,2]:=1;
-               filename[1]:='gargoyle.dat';
                number[1]:='1d4';
+               monsterid[1]:='gargoyle';
 
                value[2,1]:=2;
                value[2,2]:=2;
-               filename[2]:='slime.dat';
                number[2]:='1d8';
+               monsterid[2]:='slime';
 
                value[3,1]:=3;
                value[3,2]:=3;
-               filename[3]:='ooze.dat';
+               monsterid[3]:='ooze';
                number[3]:='1d8';
 
                value[4,1]:=4;
                value[4,2]:=4;
-               filename[4]:='spider.dat';
+               monsterid[4]:='spider';
                number[4]:='1d6';
 
                value[5,1]:=5;
                value[5,2]:=5;
-               filename[5]:='werewolf.dat';
+               monsterid[5]:='werewolf';
                number[5]:='1d6';
 
                value[6,1]:=6;
                value[6,2]:=6;
-               filename[6]:='ogre.dat';
+               monsterid[6]:='ogre';
                number[6]:='1d4';
 
                value[7,1]:=7;
                value[7,2]:=7;
-               filename[7]:='baboon.dat';
+               monsterid[7]:='baboon';
                number[7]:='1d6';
 
                value[8,1]:=8;
                value[8,2]:=8;
-               filename[8]:='centiped.dat';
+               monsterid[8]:='centipede';
                number[8]:='2d4';
 
                value[9,1]:=9;
                value[9,2]:=9;
-               filename[9]:='minotaur.dat';
+               monsterid[9]:='minotaur';
                number[9]:='1d2';
 
                value[10,1]:=10;
                value[10,2]:=10;
-               filename[10]:='troll.dat';
+               monsterid[10]:='troll';
                number[10]:='1d2';
 
                value[11,1]:=11;
                value[11,2]:=11;
-               filename[11]:='shadow.dat';
+               monsterid[11]:='shadow';
                number[11]:='1d6';
 
                value[12,1]:=12;
                value[12,2]:=12;
-               filename[12]:='skeleton.dat';
+               monsterid[12]:='skeleton';
                number[12]:='1d8';
           end;
-
-     savechart(chartdir+'/cave.dat',thechart);
+     savechart('cave',thechart);
 
      {castle.dat}
      with thechart do
@@ -2724,11 +2761,10 @@ begin
 
                value[1,1]:=1;
                value[1,2]:=1;
-               filename[1]:='soldier.dat';
+               monsterid[1]:='soldier';
                number[1]:='1d4+4';
           end;
-
-     savechart(chartdir+'/castle.dat',thechart);
+     savechart('castle',thechart);
 
      {dungeon.dat}
      with thechart do
@@ -2737,41 +2773,40 @@ begin
 
                value[1,1]:=1;
                value[1,2]:=2;
-               filename[1]:='shadow.dat';
+               monsterid[1]:='shadow';
                number[1]:='2d4';
 
                value[2,1]:=3;
                value[2,2]:=3;
-               filename[2]:='skeleton.dat';
+               monsterid[2]:='skeleton';
                number[2]:='1d8';
 
                value[3,1]:=4;
                value[3,2]:=4;
-               filename[3]:='slime.dat';
+               monsterid[3]:='slime';
                number[3]:='1d4';
 
                value[4,1]:=5;
                value[4,2]:=5;
-               filename[4]:='ooze.dat';
+               monsterid[4]:='ooze';
                number[4]:='1d4';
 
                value[5,1]:=6;
                value[5,2]:=6;
-               filename[5]:='gargoyle.dat';
+               monsterid[5]:='gargoyle';
                number[5]:='1';
 
                value[6,1]:=7;
                value[6,2]:=7;
-               filename[6]:='ghoul.dat';
+               monsterid[6]:='ghoul';
                number[6]:='2d4';
 
                value[7,1]:=8;
                value[7,2]:=8;
-               filename[7]:='wraith.dat';
+               monsterid[7]:='wraith';
                number[7]:='1d8';
           end;
-
-     savechart(chartdir+'/dungeon.dat',thechart);
+     savechart('dungeon',thechart);
 
 
 end;
