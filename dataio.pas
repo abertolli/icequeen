@@ -112,6 +112,7 @@ function    itemstring(theitem:item):string;
 function    exist(dosname:string):boolean;
 procedure   readchart(chartid:string;var chart:chartrecord);
 procedure   writegame(filename:string;player:character_t);
+procedure   readgame(filename:string;var player:character_t);
 
 IMPLEMENTATION
 
@@ -292,6 +293,49 @@ begin
     end;
     close(savefile);
 
+end;
+{--------------------------------------------------------------------------}
+procedure readgame(filename:string;var player:character_t);
+
+var
+    savefile        :   text;
+    loop            :   integer;
+    st              :   stage;
+
+begin
+	assign(savefile,filename);
+	reset(savefile);
+    with player do
+    begin
+        readln(savefile,name);
+        readln(savefile,picfile);
+        readln(savefile,sex);
+        readln(savefile,level);
+        readln(savefile,endurance);
+        readln(savefile,endurancemax);
+        readln(savefile,armorclass);
+        readln(savefile,thac0);
+        readln(savefile,damage);
+        readln(savefile,savingthrow);
+        readln(savefile,experience);
+        readln(savefile,coins);
+        readln(savefile,numitems);
+        for loop:=1 to numitems do
+            readln(savefile,item[loop]);
+        readln(savefile,numspells);
+        for loop:=1 to numspells do
+            readln(savefile,spell[loop]);
+        readln(savefile,strength);
+        readln(savefile,dexterity);
+        readln(savefile,charges);
+        readln(savefile,chargemax);
+        while not(eof(savefile)) do
+        begin
+            readln(st);
+            stages:=stages + [st];
+        end;
+    end;
+	close(savefile);
 end;
 {--------------------------------------------------------------------------}
 

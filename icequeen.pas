@@ -330,10 +330,7 @@ procedure loadgame(var player:character_t);
 var
 	dosname        :    string;
 	done           :    boolean;
-	savefile       :    text;
 	ans            :    char;
-    st             :    stage;
-    loop           :    integer;
 
 begin
 	done:=false;
@@ -347,7 +344,6 @@ begin
 	     setcolor(lightgray);
 	     setfont('default.ttf',3);
          graphwriteln(x,y,'');
-	     graphwriteln(x,y,'(default: '+savedefault+')');
 	     graphwrite(x,y,'Enter File Name: ');
 	     setcolor(lightblue);
 	     graphread(x,y,dosname);
@@ -355,45 +351,13 @@ begin
 	          dosname:=savedefault;
 	     graphwriteln(x,y,'');
 	     graphwriteln(x,y,'');
-	     setcolor(lightgray);
 	     if exist(savedir+dosname) then
 	          begin
-	               graphwriteln(x,y,'Loading...');
-	               assign(savefile,savedir+dosname);
-	               reset(savefile);
-                   with player do
-                    begin
-                        readln(savefile,name);
-                        readln(savefile,picfile);
-                        readln(savefile,sex);
-                        readln(savefile,level);
-                        readln(savefile,endurance);
-                        readln(savefile,endurancemax);
-                        readln(savefile,armorclass);
-                        readln(savefile,thac0);
-                        readln(savefile,damage);
-                        readln(savefile,savingthrow);
-                        readln(savefile,experience);
-                        readln(savefile,coins);
-                        readln(savefile,numitems);
-                        for loop:=1 to numitems do
-                            readln(savefile,item[loop]);
-                        readln(savefile,numspells);
-                        for loop:=1 to numspells do
-                            readln(savefile,spell[loop]);
-                        readln(savefile,strength);
-                        readln(savefile,dexterity);
-                        readln(savefile,charges);
-                        readln(savefile,chargemax);
-                        for st:=ring to endgame do
-                        while not(eof(savefile)) do
-                        begin
-                            readln(st);
-                            stages:=stages + [st];
-                        end;
-                    end;
-	               close(savefile);
-	               done:=true;
+                setcolor(white);
+                   readgame(savedir+dosname,player);
+	               graphwriteln(x,y,'Loaded '+dosname);
+                   prompt;
+                   done:=true;
 	          end
 	     else
 	          begin
@@ -2465,7 +2429,6 @@ begin
 	setcolor(lightgray);
 	setfont('default.ttf',3);
     graphwriteln(x,y,'');
-	graphwriteln(x,y,'(default: '+savedefault+')');
 	graphwrite(x,y,'Enter File Name: ');
 	setcolor(lightblue);
 	graphread(x,y,dosname);
@@ -2489,8 +2452,8 @@ begin
 	if goahead then
 	     begin
             writegame(savedir+dosname,player);
-	          graphwriteln(x,y,'Saved.');
-	          setfont('default.ttf',2);
+            setcolor(white);
+	          graphwriteln(x,y,'Saved '+dosname);
 	          prompt;
 	     end;
 end;
