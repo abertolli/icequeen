@@ -80,7 +80,6 @@ begin
         end;
      writeln(savefile,'~');
      close(savefile);
-     writeln(monsterid);
 end;
 {++++++++++++++++++++++++++++++++++++++++++++++++++++++++++}
 
@@ -131,6 +130,7 @@ begin
      monster.spell:=spell;
 
      savemonster(monsterid,monster);
+     write(' ',monsterid);
 
 end;
 {--------------------------------------------------------------------------}
@@ -162,7 +162,7 @@ begin
 'A':power           'B':shatter         'C':glacier
 'D':dragonbreath    'E':resistfire      'F':resistcold
 }
-
+write(monsterdata,':');
 createmonster('wyvern','wyvern','wyvern.bmp','M','C',7,0,3,'3d8','thrashes',14,9,850,'2d8',0,'');
 createmonster('centaur','centaur','centaur.bmp','M','N',4,0,5,'1d6','kicks',14,8,75,'2d6',0,'');
 createmonster('spider','crab spider','spider.bmp','M','N',2,0,7,'1d8','bites',16,7,25,'0',0,'');
@@ -204,6 +204,7 @@ createmonster('baltar','Baltar','baltar.bmp','M','C',5,5,2,'1d8+3','slices',14,1
 createmonster('succubus','Succubus','succubus.bmp','F','C',6,0,0,'1d6','claws',14,12,500,'1d10+10',0,'');
 createmonster('brawler','Brawler','brawler.bmp','M','N',2,1,9,'1d2+1','punches',16,8,25,'1d10',0,'');
 createmonster('knight','Ice Knight','knight.bmp','M','C',6,6,2,'1d8+1','strikes',14,11,350,'4d8',0,'');
+writeln;
 
 end;
 {--------------------------------------------------------------------------}
@@ -2567,14 +2568,10 @@ begin
      begin
         writeln(savefile,diceroll);
         for loop:=1 to 20 do
-        begin
-            writeln(savefile,value[loop,1],' ',value[loop,2],' ',number[loop]);
-            writeln(savefile,monsterid[loop]);
-        end;
+            writeln(savefile,value[loop,1],' ',value[loop,2],' ',number[loop],':',monsterid[loop]);
         writeln(savefile,'~');
      end;
      close(savefile);
-     writeln(chartid);
 end;
 {++++++++++++++++++++++++++++++++++++++++++++++++++++++++++}
 
@@ -2591,6 +2588,7 @@ begin
     end;
     close(savefile);
 
+    write(chartdata,':');
     clearchart(thechart);
      with thechart do
           begin
@@ -2697,6 +2695,7 @@ begin
                monsterid[20]:='giant';
           end;
      savechart('wilderness',thechart);
+     write(' wilderness');
 
     clearchart(thechart);
      with thechart do
@@ -2764,6 +2763,7 @@ begin
                number[12]:='1d8';
           end;
      savechart('cave',thechart);
+     write(' cave');
 
     clearchart(thechart);
      with thechart do
@@ -2776,6 +2776,7 @@ begin
                number[1]:='1d4+4';
           end;
      savechart('castle',thechart);
+     write(' castle');
 
     clearchart(thechart);
      with thechart do
@@ -2818,11 +2819,12 @@ begin
                number[7]:='1d8';
           end;
      savechart('dungeon',thechart);
+     write(' dungeon');
 
-
+    writeln;
 end;
 
-{
+
 procedure createsavegame;
 
 var
@@ -2831,14 +2833,44 @@ var
 procedure savegame(filename:string;player:character_t);
 
 var
-     savefile   :    file of character_t;
+     savefile   :    text;
+     loop       :   integer;
+     st         :   stage;
 
 begin
      assign(savefile,filename);
      rewrite(savefile);
-     write(savefile,player);
-     close(savefile);
-     writeln(filename);
+     with player do
+     begin
+        writeln(savefile,name);
+        writeln(savefile,picfile);
+        writeln(savefile,sex);
+        writeln(savefile,level);
+        writeln(savefile,endurance);
+        writeln(savefile,endurancemax);
+        writeln(savefile,armorclass);
+        writeln(savefile,thac0);
+        writeln(savefile,damage);
+        writeln(savefile,savingthrow);
+        writeln(savefile,experience);
+        writeln(savefile,coins);
+        writeln(savefile,numitems);
+        for loop:=1 to numitems do
+            writeln(savefile,item[loop]);
+        writeln(savefile,numspells);
+        for loop:=1 to numspells do
+            writeln(savefile,spell[loop]);
+        writeln(savefile,strength);
+        writeln(savefile,dexterity);
+        writeln(savefile,charges);
+        writeln(savefile,chargemax);
+        for st:=ring to endgame do
+            if (st in stages) then
+                writeln(savefile,st);
+    end;
+    close(savefile);
+    writeln(filename);
+
 end;
 
 
@@ -2855,7 +2887,13 @@ begin
                experience:=0;
                coins:=200;
                numitems:=5;
+               item[1]:=sword;
+               item[2]:=shield;
+               item[3]:=platemail;
+               item[4]:=bluepotion;
+               item[5]:=redpotion;
 
+{
                with item[1] do
                   begin
                      name:='sword';
@@ -2916,6 +2954,7 @@ begin
                      data[4]:=0; data[5]:=0; data[6]:=0;
                      data[7]:=0; data[8]:=0;
                   end;
+}
                numspells:=0;
                strength:=10;
                dexterity:=16;
@@ -2928,7 +2967,6 @@ begin
 
 end;
 
-}
 
 {
 procedure createitems;
@@ -3222,7 +3260,7 @@ begin {main}
                createmonsters;
                createmaps;
                createcharts;
-               {createsavegame;}
+               createsavegame;
                {createitems;}
                writeln;
                writeln('Press any key to continue.');

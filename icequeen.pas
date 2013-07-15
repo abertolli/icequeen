@@ -330,8 +330,10 @@ procedure loadgame(var player:character_t);
 var
 	dosname        :    string;
 	done           :    boolean;
-	pasfile        :    file of character_t;
+	savefile       :    text;
 	ans            :    char;
+    st             :    stage;
+    loop           :    integer;
 
 begin
 	done:=false;
@@ -357,10 +359,40 @@ begin
 	     if exist(savedir+dosname) then
 	          begin
 	               graphwriteln(x,y,'Loading...');
-	               assign(pasfile,savedir+dosname);
-	               reset(pasfile);
-	               read(pasfile,player);
-	               close(pasfile);
+	               assign(savefile,savedir+dosname);
+	               reset(savefile);
+                   with player do
+                    begin
+                        readln(savefile,name);
+                        readln(savefile,picfile);
+                        readln(savefile,sex);
+                        readln(savefile,level);
+                        readln(savefile,endurance);
+                        readln(savefile,endurancemax);
+                        readln(savefile,armorclass);
+                        readln(savefile,thac0);
+                        readln(savefile,damage);
+                        readln(savefile,savingthrow);
+                        readln(savefile,experience);
+                        readln(savefile,coins);
+                        readln(savefile,numitems);
+                        for loop:=1 to numitems do
+                            readln(savefile,item[loop]);
+                        readln(savefile,numspells);
+                        for loop:=1 to numspells do
+                            readln(savefile,spell[loop]);
+                        readln(savefile,strength);
+                        readln(savefile,dexterity);
+                        readln(savefile,charges);
+                        readln(savefile,chargemax);
+                        for st:=ring to endgame do
+                        while not(eof(savefile)) do
+                        begin
+                            readln(st);
+                            stages:=stages + [st];
+                        end;
+                    end;
+	               close(savefile);
 	               done:=true;
 	          end
 	     else
