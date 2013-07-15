@@ -2836,7 +2836,7 @@ begin
      with player do
           begin
                name:='Landon';
-               picfile:='mplayer.bmp';
+               picfile:='mplayer.ln1';
                sex:='M';
                level:=2;
                endurance:=16;
@@ -2920,9 +2920,8 @@ begin
                chargemax:=0;
           end;
 
-     writegame(savedir+'/'+savedefault,player);
-     writeln(savedir+'/'+savedefault);
-
+     writegame(savedir+savedefault,player);
+     writeln(savedir+savedefault); 
 end;
 
 
