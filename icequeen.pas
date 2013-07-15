@@ -362,7 +362,7 @@ begin
 	     else
 	          begin
 	               setcolor(red);
-	               graphwriteln(x,y,'Saved game not found.');
+	               graphwriteln(x,y,'File ('+dosname+') not found.');
 	               setcolor(lightgray);
 	               centerwrite(getmaxx DIV 2,300,'(L)oad or (S)tart');
 	               repeat
@@ -2439,7 +2439,7 @@ begin
 	setcolor(lightgray);
 	if exist(savedir+dosname) then
 	     begin
-	          graphwriteln(x,y,'File exists.');
+	          graphwriteln(x,y,'File ('+dosname+') exists.');
 	          graphwriteln(x,y,'Overwrite? (y/n)');
 	          repeat
 	               ans:=readarrowkey;
