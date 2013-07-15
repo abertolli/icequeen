@@ -106,11 +106,12 @@ type
 	end;
 
 
-function itempicfile(theitem:item):string;
-function spellstring(thespell:spell):string;
-function itemstring(theitem:item):string;
-function exist(dosname:string):boolean;
-function getchart(chartid:string):chartrecord;
+function    itempicfile(theitem:item):string;
+function    spellstring(thespell:spell):string;
+function    itemstring(theitem:item):string;
+function    exist(dosname:string):boolean;
+procedure   readchart(chartid:string;var chart:chartrecord);
+procedure   writegame(filename:string;player:character_t);
 
 IMPLEMENTATION
 
@@ -202,11 +203,10 @@ begin
      exist:=(IoResult=0);
 end;
 {--------------------------------------------------------------------------}
-function getchart(chartid:string):chartrecord;
+procedure   readchart(chartid:string;var chart:chartrecord);
 
 var
     pasfile         :   text;
-    chart           :   chartrecord;
     lineoftext      :   string;
     search          :   string;
     loop            :   integer;
@@ -250,10 +250,51 @@ begin
     end;
 	close(pasfile);
 
-    getchart:=chart;
+end;
+{--------------------------------------------------------------------------}
+procedure writegame(filename:string;player:character_t);
+
+var
+     savefile   :    text;
+     loop       :   integer;
+     st         :   stage;
+
+begin
+     assign(savefile,filename);
+     rewrite(savefile);
+     with player do
+     begin
+        writeln(savefile,name);
+        writeln(savefile,picfile);
+        writeln(savefile,sex);
+        writeln(savefile,level);
+        writeln(savefile,endurance);
+        writeln(savefile,endurancemax);
+        writeln(savefile,armorclass);
+        writeln(savefile,thac0);
+        writeln(savefile,damage);
+        writeln(savefile,savingthrow);
+        writeln(savefile,experience);
+        writeln(savefile,coins);
+        writeln(savefile,numitems);
+        for loop:=1 to numitems do
+            writeln(savefile,item[loop]);
+        writeln(savefile,numspells);
+        for loop:=1 to numspells do
+            writeln(savefile,spell[loop]);
+        writeln(savefile,strength);
+        writeln(savefile,dexterity);
+        writeln(savefile,charges);
+        writeln(savefile,chargemax);
+        for st:=ring to endgame do
+            if (st in stages) then
+                writeln(savefile,st);
+    end;
+    close(savefile);
 
 end;
 {--------------------------------------------------------------------------}
+
 
 begin
 

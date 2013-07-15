@@ -518,7 +518,7 @@ begin
      themap[20,13]:=5;
      themap[20,14]:=5;
 
-     savemap(mapdir+'/surface.map',themap);
+     savemap(surfacemap,themap);
 
      {surface.cod}
      themap[1,1]:=1;
@@ -804,7 +804,7 @@ begin
      themap[20,13]:=1;
      themap[20,14]:=1;
 
-     savemap(mapdir+'/surface.cod',themap);
+     savemap(surfacecode,themap);
 
      {cave.map}
      themap[1,1]:=29;
@@ -1094,7 +1094,7 @@ begin
      themap[20,13]:=29;
      themap[20,14]:=29;
 
-     savemap(mapdir+'/cave.map',themap);
+     savemap(cavemap,themap);
 
      {cave.cod}
      themap[1,1]:=1;
@@ -1381,7 +1381,7 @@ begin
      themap[20,13]:=1;
      themap[20,14]:=1;
 
-     savemap(mapdir+'/cave.cod',themap);
+     savemap(cavecode,themap);
 
      {castle.map}
      themap[1,1]:=0;
@@ -1669,7 +1669,7 @@ begin
      themap[20,13]:=0;
      themap[20,14]:=0;
 
-     savemap(mapdir+'/castle.map',themap);
+     savemap(castlemap,themap);
 
      {castle.cod}
      themap[1,1]:=1;
@@ -1953,7 +1953,7 @@ begin
      themap[20,13]:=1;
      themap[20,14]:=1;
 
-     savemap(mapdir+'/castle.cod',themap);
+     savemap(castlecode,themap);
 
      {dungeon.map}
      themap[1,1]:=0;
@@ -2239,7 +2239,7 @@ begin
      themap[20,13]:=0;
      themap[20,14]:=0;
 
-     savemap(mapdir+'/dungeon.map',themap);
+     savemap(dungeonmap,themap);
 
      {dungeon.cod}
      themap[1,1]:=1;
@@ -2523,7 +2523,7 @@ begin
      themap[20,13]:=1;
      themap[20,14]:=1;
 
-     savemap(mapdir+'/dungeon.cod',themap);
+     savemap(dungeoncode,themap);
 
 end;
 {--------------------------------------------------------------------------}
@@ -2830,49 +2830,6 @@ procedure createsavegame;
 var
      player    :    character_t;
 
-procedure savegame(filename:string;player:character_t);
-
-var
-     savefile   :    text;
-     loop       :   integer;
-     st         :   stage;
-
-begin
-     assign(savefile,filename);
-     rewrite(savefile);
-     with player do
-     begin
-        writeln(savefile,name);
-        writeln(savefile,picfile);
-        writeln(savefile,sex);
-        writeln(savefile,level);
-        writeln(savefile,endurance);
-        writeln(savefile,endurancemax);
-        writeln(savefile,armorclass);
-        writeln(savefile,thac0);
-        writeln(savefile,damage);
-        writeln(savefile,savingthrow);
-        writeln(savefile,experience);
-        writeln(savefile,coins);
-        writeln(savefile,numitems);
-        for loop:=1 to numitems do
-            writeln(savefile,item[loop]);
-        writeln(savefile,numspells);
-        for loop:=1 to numspells do
-            writeln(savefile,spell[loop]);
-        writeln(savefile,strength);
-        writeln(savefile,dexterity);
-        writeln(savefile,charges);
-        writeln(savefile,chargemax);
-        for st:=ring to endgame do
-            if (st in stages) then
-                writeln(savefile,st);
-    end;
-    close(savefile);
-    writeln(filename);
-
-end;
-
 
 begin
 
@@ -2963,7 +2920,8 @@ begin
                chargemax:=0;
           end;
 
-     savegame(savedir+'/'+savedefault,player);
+     writegame(savedir+'/'+savedefault,player);
+     writeln(savedir+'/'+savedefault);
 
 end;
 

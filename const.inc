@@ -6,21 +6,20 @@
         maps - the displayed map
         codes - the underlying meaning
         }
-	surfacemap	= 'surface.map';
-	surfacecode	= 'surface.cod';
-	cavemap		= 'cave.map';
-	cavecode	= 'cave.cod';
-	castlemap	= 'castle.map';
-	castlecode	= 'castle.cod';
-	dungeonmap	= 'dungeon.map';
-	dungeoncode	= 'dungeon.cod';
+	surfacemap	= 'game/surface.map';
+	surfacecode	= 'game/surface.dat';
+	cavemap		= 'game/cave.map';
+	cavecode	= 'game/cave.dat';
+	castlemap	= 'game/castle.map';
+	castlecode	= 'game/castle.dat';
+	dungeonmap	= 'game/dungeon.map';
+	dungeoncode	= 'game/dungeon.dat';
 
 	chartile	= 'chartile.ln1';
 	savedefault	= 'game.sav';
 
 	textdir		= 'text/';
 	imagedir	= 'img/';
-	mapdir		= 'map/';
 	savedir		= 'save/';
 	itemdir		= 'item';
 	monsterdata	= 'game/monst.dat';

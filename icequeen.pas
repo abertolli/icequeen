@@ -1195,7 +1195,7 @@ var
     loop    :   integer;
 
 begin
-    chart:=getchart(chartid);
+    readchart(chartid,chart);
     with chart do
     begin
         theroll:=roll(diceroll);
@@ -2451,7 +2451,6 @@ procedure savegame(player:character_t);
 
 var
 	dosname        :    string;
-	pasfile        :    file of character_t;
 	goahead        :    boolean;
 	ans            :    char;
 
@@ -2489,10 +2488,7 @@ begin
 	     goahead:=true;
 	if goahead then
 	     begin
-	          assign(pasfile,savedir+dosname);
-	          rewrite(pasfile);
-	          write(pasfile,player);
-	          close(pasfile);
+            writegame(savedir+dosname,player);
 	          graphwriteln(x,y,'Saved.');
 	          setfont('default.ttf',2);
 	          prompt;
@@ -5643,11 +5639,11 @@ var
 begin
 	exitx:=px;
 	exity:=py;
-	assign(pasfile,mapdir+themap);
+	assign(pasfile,themap);
 	reset(pasfile);
 	read(pasfile,dmap);
 	close(pasfile);
-	assign(pasfile,mapdir+thecode);
+	assign(pasfile,thecode);
 	reset(pasfile);
 	read(pasfile,dcode);
 	close(pasfile);
@@ -6182,11 +6178,11 @@ var
 	ans:char;
 
 begin
-	assign(pasfile,mapdir+surfacemap);
+	assign(pasfile,surfacemap);
 	reset(pasfile);
 	read(pasfile,map);
 	close(pasfile);
-	assign(pasfile,mapdir+surfacecode);
+	assign(pasfile,surfacecode);
 	reset(pasfile);
 	read(pasfile,code);
 	close(pasfile);
