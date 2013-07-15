@@ -1,172 +1,92 @@
 ~wilderness
 2d10
-1 1 1
-roland
-2 2 1
-wyvern
-3 3 1d3
-centaur
-4 4 1d4
-spider
-5 5 1d6
-ant
-6 6 1d4
-beetle
-7 7 1d3
-berserker
-8 8 1d6
-orc
-9 9 1d6
-goblin
-10 10 1d8
-kobold
-11 11 1d8
-kobold
-12 12 1d8
-kobold
-13 13 1d6
-goblin
-14 14 1d6
-orc
-15 15 1d4
-wolf
-16 16 1d6
-bee
-17 17 1d6
-centipede
-18 18 1d4
-bandit
-19 19 1d2
-ogre
-20 20 1
-giant
+1 1 1:roland
+2 2 1:wyvern
+3 3 1d3:centaur
+4 4 1d4:spider
+5 5 1d6:ant
+6 6 1d4:beetle
+7 7 1d3:berserker
+8 8 1d6:orc
+9 9 1d6:goblin
+10 10 1d8:kobold
+11 11 1d8:kobold
+12 12 1d8:kobold
+13 13 1d6:goblin
+14 14 1d6:orc
+15 15 1d4:wolf
+16 16 1d6:bee
+17 17 1d6:centipede
+18 18 1d4:bandit
+19 19 1d2:ogre
+20 20 1:giant
 ~
 ~cave
 1d12
-1 1 1d4
-gargoyle
-2 2 1d8
-slime
-3 3 1d8
-ooze
-4 4 1d6
-spider
-5 5 1d6
-werewolf
-6 6 1d4
-ogre
-7 7 1d6
-baboon
-8 8 2d4
-centipede
-9 9 1d2
-minotaur
-10 10 1d2
-troll
-11 11 1d6
-shadow
-12 12 1d8
-skeleton
-0 0 0
-none
-0 0 0
-none
-0 0 0
-none
-0 0 0
-none
-0 0 0
-none
-0 0 0
-none
-0 0 0
-none
-0 0 0
-none
+1 1 1d4:gargoyle
+2 2 1d8:slime
+3 3 1d8:ooze
+4 4 1d6:spider
+5 5 1d6:werewolf
+6 6 1d4:ogre
+7 7 1d6:baboon
+8 8 2d4:centipede
+9 9 1d2:minotaur
+10 10 1d2:troll
+11 11 1d6:shadow
+12 12 1d8:skeleton
+0 0 0:none
+0 0 0:none
+0 0 0:none
+0 0 0:none
+0 0 0:none
+0 0 0:none
+0 0 0:none
+0 0 0:none
 ~
 ~castle
 1
-1 1 1d4+4
-soldier
-0 0 0
-none
-0 0 0
-none
-0 0 0
-none
-0 0 0
-none
-0 0 0
-none
-0 0 0
-none
-0 0 0
-none
-0 0 0
-none
-0 0 0
-none
-0 0 0
-none
-0 0 0
-none
-0 0 0
-none
-0 0 0
-none
-0 0 0
-none
-0 0 0
-none
-0 0 0
-none
-0 0 0
-none
-0 0 0
-none
-0 0 0
-none
+1 1 1d4+4:soldier
+0 0 0:none
+0 0 0:none
+0 0 0:none
+0 0 0:none
+0 0 0:none
+0 0 0:none
+0 0 0:none
+0 0 0:none
+0 0 0:none
+0 0 0:none
+0 0 0:none
+0 0 0:none
+0 0 0:none
+0 0 0:none
+0 0 0:none
+0 0 0:none
+0 0 0:none
+0 0 0:none
+0 0 0:none
 ~
 ~dungeon
 1d8
-1 2 2d4
-shadow
-3 3 1d8
-skeleton
-4 4 1d4
-slime
-5 5 1d4
-ooze
-6 6 1
-gargoyle
-7 7 2d4
-ghoul
-8 8 1d8
-wraith
-0 0 0
-none
-0 0 0
-none
-0 0 0
-none
-0 0 0
-none
-0 0 0
-none
-0 0 0
-none
-0 0 0
-none
-0 0 0
-none
-0 0 0
-none
-0 0 0
-none
-0 0 0
-none
-0 0 0
-none
-0 0 0
-none
+1 2 2d4:shadow
+3 3 1d8:skeleton
+4 4 1d4:slime
+5 5 1d4:ooze
+6 6 1:gargoyle
+7 7 2d4:ghoul
+8 8 1d8:wraith
+0 0 0:none
+0 0 0:none
+0 0 0:none
+0 0 0:none
+0 0 0:none
+0 0 0:none
+0 0 0:none
+0 0 0:none
+0 0 0:none
+0 0 0:none
+0 0 0:none
+0 0 0:none
+0 0 0:none
 ~

@@ -211,6 +211,7 @@ var
     search          :   string;
     loop            :   integer;
     ch              :   char;
+    split           :   integer;
 
 begin
     
@@ -241,8 +242,10 @@ begin
             read(pasfile,value[loop,1]);
             read(pasfile,value[loop,2]);
             read(pasfile,ch);
-            readln(pasfile,number[loop]);
-            readln(pasfile,monsterid[loop]);
+            readln(pasfile,lineoftext);
+            split:=pos(':',lineoftext);
+            number[loop]:=copy(lineoftext,1,split-1);
+            monsterid[loop]:=copy(lineoftext,split+1,length(lineoftext));
         end;
     end;
 	close(pasfile);
