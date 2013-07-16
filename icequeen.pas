@@ -3230,24 +3230,22 @@ var
 
 begin
 	y:=135;
-	graphwriteln(x,y,'               All Drinks -- 2 coins');
+	graphwriteln(x,y,'     SPECIAL TODAY:  All Drinks 2 Coins');
 	graphwriteln(x,y,'');
-	graphwriteln(x,y,'                     (1) ale');
-	graphwriteln(x,y,'                     (2) beer');
-	graphwriteln(x,y,'                     (3) wine');
-	graphwriteln(x,y,'                     (4) whiskey');
-	graphwriteln(x,y,'                     (5) special');
-	graphwriteln(x,y,'                     (N) none');
+	graphwriteln(x,y,'              (1) ale');
+	graphwriteln(x,y,'              (2) beer');
+	graphwriteln(x,y,'              (3) wine');
+	graphwriteln(x,y,'              (4) whiskey');
+	graphwriteln(x,y,'              (5) special');
+	graphwriteln(x,y,'              (N) none');
+	graphwriteln(x,y,'  "Our special drink is the Beholder''s Spit."');
 	graphwriteln(x,y,'');
-	graphwriteln(x,y,'      "Our special drink is the Beholder''s Spit."');
-	str(coins,tempstring);
-	setfont('default.ttf',1);
-	setcolor(white);
-	outtextxy(240,400,('You have ' + tempstring + ' coins'));
-	setcolor(lightmagenta);
-	setfont('sanseri.ttf',3);
 	graphwriteln(x,y,'');
 	graphwriteln(x,y,'                 What do you take?');
+	str(coins,tempstring);
+	setfont('default.ttf',2);
+	setcolor(white);
+	outtextxy(240,400,('You have ' + tempstring + ' coins'));
 	repeat
 	     ans:=readarrowkey;
 	until (ans in ['1'..'5','n','N']);
@@ -3261,12 +3259,13 @@ begin
 	else
 	     begin
 	          clearpub;
-	          setfont('sanseri.ttf',4);
+	          setfont('default.ttf',4);
 	          setcolor(red);
+              x:=getmaxx DIV 2;
 	          case ans of
-	             '1','2','3':outtextxy(1,180,'      Hey, that''s not bad.  (Burp)');
-	             '4':outtextxy(1,200,'          My, that''s good stuff!');
-	             '5':outtextxy(1,220,' Whoa!  It really burns as it goes down!');
+	             '1','2','3':centerwrite(x,180,'Hey, that''s not bad.  (Burp)');
+	             '4':centerwrite(x,200,'My, that''s good stuff!');
+	             '5':centerwrite(x,220,'It really burns as it goes down!');
 	          end;{case}
 	          coins:=coins - drinkprice;
 	          setfont('default.ttf',2);
@@ -3503,10 +3502,10 @@ var
 	ans         :    char;
 
 begin
-	cleardevice;
-        drawpic(2,1,'pub.ln1');
-        drawpic(40,160,'dwarf.ln1');
-	setfont('sanseri.ttf',3);
+    cleardevice;
+    drawpic(2,1,'pub.ln1');
+    drawpic(40,160,'dwarf.ln1');
+	setfont('default.ttf',3);
 	setcolor(magenta);
 	x:=210;
 	y:=200;
@@ -3515,46 +3514,40 @@ begin
 	graphwriteln(x,y,'   "What''s the password?"');
 	graphwriteln(x,y,'');
 	graphwriteln(x,y,'');
-	graphwriteln(x,y,'');
-	graphwriteln(x,y,'');
 	setcolor(lightmagenta);
-	graphwrite(x,y,'You respond:  ');
+	graphwrite(x,y,'You respond: ');
 	graphread(x,y,password);
 	graphwriteln(x,y,'');
 	graphwriteln(x,y,'');
 	setcolor(magenta);
 	if not(capitalize(password)='CRYSTAL SHARD') then
 	     begin
-	          graphwriteln(x,y,'"Sorry, no password, no entrance,"  Bobo shoves');
-	          graphwriteln(x,y,'you off.');
+	          graphwriteln(x,y,'"No password, no service"');
 	          setfont('default.ttf',2);
 	          prompt;
 	     end
 	else
 	     begin
-	          graphwriteln(x,y,'"Great!  Come on in!"  You enter the Metallic Beholder');
-	          graphwriteln(x,y,'Pub.');
+	          graphwriteln(x,y,'"Great! Come on in..."');
 	          setfont('default.ttf',2);
 	          prompt;
 	          repeat
 	               clearpub;
-                       drawpic(240,140,'roland.ln1');
-	               setfont('sanseri.ttf',3);
+                   drawpic(240,140,'roland.ln1');
+	               setfont('default.ttf',3);
 	               setcolor(lightmagenta);
-	               outtextxy(1,280,'      "So, what''ll it be," asks Roland McDoland');
-	               setfont('triplex.ttf',3);
-	               homecursor(x,y);
-	               y:=420;
-	               graphwriteln(x,y,'            (B)uy, (P)lay, (T)ip or (E)xit');
+                   x:=getmaxx DIV 2;
+	               centerwrite(x,280,'"So, what''ll it be," asks Roland McDoland');
+	               centerwrite(x,420,'(B)uy, (P)lay, (T)ip or (E)xit');
 	               str(player.coins,tempstring);
-	               setfont('default.ttf',1);
+	               setfont('default.ttf',2);
 	               setcolor(white);
-	               outtextxy(240,400,('You have ' + tempstring + ' coins'));
+	               centerwrite(x,400,('You have ' + tempstring + ' coins'));
 	               repeat
 	                    ans:=readarrowkey;
 	               until (ans in ['e','E','b','B','p','P','t','T','*']);
 	               clearpub;
-	               setfont('sanseri.ttf',3);
+	               setfont('default.ttf',3);
 	               setcolor(magenta);
 	               homecursor(x,y);
 	               case ans of
@@ -3580,30 +3573,28 @@ var
 
 begin
 	cleardevice;
-	setfont('gothic.ttf',5);
+	setfont('gothic.ttf',6);
 	homecursor(x,y);
+    x:=getmaxx DIV 2;
 	setcolor(darkgray);
-	outtextxy(x+1,y+1,'     The Eagle Talon Inn');
+	centerwrite(x+3,y+3,'The Eagle Talon Inn');
 	setcolor(cyan);
-	outtextxy(x,y,'     The Eagle Talon Inn');
-        drawpic(420,120,'innkeep.ln1');
-	setfont('sanseri.ttf',3);
+	centerwrite(x,y,'The Eagle Talon Inn');
+    drawpic(420,120,'innkeep.ln1');
+	setfont('default.ttf',3);
 	setcolor(lightblue);
 	str(innprice,tempstring);
-	outtextxy(1,160,'    "We charge '+ tempstring + ' coins a night."');
-	str(player.coins,tempstring);
-	setfont('default.ttf',1);
-	setcolor(white);
-	outtextxy(240,400,('You have ' + tempstring + ' coins'));
+	outtextxy(10,160,'"We charge '+ tempstring + ' coins a night."');
 	setcolor(lightcyan);
-	setfont('sanseri.ttf',3);
-	outtextxy(1,420,'             Do you stay the night? (y/n)');
+	centerwrite(x,420,'Do you stay the night? (y/n)');
+	str(player.coins,tempstring);
+	setfont('default.ttf',2);
+	setcolor(white);
+	centerwrite(x,400,'You have ' + tempstring + ' coins');
 	repeat
 	     ans:=readarrowkey;
 	until (ans in ['n','N','y','Y']);
-	if (ans in ['n','N']) then
-	     exit
-	else
+	if (ans in ['y','Y']) then
 	     with player do
 	          if (coins<innprice) then
 	               begin
@@ -3613,29 +3604,29 @@ begin
 	          else
 	               begin
 	                    cleardevice;
+                        setfont('default.ttf',3);
 	                    setcolor(yellow);
-
-	                    y:=120;
-	                    graphwriteln(x,y,'                     Zzzzzzzz....');
-	                    graphwriteln(x,y,'');
+	                    y:=200;
+	                    centerwrite(x,y,'Zzzzzzzz....');
+                        y:=y+30;
 	                    setcolor(cyan);
+	                    centerwrite(x,y,'You sleep the night and gain a little health.');
 	                    coins:=coins - innprice;
-	                    graphwriteln(x,y,'     You sleep the night and gain a little health.');
 	                    endurance:=endurance + roll('1d4');
 	                    if(endurance>endurancemax)then
 	                         endurance:=endurancemax;
 	                    charges:=chargemax;
+                        setfont('default.ttf',2);
 	                    if (roll('1d100')<=5) then
 	                         begin
 	                              graphwriteln(x,y,'');
 	                              graphwriteln(x,y,'');
-	                              setcolor(blue);
-	                              setfont('triplex.ttf',2);
-	                              graphwrite(x,y,'You find a small note under ');
-	                              graphwriteln(x,y,'your pillow that says, "the');
-	                              graphwriteln(x,y,'password is... crystal shard"');
+	                              graphwriteln(x,y,'');
+	                              graphwriteln(x,y,'');
+	                              setcolor(lightblue);
+	                              graphwriteln(x,y,'You find a small note under your pillow that says,');
+	                              graphwriteln(x,y,'"the password is CRYSTAL SHARD"');
 	                         end;
-	                    setfont('default.ttf',2);
 	                    prompt;
 	               end;
 end;
