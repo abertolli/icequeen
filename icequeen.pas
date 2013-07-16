@@ -2649,20 +2649,23 @@ var
 begin
 	repeat
 	     cleardevice;
-	     setfont('gothic.ttf',5);
+	     setfont('gothic.ttf',6);
 	     homecursor(x,y);
+         x:=getmaxx DIV 2;
 	     setcolor(darkgray);
-	     outtextxy(x+3,y+3,'    Ye Olde Equipment Shop');
+	     centerwrite(x+3,y+3,'Ye Olde Equipment Shop');
 	     setcolor(lightgray);
-	     outtextxy(x,y,'    Ye Olde Equipment Shop');
+	     centerwrite(x,y,'Ye Olde Equipment Shop');
 	     graphwriteln(x,y,'');
-	     setfont('triplex.ttf',3);
+	     setfont('default.ttf',3);
 	     y:=420;
-	     graphwriteln(x,y,'               (B)uy, (S)ell, or (E)xit');
+         x:=getmaxx DIV 2;
+	     centerwrite(x,y,'(B)uy, (S)ell, or (E)xit');
 	     str(player.coins,tempstring);
-	     setfont('default.ttf',1);
+	     setfont('default.ttf',2);
 	     setcolor(white);
-	     outtextxy(240,400,('You have ' + tempstring + ' coins'));
+         x:=getmaxx DIV 2;
+	     centerwrite(x,400,('You have ' + tempstring + ' coins'));
 
 	     drawpic(150,100,'sword.ln1');
 		 drawpic(150,200,'shield.ln1');
