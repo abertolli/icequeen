@@ -326,7 +326,7 @@ begin
             end;
             if (key = #0) then keyselected:=false;
         end;
-    until(keyselected and (event.type_ = SDL_KeyUp));
+    until(keyselected);
     SDL_EnableUnicode(SDL_Disable);
     readarrowkey:=key;
 end;
