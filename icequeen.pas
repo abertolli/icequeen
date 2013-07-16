@@ -2457,8 +2457,8 @@ end;
 procedure broke;
 
 begin
-	setfont('sanseri.ttf',5);
-	outtextxy(1,200,'  You do not have the funds!!');
+	setfont('default.ttf',5);
+	centerwrite(getmaxx DIV 2,200,'You do not have the funds!!');
 	setfont('default.ttf',2);
 	prompt;
 end;
@@ -2472,43 +2472,42 @@ var
 
 begin
 	setcolor(black);
-	setfont('triplex.ttf',3);
-	outtextxy(10,420,'               (B)uy, (S)ell, or (E)xit');
-	setcolor(white);
+    bar(0,400,getmaxx,getmaxy);
 	with player do
 	     if (numitems=itemmax) then
 	          begin
 	               setcolor(lightgray);
-	               outtextxy(10,420,'  Sorry, but you don''t have room in your pack!');
+	               centerwrite(getmaxx DIV 2,420,'Sorry, but you don''t have room in your pack!');
 	               setfont('default.ttf',2);
 	               prompt;
 	          end
 	     else
 	          begin
-	               setfont('default.ttf',1);
-	               outtextxy(120,160,'(1) SWORD');
+	            setcolor(white);
+	               setfont('default.ttf',2);
+	               outtextxy(120,155,'(1) SWORD');
 	               outtextxy(120,170,'   10 coins');
-	               outtextxy(120,260,'(2) SHIELD');
+	               outtextxy(120,255,'(2) SHIELD');
 	               outtextxy(120,270,'   10 coins');
-	               outtextxy(120,360,'(3) AXE');
+	               outtextxy(120,355,'(3) AXE');
 	               outtextxy(120,370,'    7 coins');
-	               outtextxy(270,160,'(4) CHAIN MAIL');
+	               outtextxy(270,155,'(4) CHAIN MAIL');
 	               outtextxy(270,170,'   40 coins');
-	               outtextxy(270,260,'(5) PLATE MAIL');
+	               outtextxy(270,255,'(5) PLATE MAIL');
 	               outtextxy(270,270,'   60 coins');
-	               outtextxy(270,360,'(6) DAGGER');
+	               outtextxy(270,355,'(6) DAGGER');
 	               outtextxy(270,370,'    3 coins');
-	               outtextxy(420,160,'(7) CLUB');
+	               outtextxy(420,155,'(7) CLUB');
 	               outtextxy(420,170,'    3 coins');
-	               outtextxy(420,260,'(8) STAFF');
+	               outtextxy(420,255,'(8) STAFF');
 	               outtextxy(420,270,'    5 coins');
-	               outtextxy(420,360,'(9) HAMMER OF WAR');
+	               outtextxy(420,355,'(9) HAMMER OF WAR');
 	               outtextxy(420,370,'    5 coins');
-	               setfont('sanseri.ttf',2);
+	               setfont('default.ttf',3);
 	               setcolor(lightgray);
 	               x:=10;
 	               y:=420;
-	               graphwrite(x,y,'Which item:  ');
+	               graphwrite(x,y,'Which item: ');
 	               repeat
 	                    ans:=readarrowkey;
 	               until(ans in ['1'..'9']);
@@ -2550,8 +2549,9 @@ begin
                         price:=5;
                         end;
 	               end;{case}
+                   setcolor(white);
 	               graphwrite(x,y,itemstring(theitem));
-	               graphwrite(x,y,' -- ARE YOU SURE (y/n)');
+	               graphwrite(x,y,' (y/n)');
 	               repeat
 	                    ans:=readarrowkey;
 	               until (ans in ['y','Y','n','N']);
