@@ -13,11 +13,7 @@
 program IceQueen;
 
 uses
-	{$ifdef Win32}
-	wincrt, graph, graphio, dataio, dice;
-	{$else}
 	graphio, dataio, dice;
-	{$endif}
 
 const
 
