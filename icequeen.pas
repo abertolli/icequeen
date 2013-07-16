@@ -3001,20 +3001,21 @@ var
 begin
 	repeat
 	     cleardevice;
-	     setfont('gothic.ttf',5);
+	     setfont('gothic.ttf',6);
 	     homecursor(x,y);
+         x:=getmaxx DIV 2;
 	     setcolor(magenta);
-	     outtextxy(x+3,y+3,'          Magic Shop');
+	     centerwrite(x+3,y+3,'Magic Shop');
 	     setcolor(cyan);
-	     outtextxy(x,y,'          Magic Shop');
-	     graphwriteln(x,y,'');
-	     setfont('triplex.ttf',3);
+	     centerwrite(x,y,'Magic Shop');
+         setcolor(lightgray);
+	     setfont('default.ttf',3);
 	     y:=420;
-	     graphwriteln(x,y,'            (B)uy, (S)ell, (L)earn or (E)xit');
+	     centerwrite(x,y,'(B)uy, (S)ell, (L)earn or (E)xit');
 	     str(player.coins,tempstring);
-	     setfont('default.ttf',1);
-	     setcolor(white);
-	     outtextxy(240,400,('You have ' + tempstring + ' coins'));
+         setcolor(white);
+	     setfont('default.ttf',2);
+	     centerwrite(x,400,('You have ' + tempstring + ' coins'));
              drawpic(20,280,'wizard.ln1');
              drawpic(150,100,'potion-b.ln1'); {number based on color}
              drawpic(150,200,'potion-r.ln1');
