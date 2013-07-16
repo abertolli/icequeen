@@ -3291,15 +3291,16 @@ var
 
 begin
 	str(skullprice,tempstring);
-	tempstring:='   It will cost '+tempstring+' coins to play a game of Skull Dice';
+	tempstring:='It will cost '+tempstring+' coins to play a game of Skull Dice';
 	outtextxy(1,180,tempstring);
 	str(player.coins,tempstring);
-	setfont('default.ttf',1);
+	setfont('default.ttf',2);
 	setcolor(white);
-	outtextxy(240,400,('You have ' + tempstring + ' coins'));
+    x:=getmaxx DIV 2;
+	centerwrite(x,400,('You have ' + tempstring + ' coins'));
 	setcolor(lightmagenta);
-	setfont('sanseri.ttf',3);
-	outtextxy(1,420,'                  Go ahead? (y/n)');
+	setfont('default.ttf',3);
+	centerwrite(x,420,'Go ahead? (y/n)');
 	repeat
 	     ans:=readarrowkey;
 	until (ans in ['y','Y','n','N']);
@@ -3335,105 +3336,117 @@ begin
 	                         end;{case}
 	                         drawpic(loop*115,240,thepicture);
 	                    end;
-	               x:=10;
 	               y:=300;
 	               setcolor(yellow);
-	               setfont('sanseri.ttf',3);
 	               if (skulldice=4) then
 	                    begin
-	                         graphwriteln(x,y,'"Ha, ha!  You lose!  And now the game begins,"  with');
-	                         graphwriteln(x,y,'that Roland pulls out his french fry wand.  You quickly');
-	                         graphwriteln(x,y,'dodge his attacks.  Then, Roland just obliterates you.');
-	                         setfont('default.ttf',2);
-	                         prompt;
-	                         died;
-	                         exit;
+	                    x:=10;
+	                    graphwriteln(x,y,'"Ha, ha!  You lose!  And now the game begins,"');
+                        graphwriteln(x,y,'with that Roland pulls out his french fry wand.');
+                        graphwriteln(x,y,'After an hour of dodgin his attacks, you begin to');
+	                    graphwriteln(x,y,'tire.  Then, Roland just obliterates you.');
+	                    setfont('default.ttf',2);
+	                    prompt;
+	                    died;
+	                    exit;
 	                    end
 	               else
 	                    if (skulldice=3) then
-	                         graphwriteln(x,y,'     "Watch out!  Almost had to kill ya there."')
+	                         centerwrite(x,y,'"Watch out!  Almost had to kill ya there."')
 	                    else
 	                         if (blackdice=4) then
 	                              begin
-	                                   graphwriteln(x,y,'   "YOU WIN THE GRAND PRIZE!  I will teach you the');
-	                                   graphwriteln(x,y,'   obliterate spell."');
-	                                   if (numspells=spellmax) then
-	                                        graphwriteln(x,y,'       Too bad you can''t learn anymore spells.')
-	                                   else
-	                                        begin
-	                                             present:=false;
-	                                             for loop:=1 to numspells do
-	                                                  if (spell[loop]=obliterate) then
-	                                                       present:=true;
-	                                             if (present) then
-	                                                  graphwriteln(x,y,'    But you already know how to obliterate things.')
-	                                             else
-	                                                  if (ring in stages) then
-	                                                       begin
-	                                                            chargemax:=chargemax + 1;
-	                                                            if(chargemax>ringmax)then
-	                                                                 chargemax:=ringmax;
-	                                                            charges:=charges+1;
-	                                                            if(charges>chargemax)then
-	                                                                 charges:=chargemax;
-	                                                            numspells:=numspells + 1;
-	                                                            spell[numspells]:=obliterate;
-	                                                       end
-	                                                  else
-	                                                       graphwriteln(x,y,'        Too bad you don''t have a ring, huh?');
-	                                        end;
+	                              centerwrite(x,y,'"YOU WIN THE GRAND PRIZE!');
+                                  graphwriteln(x,y,'');
+                                  graphwriteln(x,y,'');
+                                  setfont('default.ttf',2);
+	                              graphwriteln(x,y,'Roland teaches you OBLITERATE"');
+	                              if (numspells=spellmax) then
+	                                    graphwriteln(x,y,'but you can''t learn anymore spells!')
+	                              else
+	                                    begin
+	                                    present:=false;
+	                                    for loop:=1 to numspells do
+	                                        if (spell[loop]=obliterate) then
+	                                            present:=true;
+	                                    if (present) then
+	                                        graphwriteln(x,y,'but you already know how to obliterate things.')
+	                                    else
+	                                        if (ring in stages) then
+	                                            begin
+	                                            chargemax:=chargemax + 1;
+	                                            if(chargemax>ringmax)then
+	                                                chargemax:=ringmax;
+	                                            charges:=charges+1;
+	                                            if(charges>chargemax)then
+	                                                charges:=chargemax;
+	                                            numspells:=numspells + 1;
+	                                            spell[numspells]:=obliterate;
+	                                            end
+	                                        else
+	                                            graphwriteln(x,y,'Too bad you don''t have a ring, huh?');
+	                                    end;
 	                              end
 	                         else
 	                              if (whitedice=4) then
 	                                   begin
-	                                        graphwriteln(x,y,'"You are the proud owner of a Ring of Power."');
-	                                        if (ring in stages) then
-	                                             begin
-	                                                  graphwriteln(x,y,'You already have one...');
-	                                                  graphwriteln(x,y,'Roland enchants your ring with an extra charge.');
-	                                                  chargemax:=chargemax + 1;
-	                                                  if (chargemax>ringmax) then
-	                                                       charges:=ringmax;
-	                                                  charges:=chargemax;
-	                                             end
-	                                        else
-	                                             begin
-	                                                  stages:=stages + [ring];
-	                                                  if not(numspells=spellmax)then
-	                                                       begin
-	                                                            chargemax:=1;
-	                                                            charges:=1;
-	                                                            numspells:=1;
-	                                                            spell[numspells]:=power;
-	                                                       end;
-	                                             end;
+	                                   centerwrite(x,y,'"You are the proud owner of a Ring of Power."');
+                                       graphwriteln(x,y,'');
+                                       graphwriteln(x,y,'');
+                                       setfont('default.ttf',2);
+	                                   if (ring in stages) then
+	                                        begin
+	                                        graphwriteln(x,y,'You already have one...');
+	                                        graphwriteln(x,y,'Roland enchants your ring with an extra charge.');
+	                                        chargemax:=chargemax + 1;
+	                                        if (chargemax>ringmax) then
+	                                            charges:=ringmax;
+	                                        charges:=chargemax;
+	                                        end
+	                                   else
+	                                        begin
+	                                        stages:=stages + [ring];
+	                                        if not(numspells=spellmax)then
+	                                            begin
+	                                            chargemax:=1;
+	                                            charges:=1;
+	                                            numspells:=1;
+	                                            spell[numspells]:=power;
+	                                            end;
+	                                        end;
 	                                   end
 	                              else
 	                                   if (blackdice=3) then
 	                                        begin
-	                                             graphwriteln(x,y,'"Great!  Here''s a green potion with your name on it."');
-	                                             if (numitems=itemmax) then
-	                                                  graphwriteln(x,y,'You must decline since you cannot carry anymore.')
-	                                             else
-	                                                  begin
-	                                                       numitems:=numitems + 1;
-	                                                       item[numitems]:=greenpotion;
-	                                                  end;
+	                                        centerwrite(x,y,'"Here''s a green potion with your name on it."');
+                                            graphwriteln(x,y,'');
+                                            graphwriteln(x,y,'');
+                                            setfont('default.ttf',2);
+	                                        if (numitems=itemmax) then
+	                                            graphwriteln(x,y,'You must decline since you cannot carry anymore.')
+	                                        else
+	                                            begin
+	                                            numitems:=numitems + 1;
+	                                            item[numitems]:=greenpotion;
+	                                            end;
 	                                        end
 	                                   else
 	                                        if (whitedice=3) then
-	                                             begin
-	                                                  graphwriteln(x,y,'       "You win.  Your prize is a blue potion."');
-	                                                  if (numitems=itemmax) then
-	                                                       graphwriteln(x,y,'You must decline since you cannot carry anymore.')
-	                                                  else
-	                                                       begin
-	                                                            numitems:=numitems + 1;
-	                                                            item[numitems]:=bluepotion;
-	                                                       end;
-	                                             end
+	                                            begin
+	                                            centerwrite(x,y,'"You win. Your prize is a blue potion."');
+                                                graphwriteln(x,y,'');
+                                                graphwriteln(x,y,'');
+                                                setfont('default.ttf',2);
+	                                            if (numitems=itemmax) then
+	                                                graphwriteln(x,y,'You must decline since you cannot carry anymore.')
+	                                            else
+	                                                begin
+	                                                numitems:=numitems + 1;
+	                                                item[numitems]:=bluepotion;
+	                                                end;
+	                                            end
 	                                        else
-	                                             graphwriteln(x,y,'                "Sorry, no prize."');
+	                                            centerwrite(x,y,'"Sorry, no prize."');
 	               setfont('default.ttf',2);
 	               prompt;
 	          end;
