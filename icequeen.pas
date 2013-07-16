@@ -2785,32 +2785,31 @@ var
 
 begin
 	setcolor(black);
-	setfont('triplex.ttf',3);
-	outtextxy(10,420,'            (B)uy, (S)ell, (L)earn or (E)xit');
-	setcolor(white);
+    bar(0,400,getmaxx,getmaxy);
 	with player do
 	     if (numitems=itemmax) then
 	          begin
-	               setcolor(lightgray);
-	               outtextxy(10,420,'  Sorry, but you don''t have room in your pack!');
+	            setcolor(lightgray);
+	               centerwrite(getmaxx DIV 2,420,'Sorry, but you don''t have room in your pack!');
 	               setfont('default.ttf',2);
 	               prompt;
 	          end
 	     else
 	          begin
-	               setfont('default.ttf',1);
-	               outtextxy(110,160,'(1) BLUE POTION');
+	            setcolor(white);
+	               setfont('default.ttf',2);
+	               outtextxy(110,155,'(1) BLUE POTION');
 	               outtextxy(110,170,'    100 coins');
-	               outtextxy(110,260,'(2) RED POTION');
+	               outtextxy(110,255,'(2) RED POTION');
 	               outtextxy(110,270,'    100 coins');
-	               outtextxy(110,360,'(3) GREEN POTION');
+	               outtextxy(110,355,'(3) GREEN POTION');
 	               outtextxy(110,370,'    300 coins');
-	               outtextxy(340,340,'(4) RING OF POWER');
+	               outtextxy(340,335,'(4) RING OF POWER');
 	               outtextxy(340,350,'     800 coins');
-	               setfont('sanseri.ttf',2);
-	               setcolor(red);
 	               x:=10;
 	               y:=420;
+	               setcolor(lightgray);
+	               setfont('default.ttf',3);
 	               graphwrite(x,y,'Which item:  ');
 	               repeat
 	                    ans:=readarrowkey;
@@ -2834,11 +2833,12 @@ begin
 	                             price:=800;
 	                        end;
 	               end;
+                   setcolor(white);
 	               if (getring) then
 	                    graphwrite(x,y,'Ring of Power')
 	               else
 	                    graphwrite(x,y,itemstring(theitem));
-	               graphwrite(x,y,' -- ARE YOU SURE (y/n)');
+	               graphwrite(x,y,' (y/n)');
 	               repeat
 	                    ans:=readarrowkey;
 	               until (ans in ['y','Y','n','N']);
@@ -2854,9 +2854,8 @@ begin
 	                              if (ring in stages) then
 	                                   begin
 	                                        setfillstyle(solidfill,black);
-	                                        bar(1,420,640,480);
-	                                        setfont('triplex.ttf',3);
-	                                        outtextxy(200,420,'You already have one.');
+	                                        bar(0,400,getmaxx,getmaxy);
+	                                        centerwrite(getmaxx DIV 2,420,'You already have one.');
 	                                        setfont('default.ttf',2);
 	                                        prompt;
 	                                   end
@@ -2893,40 +2892,36 @@ var
 
 begin
 	setcolor(black);
-	setfont('triplex.ttf',3);
-	outtextxy(10,420,'            (B)uy, (S)ell, (L)earn or (E)xit');
+    bar(0,400,getmaxx,getmaxy);
 	setcolor(white);
 	with player do
 	     if (numspells=spellmax) or not(ring in stages) then
 	          begin
 	               setcolor(lightgray);
+                   x:=getmaxx DIV 2;
 	               if (ring in stages) then
-	                    outtextxy(80,420,'Sorry, you can''t learn any more spells.')
+	                    centerwrite(x,420,'Sorry, you can''t learn any more spells.')
 	               else
-	                    outtextxy(100,420,'You need a ring to store your spells.');
+	                    centerwrite(x,420,'You need a ring to store your spells.');
 	               setfont('default.ttf',2);
 	               prompt;
 	          end
 	     else
 	          begin
-	               setfillstyle(solidfill,black);
-	               bar(380,280,460,360);
-	               setfont('default.ttf',1);
-	               outtextxy(360,240,'(1) CALL WILD');
-	               outtextxy(360,250,'   100 coins');
-	               outtextxy(360,270,'(2) COURAGE');
-	               outtextxy(360,280,'   300 coins');
-	               outtextxy(360,300,'(3) WEB');
-	               outtextxy(360,310,'   400 coins');
-	               outtextxy(360,330,'(4) HEAL');
-	               outtextxy(360,340,'   500 coins');
-	               outtextxy(360,360,'(5) FIRE BLAST');
-	               outtextxy(360,370,'   600 coins');
-	               setfont('sanseri.ttf',2);
-	               setcolor(red);
+                setcolor(black);
+	               bar(320,260,getmaxx,360);
+                   setcolor(white);
+	               setfont('default.ttf',2);
+	               outtextxy(320,260,'(1) CALL WILD   100 coins');
+	               outtextxy(320,280,'(2) COURAGE     300 coins');
+	               outtextxy(320,300,'(3) WEB         400 coins');
+	               outtextxy(320,320,'(4) HEAL        500 coins');
+	               outtextxy(320,340,'(5) FIRE BLAST  600 coins');
+	               setfont('default.ttf',3);
+	               setcolor(lightgray);
 	               x:=10;
 	               y:=420;
-	               graphwrite(x,y,'Which spell:  ');
+	               graphwrite(x,y,'Which spell: ');
 	               repeat
 	                    ans:=readarrowkey;
 	               until(ans in ['1'..'5']);
@@ -2952,8 +2947,9 @@ begin
 	                             price:=600;
 	                        end;
 	               end;{case}
+                   setcolor(white);
 	               graphwrite(x,y,spellstring(thespell));
-	               graphwrite(x,y,' -- ARE YOU SURE (y/n)');
+	               graphwrite(x,y,' (y/n)');
 	               repeat
 	                    ans:=readarrowkey;
 	               until (ans in ['y','Y','n','N']);
@@ -2971,8 +2967,8 @@ begin
 	                         if (present) then
 	                              begin
 	                                   setcolor(lightgreen);
-	                                   setfont('sanseri.ttf',5);
-	                                   outtextxy(1,200,'    You already know that!!');
+	                                   setfont('default.ttf',5);
+	                                   centerwrite(getmaxx DIV 2,200,'You already know that!');
 	                                   setfont('default.ttf',2);
 	                                   prompt;
 	                              end
