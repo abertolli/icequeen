@@ -124,9 +124,9 @@ begin
         sword           :   itempicfile:='sword.ln1';
         shield          :   itempicfile:='shield.ln1';
         axe             :   itempicfile:='axe.ln1';
-        bluepotion      :   itempicfile:='potion1.ln1';
-        redpotion       :   itempicfile:='potion2.ln1';
-        greenpotion     :   itempicfile:='potion3.ln1';
+        bluepotion      :   itempicfile:='potion-b.ln1';
+        redpotion       :   itempicfile:='potion-r.ln1';
+        greenpotion     :   itempicfile:='potion-g.ln1';
         chainmail       :   itempicfile:='chain.ln1';
         platemail       :   itempicfile:='plate.ln1';
         dagger          :   itempicfile:='dagger.ln1';

@@ -3012,9 +3012,9 @@ begin
 	     setcolor(white);
 	     outtextxy(240,400,('You have ' + tempstring + ' coins'));
              drawpic(20,280,'wizard.ln1');
-             drawpic(150,100,'potion02.ln1'); {number based on color}
-             drawpic(150,200,'potion05.ln1');
-             drawpic(150,300,'potion03.ln1');
+             drawpic(150,100,'potion-b.ln1'); {number based on color}
+             drawpic(150,200,'potion-r.ln1');
+             drawpic(150,300,'potion-g.ln1');
              drawpic(320,100,'skilbook.ln1');
              drawpic(380,280,'ring.ln1');
 	     repeat
