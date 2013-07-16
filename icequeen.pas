@@ -2582,12 +2582,12 @@ var
 begin
 	cleardevice;
 	homecursor(x,y);
-	setfont('sanseri.ttf',3);
+	setfont('default.ttf',3);
 	with player do
 	     if (numitems>0) then
 	          begin
 	               setcolor(lightblue);
-	               graphwriteln(x,y,'   ITEMS');
+	               graphwriteln(x,y,'ITEMS');
 	               setcolor(white);
 	               for count:=1 to numitems do
 	                    begin
@@ -2600,7 +2600,6 @@ begin
 	               repeat
 	                    ans:=readarrowkey;
 	               until (ans in ['1'..tempstring[1]]);
-	               graphwriteln(x,y,'');
 	               val(ans,tempinteger,tempcode);
 	               tempstring:=itemstring(item[tempinteger]);
                    {
@@ -2623,10 +2622,15 @@ begin
                         magicshield     :price:=1500;
                         flamewand       :price:=2500;
                    end; {case}
+                   x:=x+20;
+                   y:=y+20;
+	               drawpic(x,y,itempicfile(item[tempinteger]));
+	               graphwriteln(x,y,'');
+	               graphwriteln(x,y,'');
 	               graphwrite(x,y,'Sell '+ tempstring);
 	               str(price,tempstring);
 	               graphwriteln(x,y,' for ' + tempstring + ' coins? (y/n)');
-	               drawpic(280,(numitems+7)*textheight('M'),itempicfile(item[tempinteger]));
+                   graphwriteln(x,y,'');
 	               repeat
 	                    ans:=readarrowkey;
 	               until(ans in ['y','Y','n','N']);
