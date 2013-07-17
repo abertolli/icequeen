@@ -58,19 +58,10 @@ end;
 {-------------------------------------------------------------------------}
 procedure drawpic(beginx,beginy:integer;dosname:string);
 
-var
-   previouscolor: word;
-
 begin
    dosname:=imagedir+dosname;
    if not(exist(dosname)) then
-      begin
-         previouscolor:=getcolor;
-         setcolor(lightblue);
-         setfont('default.ttf',1);
-         outtextxy(beginx,beginy,dosname);
-	 setcolor(previouscolor);
-      end
+        writeln('drawpic: '+dosname+' not found')
    else
       drawpicturebyline(beginx,beginy,dosname);
 end;
@@ -131,16 +122,13 @@ procedure titlescreen;
 
 {Ice Queen title screen}
 
-var
-    center      :   integer;
-
 begin
-    center:=getmaxx DIV 2;
+    x:=getmaxx DIV 2;
     setfont('gothic.ttf',8);
     setcolor(lightblue);
-    centerwrite(center+5,385,'The Ice Queen');
+    centerwrite(x+5,385,'The Ice Queen');
     setcolor(white);
-    centerwrite(center,380,'The Ice Queen');
+    centerwrite(x,380,'The Ice Queen');
     setfont('default.ttf',2);
     drawpic(120,10,'tcastle.ln1');
     setfont('default.ttf',2);
@@ -229,7 +217,7 @@ begin
 	               basestr:=strength;
 	               basedex:=dexterity;
 	               repeat
-	                  setfillstyle(solidfill,black);
+	                  setcolor(black);
 	                  bar(0,200,300,300);
 	                  y:=200;
 	                  graphwriteln(x,y,'Use the arrow keys to assign points');
@@ -881,9 +869,10 @@ procedure combatmenuprompt;
 var ch:char;
 
 begin
-	y:=450;
-	setfont('default.ttf',1);
-	graphwriteln(x,y,'       <press space>');
+    x:=120;
+	y:=440;
+	setfont('default.ttf',2);
+	centerwrite(x,y,'<press space>');
 	ch:=readarrowkey;
 end;
 {---------------------------------------------------------------------------}
@@ -892,7 +881,6 @@ procedure clearcombatmenu;
 begin
 
 	setcolor(blue);
-	setfillstyle(solidfill,blue);
 	bar(40,300,200,460);
 	setcolor(lightblue);
 	rectangle(40,300,200,460);
@@ -906,64 +894,44 @@ var
 	hitbar         :    word;
 
 begin
+    setfont('default.ttf',2);
 	setcolor(blue);
-	setfillstyle(solidfill,blue);
 	bar(420,300,600,460);
 	setcolor(lightblue);
 	rectangle(420,300,600,460);
 	setcolor(lightcyan);
 	calcstats(player);
-	x:=510 - (textwidth(player.name) DIV 2);
+	x:=510;
 	y:=300;
-	outtextxy(x,y,player.name);
+	centerwrite(x,y,player.name);
 	graphwriteln(x,y,'');
-	x:=440;
-	str(player.level,tempstring);
-	tempstring:='Level: ' + tempstring;
-	graphwriteln(x,y,tempstring);
+	graphwriteln(x,y,'');
 	x:=440;
 	str(player.endurance,tempstring);
 	tempstring:='HP: ' + tempstring + '/';
 	graphwrite(x,y,tempstring);
 	str(player.endurancemax,tempstring);
 	graphwriteln(x,y,tempstring);
-	setcolor(lightgray);
-	line(438,366,541,366);
-	line(438,366,438,371);
-	setcolor(black);
-	line(439,367,541,367);
-	line(439,370,541,370);
-	line(439,367,439,370);
-	line(541,367,541,370);
-	hitbar:=(player.endurance DIV player.endurancemax)*100;
+	hitbar:=(player.endurance * 100) DIV player.endurancemax;
+    setcolor(black);
+    x:=440;
+    bar(x,y,x+101,y+4);
 	case hitbar of
 	     0..20:setcolor(red);
 	     21..50:setcolor(yellow);
 	else
 	     setcolor(green);
 	end; {case}
-	line(440,368,440+hitbar,368);
-	line(440,369,440+hitbar,369);
-	setcolor(black);
-	line(441+hitbar,368,540,368);
-	line(441+hitbar,369,540,369);
+    bar(x,y,x+hitbar,y+2);
 	setcolor(lightcyan);
+	graphwriteln(x,y,'');
 	x:=440;
-	y:=y+15;
 	str(player.armorclass,tempstring);
 	tempstring:='AC: ' + tempstring;
 	graphwriteln(x,y,tempstring);
-	x:=440;
-	str(player.thac0,tempstring);
-	tempstring:='THAC0: ' + tempstring;
-	graphwriteln(x,y,tempstring);
+	graphwriteln(x,y,'');
 	x:=440;
 	graphwriteln(x,y,'Dmg: '+player.damage);
-        x:=440;
-	str(player.savingthrow,tempstring);
-	tempstring:='Save: ' + tempstring;
-	graphwriteln(x,y,tempstring);
-
 end;
 {---------------------------------------------------------------------------}
 procedure combatscreen(player:character_t;nummonsters:integer;
@@ -977,7 +945,7 @@ var
 
 begin
 	cleardevice;
-	setfont('default.ttf',1);
+	setfont('default.ttf',2);
 
 	{draw the monsters & write names}
 	row1width:=(nummonsters * 120) + ((nummonsters - 1) * spacing);
@@ -1027,10 +995,9 @@ begin
 	                    x:=x+120+spacing;
 	               end;
 	     end;
-	setfont('sanseri.ttf',1);
 	clearcombatmenu;           {Create the combat menu window on the left}
 	combatstats(player);       {Create the combat stats window on the right}
-	x:=(640 DIV 2) - 60;   {Draw the player in the center}
+	x:=(getmaxx DIV 2) - 60;   {Draw the player in the center}
 	y:=340;
 	drawpic(x,y,player.picfile);
 end;
@@ -1049,7 +1016,7 @@ var
 
 begin
 	clearcombatmenu;
-	setfont('sanseri.ttf',1);
+	setfont('default.ttf',2);
 	y:=300;
 	graphwriteln(x,y,'');
 	ac:=themonster.armorclass;
@@ -1059,7 +1026,9 @@ begin
 	if ((hitroll>=(player.thac0-ac))and(hitroll>1))or(hitroll=20) then
 	     begin
 	          graphwriteln(x,y,'');
-	          graphwriteln(x,y,'        You hit!');
+              x:=120;
+	          centerwrite(x,y,'You hit!');
+	          graphwriteln(x,y,'');
 	          graphwriteln(x,y,'');
 	          dmg:=roll(player.damage);
 	          if (dmg<1) then
@@ -1072,23 +1041,26 @@ begin
 	               dmg:=(dmg DIV 2)+1;
 	          str(dmg,s);
 	          s:='('+s+')';
-	          x:=120-(textwidth(s) DIV 2);
-	          graphwriteln(x,y,s);
+	          x:=120;
+	          centerwrite(x,y,s);
+              graphwriteln(x,y,'');
 	          if (dmg>themonster.endurance) then
 	               themonster.endurance:=0
 	          else
 	               themonster.endurance:=themonster.endurance-dmg;
 	          if (themonster.endurance=0) then
 	               begin
-	                    x:=120-(textwidth('KILLED') DIV 2);
-	                    graphwriteln(x,y,'KILLED');
+	                    x:=120;
+	                    centerwrite(x,y,'KILLED');
+                        graphwriteln(x,y,'');
 	               end;
 	     end
 	else
 	     begin
 	          graphwriteln(x,y,'');
 	          graphwriteln(x,y,'');
-	          graphwriteln(x,y,'       You missed');
+              x:=120;
+	          centerwrite(x,y,'You missed');
 	     end;
 end;
 {---------------------------------------------------------------------------}
@@ -1241,9 +1213,7 @@ begin
 	                    player.endurance:=player.endurance+roll('1d6')+1;
 	                    if (player.endurance>player.endurancemax) then
 	                         player.endurance:=player.endurancemax;
-	                    setfont('sanseri.ttf',1);
 	                    combatstats(player);
-	                    setfont('default.ttf',1);
 	               end;
 	       courage:begin
 	                    if not(playereffect.courage) then
@@ -2124,9 +2094,7 @@ begin
 	                    monsterattack(player,loop,monster[loop],
 	                                  playereffect);
 	               end;
-	          setfont('sanseri.ttf',1);
 	          combatstats(player);
-	          setfont('default.ttf',1);
 	          combatmenuprompt;
 	          if (player.endurance=0) then
 	             begin
@@ -2161,15 +2129,15 @@ procedure writeflee;
 
 begin
 	setcolor(lightcyan);
-	setfont('sanseri.ttf',1);
-	outtextxy(40,360,'  You run away...');
+	setfont('default.ttf',2);
+	centerwrite(120,360,'You run away...');
 end;
 {---------------------------------------------------------------------------}
 procedure combat(var player:character_t;var nummonsters:integer;
 	            monster:monsterlist);
 
 var
-	oldplayer      :    character_t;
+	origplayer     :    character_t;
 	xppool         :    longint;
 	coinpool       :    longint;
 	flee           :    boolean;
@@ -2180,7 +2148,7 @@ var
 	ch             :    char;
 
 begin
-	oldplayer:=player;
+	origplayer:=player;
 	flee:=false;
 	xppool:=0;
 	coinpool:=0;
@@ -2205,15 +2173,9 @@ begin
 	     calcstats(player);
 	     combatscreen(player,nummonsters,monster);
 	     setcolor(lightcyan);
-	     setfont('sanseri.ttf',3);
-	     y:=300;
-	     graphwriteln(x,y,'');
-	     graphwriteln(x,y,'      (F)ight');
-	     y:=y+10;
-	     graphwriteln(x,y,'        or');
-	     x:=x+5;
-	     y:=y+10;
-	     graphwriteln(x,y,'      (R)un');
+         x:=120;
+	     y:=360;
+	     centerwrite(x,y,'(F)ight or (R)un ');
 	     repeat
 	          ch:=readarrowkey;
 	     until (ch in ['f','F','r','R']);
@@ -2253,9 +2215,9 @@ begin
 	               end;
 	until (flee)or(nummonsters=0);
 
-	{readjust stats using oldplayer}
-	player.strength:=oldplayer.strength;
-	player.dexterity:=oldplayer.dexterity;
+	{readjust stats using origplayer}
+	player.strength:=origplayer.strength;
+	player.dexterity:=origplayer.dexterity;
 
 	with player do                     {Add xp and treasure}
 	     begin
@@ -2283,30 +2245,30 @@ end;
 procedure clearmap;
 
 begin
-	setfillstyle(solidfill,blue);
+	setcolor(blue);
 	bar(41,41,440,320);
 end;
 {--------------------------------------------------------------------------}
 procedure clearmessage;
 
 begin
-	setfillstyle(solidfill,darkgray);
+	setcolor(darkgray);
 	bar(41,361,600,440);
 end;
 {--------------------------------------------------------------------------}
 procedure clearstats;
 
 begin
-	setfillstyle(solidfill,red);
+	setcolor(red);
 	bar(481,41,600,320);
 end;
 {--------------------------------------------------------------------------}
 procedure screensetup;
 
 begin
-	setfillstyle(solidfill,lightgray);
+	setcolor(lightgray);
 	bar(0,0,640,480);
-	setfillstyle(solidfill,black);
+	setcolor(black);
 	bar(38,38,443,323);
 	bar(38,358,603,443);
 	bar(478,38,603,323);
@@ -2315,69 +2277,53 @@ begin
 	clearstats;
 end;
 {---------------------------------------------------------------------------}
-function midstats(thestring:string) :    integer;
-
-begin
-	midstats:=541 - (textwidth(thestring) DIV 2);
-end;
-{---------------------------------------------------------------------------}
 procedure writestats(player:character_t);
 
 var
 
-	thestring      :    string;
-	tempstring     :    string;
-	loop           :    integer;
+	s1          :   string;
+	s2          :   string;
+    center      :   integer;
 
 begin
 	clearstats;
+    calcstats(player);
 	setcolor(lightred);
 	with player do
 	     begin
-	          setfont('sanseri.ttf',2);
-	          tempstring:=name;
-	          while (textwidth(tempstring)>120) do
-	               delete(tempstring,length(tempstring),1);
-	          outtextxy(midstats(tempstring),50,tempstring);
-	          setfont('default.ttf',1);
-	          outtextxy(midstats('ENDURANCE'),80,'ENDURANCE');
-	          str(endurance,tempstring);
-	          thestring:=tempstring;
-	          str(endurancemax,tempstring);
-	          thestring:=thestring + '/' + tempstring;
-	          outtextxy(midstats(thestring),90,thestring);
-	          y:=110;
-	          if (numitems>0) then
-	               begin
-	                    x:=midstats('ITEMS');
-	                    graphwriteln(x,y,'ITEMS');
-	                    for loop:=1 to numitems do
-	                         begin
-	                              x:=midstats(itemstring(item[loop]));
-	                              graphwriteln(x,y,itemstring(item[loop]));
-	                         end;
-	               end
-	          else
-	               begin
-	                    x:=midstats('No Items');
-	                    graphwriteln(x,y,'No Items');
-	               end;
-	          graphwriteln(x,y,'');
-	          if (numspells>0) then
-	               begin
-	                    x:=midstats('SPELLS');
-	                    graphwriteln(x,y,'SPELLS');
-	                    for loop:=1 to numspells do
-	                         begin
-	                              x:=midstats(spellstring(spell[loop]));
-	                              graphwriteln(x,y,spellstring(spell[loop]));
-	                         end;
-	               end
-	          else
-	               begin
-	                    x:=midstats('No spells');
-	                    graphwriteln(x,y,'No spells');
-	               end;
+              center:=540;
+              y:=50;
+	          setfont('gothic.ttf',4);
+	          s1:=name;
+	          while (textwidth(s1)>120) do
+	               delete(s1,length(s1),1);
+	          centerwrite(center,y,s1);
+              graphwriteln(x,y,'');
+
+	          setfont('default.ttf',2);
+	          str(endurance,s1);
+              str(endurancemax,s2);
+              centerwrite(center,y,'ENDURANCE');
+              graphwriteln(x,y,'');
+	          centerwrite(center,y,s1 + '/' + s2);
+              graphwriteln(x,y,'');
+              graphwriteln(x,y,'');
+
+              str(armorclass,s1);
+              centerwrite(center,y,'AC: '+s1);
+              graphwriteln(x,y,'');
+
+              centerwrite(center,y,'DMG: '+damage);
+              graphwriteln(x,y,'');
+              graphwriteln(x,y,'');
+
+	          str(charges,s1);
+              str(chargemax,s2);
+              centerwrite(center,y,'MAGIC');
+              graphwriteln(x,y,'');
+	          centerwrite(center,y,s1 + '/' + s2);
+              graphwriteln(x,y,'');
+
 	     end;
 
 end;
@@ -2861,7 +2807,7 @@ begin
 	                              setcolor(lightgray);
 	                              if (ring in stages) then
 	                                   begin
-	                                        setfillstyle(solidfill,black);
+	                                        setcolor(black);
 	                                        bar(0,400,getmaxx,getmaxy);
 	                                        centerwrite(getmaxx DIV 2,420,'You already have one.');
 	                                        setfont('default.ttf',2);
@@ -3060,7 +3006,7 @@ begin
 	repeat
 	     ch:=readarrowkey;
 	until (ch in ['a','A','r','R']);
-	setfillstyle(solidfill,black);
+	setcolor(black);
 	bar(1,240,640,300);
 	if (ch in ['r','R']) then
 	     begin
@@ -3223,7 +3169,7 @@ end;
 procedure clearpub;
 
 begin
-	setfillstyle(solidfill,black);
+	setcolor(black);
 	bar(1,120,640,480);
 end;
 {---------------------------------------------------------------------------}
@@ -3756,7 +3702,7 @@ end;
 procedure clearesi;
 
 begin
-	setfillstyle(solidfill,black);
+	setcolor(black);
 	bar(0,175,640,480);
 end;
 {---------------------------------------------------------------------------}
@@ -4821,33 +4767,33 @@ begin
 	cleardevice;
         drawpic(70,10,'esi.ln1');
 	setcolor(yellow);
-	setfont('default.ttf',5);
-	writefile(180,textdir+'039.txt');
+	setfont('default.ttf',2);
+	writefile(175,textdir+'039.txt');
 	prompt;
 	repeat
 	     clearesi;
 	     homecursor(x,y);
 	     y:=240;
 	     setcolor(yellow);
-	     setfont('default.ttf',6);
-	     graphwriteln(x,y,'     1) Look around');
-	     graphwriteln(x,y,'     2) Order a drink');
-	     graphwriteln(x,y,'     3) Rent a room');
-	     graphwriteln(x,y,'     4) Try your luck at dice');
+	     setfont('default.ttf',3);
+	     graphwriteln(x,y,' 1) Look around');
+	     graphwriteln(x,y,' 2) Order a drink');
+	     graphwriteln(x,y,' 3) Rent a room');
+	     graphwriteln(x,y,' 4) Try your luck at dice');
 	     y:=240;
 	     x:=320;
-	     graphwriteln(x,y,'     5) Visit the Magic Merchant');
+	     graphwriteln(x,y,' 5) See the Magic Merchant');
 	     x:=320;
-	     graphwriteln(x,y,'     6) Arm wrestling table');
+	     graphwriteln(x,y,' 6) Arm wrestling table');
 	     x:=320;
-	     graphwriteln(x,y,'     7) Knife throwing board');
+	     graphwriteln(x,y,' 7) Knife throwing board');
 	     x:=320;
-	     graphwriteln(x,y,'     8) Go over to the jester');
+	     graphwriteln(x,y,' 8) Go over to the jester');
 	     graphwriteln(x,y,'');
 	     graphwriteln(x,y,'                       (V)iew your stats');
 	     graphwriteln(x,y,'                    (E)xit the Elf Skull Inn');
 	     str(player.coins,tempstring);
-	     setfont('default.ttf',1);
+	     setfont('default.ttf',2);
 	     setcolor(white);
 	     outtextxy(240,460,('You have ' + tempstring + ' coins'));
 	     repeat
@@ -4855,19 +4801,17 @@ begin
 	     until (ans in ['1'..'8','e','E','v','V']);
 	     clearesi;
 	     setcolor(yellow);
-	     setfont('default.ttf',6);
+	     setfont('default.ttf',2);
 	     homecursor(x,y);
 	     case ans of
 	       'e','E':exit;
 	       'v','V':begin
 	                    viewstats(player);
 	                    cleardevice;
-                            drawpic(70,10,'esi.ln1');
+                        drawpic(70,10,'esi.ln1');
 	               end;
 	           '1':begin
-	                    setcolor(yellow);
-	                    setfont('default.ttf',5);
-	                    writefile(180,textdir+'039.txt');
+	                    writefile(175,textdir+'039.txt');
 	                    prompt;
 	               end;
 	           '2':begin
@@ -4907,11 +4851,11 @@ var
 begin
 	clearmessage;
 	homemessage(x,y);
-	setfont('default.ttf',2);
+	setfont('default.ttf',3);
 	setcolor(black);
-	message(x,y,'           You encounter');
-	message(x,y,'');
-	message(x,y,'             MONSTERS!');
+	centerwrite(getmaxx DIV 2,y,'You encounter');
+	graphwriteln(x,y,'');
+	centerwrite(getmaxx DIV 2,y,'MONSTERS!');
 	prompt;
 
     rollchart(chartid,nummonsters,monsterid);
@@ -5624,7 +5568,6 @@ begin
 	     if (px<20)and(py>1)and(dmap[px+1,py-1]<>28) then
 	          drawmaptile(px+1,py-1,dmap);
 	     setcolor(red);
-	     setfillstyle(solidfill,red);
 	     fillellipse((px*20)+31,(py*20)+31,3,3);
 	     lastx:=px;
 	     lasty:=py;
@@ -5637,7 +5580,6 @@ begin
 	     if (dcode[px,py]=28) then
 	          begin
 	               setcolor(blue);
-	               setfillstyle(solidfill,blue);
 	               fillellipse((px*20)+31,(py*20)+31,3,3);
 	          end;
 	     if (ans='2')and(py<14)and(dcode[px,py+1]<>1) then
@@ -5864,10 +5806,10 @@ var ans:char;
 begin
 	clearmessage;
 	homemessage(x,y);
-	setfont('default.ttf',2);
+	setfont('default.ttf',3);
 	setcolor(black);
-	message(x,y,'');
-	message(x,y,' The Elf Skull Inn -- enter? (y/n)');
+	graphwriteln(x,y,'');
+	centerwrite(getmaxx DIV 2,y,'The Elf Skull Inn (y/n)');
 	repeat
 	     ans:=readarrowkey;
 	until (ans in ['y','Y','n','N']);
@@ -5884,10 +5826,10 @@ var ans:char;
 begin
 	clearmessage;
 	homemessage(x,y);
-	setfont('default.ttf',2);
+	setfont('default.ttf',3);
 	setcolor(black);
-	message(x,y,'');
-	message(x,y,'   Gilantry City -- enter? (y/n)');
+	graphwriteln(x,y,'');
+	centerwrite(getmaxx DIV 2,y,'Gilantry City (y/n)');
 	repeat
 	     ans:=readarrowkey;
 	until (ans in ['y','Y','n','N']);

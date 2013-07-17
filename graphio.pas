@@ -57,8 +57,6 @@ var
     cursory         :   word;
     fontpath        :   string;
     fontfile        :   string;
-    fillpattern     :   word;
-    fillcolor       :   word;
 
 {legacy support}
 function getpixel(x,y:smallint):word;
@@ -68,7 +66,6 @@ procedure outtextxy(x,y:word;s:string);
 function textwidth(s:string):word;
 function textheight(s:string):word;
 procedure cleardevice;
-procedure setfillstyle(pattern,color:word);
 procedure line(x1,y1,x2,y2:smallint);
 procedure bar(x1,y1,x2,y2:smallint);
 procedure rectangle(x1,y1,x2,y2:smallint);
@@ -244,12 +241,6 @@ begin
     SDL_Flip(screen);
 end;
 {--------------------------------------------------------------------------}
-procedure setfillstyle(pattern,color:word);
-begin
-    fillpattern:=pattern;
-    fillcolor:=color;
-end;
-{--------------------------------------------------------------------------}
 procedure line(x1,y1,x2,y2:smallint);
 begin
     lineRGBA(screen,x1,y1,x2,y2,r[fgcolor],g[fgcolor],b[fgcolor],255);
@@ -258,7 +249,7 @@ end;
 {--------------------------------------------------------------------------}
 procedure bar(x1,y1,x2,y2:smallint);
 begin
-    boxRGBA(screen,x1,y1,x2,y2,r[fillcolor],g[fillcolor],b[fillcolor],255);
+    boxRGBA(screen,x1,y1,x2,y2,r[fgcolor],g[fgcolor],b[fgcolor],255);
     SDL_UpdateRect(screen,0,0,0,0);
 end;
 {--------------------------------------------------------------------------}
@@ -270,7 +261,7 @@ end;
 {--------------------------------------------------------------------------}
 procedure fillellipse(x1,y1:smallint;xradius,yradius:word);
 begin
-    filledEllipseRGBA(screen,x1,y1,xradius,yradius,r[fillcolor],g[fillcolor],b[fillcolor],255);
+    filledEllipseRGBA(screen,x1,y1,xradius,yradius,r[fgcolor],g[fgcolor],b[fgcolor],255);
     SDL_UpdateRect(screen,0,0,0,0);
 end;
 {--------------------------------------------------------------------------}
