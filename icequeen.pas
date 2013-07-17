@@ -637,13 +637,13 @@ end;
 procedure viewstats(var player:character_t);
 
 var
-	tempstring     :    string;
-	count          :    integer;
-	score          :    integer;
-	totalscore     :    integer;
-	stageloop      :    stage;
-	s2             :    string;
-	ans            :    char;
+	s               :    string;
+	s2              :    string;
+	count           :    integer;
+	score           :    integer;
+	totalscore      :    integer;
+	stageloop       :    stage;
+	ans             :    char;
 
 begin
 	repeat
@@ -652,54 +652,95 @@ begin
 	     with player do
 	          begin
 	               drawpic(20,20,picfile);
-	               setfont('triplex.ttf',4);
+	               setfont('gothic.ttf',6);
 	               setcolor(white);
-	               x:=240;
+	               x:=200;
 	               y:=25;
 	               graphwriteln(x,y,name);
-	               graphwriteln(x,y,'');
-	               setfont('sanseri.ttf',2);
+	               setfont('default.ttf',2);
+
 	               x:=200;
-	               str(level,tempstring);
-	               tempstring:='level: ' + tempstring;
-	               graphwrite(x,y,tempstring);
-	               graphwrite(x,y,'     ');
+	               str(level,s);
+	               s:='Level '+s;
+                   str(experience,s2);
+                   s:=s+' ('+s2+' xp)';
+	               graphwriteln(x,y,s);
+
+
+                   {
 	               if (sex in ['m','M']) then
 	                    graphwriteln(x,y,'male')
 	               else
 	                    graphwriteln(x,y,'female');
-	               y:=140;
-	               graphwriteln(x,y,'');
+                   }
+
 	               setcolor(lightred);
-	               str(endurance,tempstring);
-	               tempstring:='Endurance: ' + tempstring;
-	               graphwrite(x,y,tempstring);
-	               str(endurancemax,tempstring);
-	               tempstring:='/' + tempstring;
-	               graphwriteln(x,y,tempstring);
+                   setfont('default.ttf',3);
+	               str(endurance,s);
+	               s:='Endurance: ' + s;
+	               y:=145;
+	               graphwrite(x,y,s);
+	               str(endurancemax,s);
+	               s:='/' + s;
+	               graphwriteln(x,y,s);
 	               graphwriteln(x,y,'');
 	               setcolor(lightgray);
-	               str(armorclass,tempstring);
-	               tempstring:='Armor Class: ' + tempstring;
-	               graphwritelncol1(x,y,tempstring);
-	               str(thac0,tempstring);
-	               tempstring:='To Hit Roll: ' + tempstring;
-	               graphwritelncol1(x,y,tempstring);
-	               str(strength,tempstring);
-	               tempstring:='Strength: ' + tempstring;
-	               graphwritelncol1(x,y,tempstring);
-	               str(dexterity,tempstring);
-	               tempstring:='Dexterity: ' + tempstring;
-	               graphwritelncol1(x,y,tempstring);
-	               str(savingthrow,tempstring);
-	               tempstring:='Saving Throw: ' + tempstring;
-	               graphwritelncol1(x,y,tempstring);
+	               str(armorclass,s);
+	               s:='Armor Class: ' + s;
+	               graphwritelncol1(x,y,s);
+	               str(thac0,s);
+	               s:='To Hit Roll: ' + s;
+	               graphwritelncol1(x,y,s);
+	               str(strength,s);
+	               s:='Strength: ' + s;
+	               graphwritelncol1(x,y,s);
+	               str(dexterity,s);
+	               s:='Dexterity: ' + s;
+	               graphwritelncol1(x,y,s);
+	               str(savingthrow,s);
+	               s:='Saving Throw: ' + s;
+	               graphwritelncol1(x,y,s);
 	               x:=col1;
 	               graphwriteln(x,y,'Damage: '+damage);
-                       str(experience,tempstring);
-                       tempstring:='Experience: ' + tempstring;
-	               graphwritelncol1(x,y,tempstring);
 
+
+	               graphwriteln(x,y,'');
+	               setcolor(yellow);
+	               str(coins,s);
+	               s:='Coins: ' + s;
+	               graphwritelncol1(x,y,s);
+	               y:=145;
+	               setcolor(lightblue);
+	               for count:=1 to numitems do
+	                    begin
+                            {
+	                         s:=item[count].name;
+                             }
+                             s:=itemstring(item[count]);
+	                         graphwritelncol2(x,y,s);
+	                    end;
+
+	               y:=125;
+	               setcolor(lightmagenta);
+	               setfont('default.ttf',2);
+	               if (ring in stages) then
+	                    begin
+                        graphwritelncol3(x,y,'Magic Ring');
+	                    str(charges,s);
+	                    str(chargemax,s2);
+	                    s:=s + '/' + s2 + ' charges';
+	                    graphwritelncol3(x,y,s);
+	                    end;
+	               setcolor(magenta);
+	               setfont('default.ttf',3);
+	               for count:=1 to numspells do
+	                    begin
+	                         s:=spellstring(spell[count]);
+	                         graphwritelncol3(x,y,s);
+	                    end;
+
+                   setcolor(white);
+                   setfont('default.ttf',2);
 	               score:=0;
 	               totalscore:=0;
 	               for stageloop:=ring to endgame do
@@ -708,51 +749,17 @@ begin
 	                         if (stageloop in stages) then
 	                              score:=score+1;
 	                    end;
-	               score:=(score DIV totalscore)*100;
-	               str(score,tempstring);
-	               tempstring:='Score: ' + tempstring + '%';
-	               graphwritelncol1(x,y,tempstring);
-
-	               graphwriteln(x,y,'');
-	               setcolor(yellow);
-	               str(coins,tempstring);
-	               tempstring:='Coins: ' + tempstring;
-	               graphwritelncol1(x,y,tempstring);
-	               y:=140;
-	               graphwriteln(x,y,'');
-	               setcolor(lightblue);
-	               for count:=1 to numitems do
-	                    begin
-                            {
-	                         tempstring:=item[count].name;
-                             }
-                             tempstring:=itemstring(item[count]);
-	                         graphwritelncol2(x,y,tempstring);
-	                    end;
-	               y:=140;
-	               graphwriteln(x,y,'');
-	               setcolor(lightmagenta);
-	               for count:=1 to numspells do
-	                    begin
-	                         tempstring:=spellstring(spell[count]);
-	                         graphwritelncol3(x,y,tempstring);
-	                    end;
-	               if (ring in stages) then
-	                    begin
-	                         setfont('sanseri.ttf',1);
-	                         graphwritelncol3(x,y,'');
-	                         str(charges,tempstring);
-	                         tempstring:='Ring Charges: ' + tempstring;
-	                         str(chargemax,s2);
-	                         tempstring:=tempstring + '/' + s2;
-	                         graphwritelncol3(x,y,tempstring);
-	                    end;
+	               score:=(score * 100) DIV totalscore;
+	               str(score,s);
+	               s:='Total Progress: ' + s + '%';
+                   x:=getmaxx DIV 2;
+                   y:=400;
+	               centerwrite(x,y,s);
 	          end;
 	     setcolor(lightgreen);
-	     setfont('triplex.ttf',3);
+	     setfont('default.ttf',3);
 	     y:=420;
-	     x:=320 - (textwidth('(D)rop or (E)xit') DIV 2);
-	     graphwriteln(x,y,'(D)rop or (E)xit');
+	     centerwrite(x,y,'(D)rop or (E)xit');
 	     repeat
 	          ans:=readarrowkey;
 	     until (ans in ['d','D','e','E']);
