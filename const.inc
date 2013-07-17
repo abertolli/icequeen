@@ -18,11 +18,12 @@
 	chartile	= 'chartile.ln1';
 	savedefault	= 'game.sav';
 
-	textdir		= 'text/';
 	imagedir	= 'img/';
 	savedir		= 'save/';
 	itemdir		= 'item';
-	monsterdata	= 'game/monst.dat';
+    chartfile   = 'game/charts.dat';
+	monsterfile	= 'game/monsters.dat';
+    msgfile     = 'game/msg.dat';
 
 	{used for text columns}
 	col1	= 20;	 {column 1 for viewing stats}
