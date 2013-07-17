@@ -492,10 +492,10 @@ begin
         close(pasfile);
     end
     else
-        errormsg:='drawpicturebyline: '+dosname+' not found';
+        errormsg:=dosname+' not found';
 
     if (errormsg <> '') then
-        writeln(errormsg);
+        writeln('drawpicturebyline: '+errormsg);
 end;
 
 {--------------------------------------------------------------------------}
