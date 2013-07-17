@@ -23,7 +23,7 @@
 	itemdir		= 'item';
     chartfile   = 'game/charts.dat';
 	monsterfile	= 'game/monsters.dat';
-    msgfile     = 'game/msg.dat';
+    textfile    = 'game/text.dat';
 
 	{used for text columns}
 	col1	= 20;	 {column 1 for viewing stats}

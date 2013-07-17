@@ -1,2 +1,0 @@
-                              CANDLE: "Strength"
-                      Your strength increases by 1 point.

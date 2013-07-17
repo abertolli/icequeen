@@ -85,7 +85,7 @@ procedure graphwrite(var x,y:integer;s:string);
 procedure graphwriteln(var x,y:integer;s:string);
 procedure graphread(var x,y:integer;var s:string);
 procedure drawpicturebyline(beginx,beginy:integer;dosname:string);
-procedure writemsg(msgfile:string;beginy:integer;msgid:string);
+procedure writetext(textfile:string;beginy:integer;textid:string);
 procedure openscreen;
 procedure closescreen;
 
@@ -490,7 +490,7 @@ begin
 end;
 
 {--------------------------------------------------------------------------}
-procedure writemsg(msgfile:string;beginy:integer;msgid:string);
+procedure writetext(textfile:string;beginy:integer;textid:string);
 
 {Puts the contents of a text file to the screen. Use beginy to start it
 somewhere other than the very top.}
@@ -508,16 +508,16 @@ begin
      y:=beginy;
      doprompt:=false;
      numlines:=(screen^.h+1-y) DIV (textheight('M')+2) - 1;
-     assign(pasfile,msgfile);
+     assign(pasfile,textfile);
      reset(pasfile);
      lineoftext:='';
-     while not(eof(pasfile) or (pos('~'+msgid,lineoftext) = 1)) do
+     while not(eof(pasfile) or (pos('~'+textid,lineoftext) = 1)) do
          readln(pasfile,lineoftext);
      while not(eof(pasfile) or (lineoftext = '~')) do
           begin
                readln(pasfile,lineoftext);
                doprompt:=(pos('{prompt}',lineoftext) = 1);
-               if not(doprompt) then
+               if not((doprompt) or (lineoftext = '~')) then
                begin
                     graphwriteln(x,y,lineoftext);
                     numlines:=numlines - 1;

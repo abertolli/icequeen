@@ -1,7 +1,0 @@
-You courageously walk over toward a group of thieves who
-are practicing their knife-throwing skills at a target on
-the wall.  They eye you suspiciously as you approach their
-corner of the Elf Skull Inn.  ''Care to try?'' asks one
-with a grin.
-
-Do you accept the challenge?  (y/n)

@@ -1,2 +1,0 @@
-                                WATER: "Speed"
-                      Your dexterity increases by 1 point.
