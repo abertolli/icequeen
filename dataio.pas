@@ -16,7 +16,6 @@ const
 	itemmax		= 9;
 	spellmax	= 8;	{number of spells that can be in the ring}
 
-    chartdata   = 'game/chart.dat';
 
 type
 	spell		= (icestorm,fireblast,web,callwild,heal,courage,
@@ -110,7 +109,7 @@ function    itempicfile(theitem:item):string;
 function    spellstring(thespell:spell):string;
 function    itemstring(theitem:item):string;
 function    exist(dosname:string):boolean;
-procedure   readchart(chartid:string;var chart:chartrecord);
+procedure   readchart(chartfile,chartid:string;var chart:chartrecord);
 procedure   writegame(filename:string;player:character_t);
 procedure   readgame(filename:string;var player:character_t);
 
@@ -204,7 +203,7 @@ begin
      exist:=(IoResult=0);
 end;
 {--------------------------------------------------------------------------}
-procedure   readchart(chartid:string;var chart:chartrecord);
+procedure   readchart(chartfile,chartid:string;var chart:chartrecord);
 
 var
     pasfile         :   text;
@@ -216,12 +215,12 @@ var
 
 begin
     
-    if not(exist(chartdata)) then
+    if not(exist(chartfile)) then
     begin
-        writeln('Could not open '+chartdata);
+        writeln('Could not open '+chartfile);
         halt(1);
     end;
-    assign(pasfile,chartdata);
+    assign(pasfile,chartfile);
     reset(pasfile);
 
     lineoftext:='';
