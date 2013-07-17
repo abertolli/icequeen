@@ -492,16 +492,10 @@ begin
         close(pasfile);
     end
     else
-        errormsg:=dosname+' not found';
+        errormsg:='drawpicturebyline: '+dosname+' not found';
 
     if (errormsg <> '') then
-    begin
-        {Write the error to the screen}
-        setcolor(lightblue);
-        setfont('default.ttf',1);
-        outtextxy(beginx,beginy,errormsg);
-    end;
-
+        writeln(errormsg);
 end;
 
 {--------------------------------------------------------------------------}

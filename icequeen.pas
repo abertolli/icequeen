@@ -30,6 +30,7 @@ type
 		glacier		: boolean;
 					 end;
 	effectlist	 = array[1..monstermax] of effectrecord;
+    menulist    =   array[1..menumax] of string;
 
 var
 	GAMEOVER	: boolean;
@@ -2405,11 +2406,11 @@ procedure surfacemessage;
 begin
 	clearmessage;
 	homemessage(x,y);
-	setfont('default.ttf',2);
+	setfont('default.ttf',3);
 	setcolor(black);
-	message(x,y,' Use arrow keys or keypad to move');
-	message(x,y,'');
-	message(x,y,'    Press <SPACE> for options');
+	centerwrite(getmaxx DIV 2,y,'Use arrow keys or keypad to move');
+	graphwriteln(x,y,'');
+	centerwrite(getmaxx DIV 2,y,'Press <SPACE> for options');
 end;
 
 {Town Procedures and functions}
@@ -3651,48 +3652,53 @@ begin
 	               end;
 end;
 {---------------------------------------------------------------------------}
-procedure townoptions(var leavetown:boolean);
+procedure showmenu(c1,c2:integer;title:string;menu:menulist);
 
-var ans:char;
+var
+    loop        :   integer;
 
 begin
-	setcolor(lightblue);
+	setcolor(c2);
 	setfont('default.ttf',6);
 	x:=10;
 	y:=40;
-	centerwrite(getmaxx DIV 2,y,'Town Options');
-    graphwriteln(x,y,'');
+	centerwrite(getmaxx DIV 2,y,title);
 	setfont('default.ttf',4);
+    graphwriteln(x,y,'');
 	graphwriteln(x,y,'');
-	setcolor(lightcyan);
-	graphwrite(x,y,'              V');
-	setcolor(lightblue);
-	graphwriteln(x,y,'iew Stats');
-	setcolor(lightcyan);
-	graphwrite(x,y,'              U');
-	setcolor(lightblue);
-	graphwriteln(x,y,'se Item');
-	setcolor(lightcyan);
-	graphwrite(x,y,'              C');
-	setcolor(lightblue);
-	graphwriteln(x,y,'ast Spell');
-	setcolor(lightcyan);
-	graphwrite(x,y,'              L');
-	setcolor(lightblue);
-	graphwriteln(x,y,'eave Town');
-	setcolor(lightcyan);
-	graphwrite(x,y,'              S');
-	setcolor(lightblue);
-	graphwriteln(x,y,'ave Game');
-	setcolor(lightcyan);
-	graphwrite(x,y,'              Q');
-	setcolor(lightblue);
-	graphwriteln(x,y,'uit Game');
-	graphwriteln(x,y,'');
-	graphwriteln(x,y,'');
+    for loop:=1 to menumax do
+        if (menu[loop] <> '') then
+            begin
+	        setcolor(c1);
+	        graphwrite(x,y,'              '+menu[loop][1]);
+	        setcolor(c2);
+	        graphwriteln(x,y,copy(menu[loop],2,length(menu[loop])));
+            end
+        else
+            graphwriteln(x,y,'');
 	setcolor(white);
     setfont('default.ttf',2);
 	centerwrite(getmaxx DIV 2,y,'Press any other key to go back to town');
+end;
+
+{---------------------------------------------------------------------------}
+procedure townoptions(var leavetown:boolean);
+
+var
+    ans     :   char;
+    menu    :   menulist;
+    loop    :   integer;
+
+begin
+    for loop:=1 to menumax do
+        menu[loop]:='';
+    menu[1]:='View Stats';
+    menu[2]:='Use Item';
+    menu[3]:='Cast Spell';
+    menu[4]:='Leave Town';
+    menu[5]:='Save Game';
+    menu[6]:='Quit Game';
+    showmenu(lightcyan,lightblue,'Town Options',menu);
 	ans:=readarrowkey;
 	case ans of
 	 'v','V':viewstats(player);
@@ -4917,47 +4923,22 @@ end;
 {---------------------------------------------------------------------------}
 procedure dungeonoptions;
 
-var ans:char;
-
+var
+    ans     :   char;
+    loop    :   integer;
+    menu    :   menulist;
 
 begin
 	cleardevice;
-	setcolor(magenta);
-	setfont('default.ttf',3);
-	x:=10;
-	y:=100;
-	graphwriteln(x,y,'    Dungeon Options');
-	graphwriteln(x,y,'');
-	setfont('default.ttf',2);
-	graphwriteln(x,y,'');
-	setcolor(lightmagenta);
-	graphwrite(x,y,'            V');
-	setcolor(magenta);
-	graphwriteln(x,y,'iew Stats');
-	graphwriteln(x,y,'');
-	setcolor(lightmagenta);
-	graphwrite(x,y,'            U');
-	setcolor(magenta);
-	graphwriteln(x,y,'se Item');
-	graphwriteln(x,y,'');
-	setcolor(lightmagenta);
-	graphwrite(x,y,'            C');
-	setcolor(magenta);
-	graphwriteln(x,y,'ast Spell');
-	graphwriteln(x,y,'');
-	setcolor(lightmagenta);
-	graphwrite(x,y,'            Q');
-	setcolor(magenta);
-	graphwriteln(x,y,'uit Game');
-	graphwriteln(x,y,'');
-	graphwriteln(x,y,'');
-	graphwriteln(x,y,'');
-	setcolor(lightmagenta);
-	graphwrite(x,y,'  ** ');
-	setcolor(magenta);
-	graphwrite(x,y,'any other key--Back to Game');
-	setcolor(lightmagenta);
-	graphwriteln(x,y,' **');
+
+    for loop:=1 to menumax do
+        menu[loop]:='';
+    menu[1]:='View Stats';
+    menu[2]:='Use Item';
+    menu[3]:='Cast Spell';
+    menu[4]:='Quit Game';
+    showmenu(lightmagenta,magenta,'Dungeon Options',menu);
+
 	ans:=readarrowkey;
 	case ans of
 	 'v','V':begin
@@ -6087,46 +6068,22 @@ end;
 {---------------------------------------------------------------------------}
 procedure surfaceoptions;
 
-var ans:char;
+var
+    ans     :   char;
+    loop    :   integer;
+    menu    :   menulist;
 
 begin
 	cleardevice;
-	setcolor(green);
-	setfont('default.ttf',3);
-	x:=10;
-	y:=100;
-	graphwriteln(x,y,'   Wilderness Options');
-	graphwriteln(x,y,'');
-	setfont('default.ttf',2);
-	graphwriteln(x,y,'');
-	setcolor(lightgreen);
-	graphwrite(x,y,'            V');
-	setcolor(green);
-	graphwriteln(x,y,'iew Stats');
-	graphwriteln(x,y,'');
-	setcolor(lightgreen);
-	graphwrite(x,y,'            U');
-	setcolor(green);
-	graphwriteln(x,y,'se Item');
-	graphwriteln(x,y,'');
-	setcolor(lightgreen);
-	graphwrite(x,y,'            C');
-	setcolor(green);
-	graphwriteln(x,y,'ast Spell');
-	graphwriteln(x,y,'');
-	setcolor(lightgreen);
-	graphwrite(x,y,'            Q');
-	setcolor(green);
-	graphwriteln(x,y,'uit Game');
-	graphwriteln(x,y,'');
-	graphwriteln(x,y,'');
-	graphwriteln(x,y,'');
-	setcolor(lightgreen);
-	graphwrite(x,y,'  ** ');
-	setcolor(green);
-	graphwrite(x,y,'any other key--Back to Game');
-	setcolor(lightgreen);
-	graphwriteln(x,y,' **');
+
+    for loop:=1 to menumax do
+        menu[loop]:='';
+    menu[1]:='View Stats';
+    menu[2]:='Use Item';
+    menu[3]:='Cast Spell';
+    menu[4]:='Quit Game';
+    showmenu(lightgreen,green,'Wilderness Options',menu);
+
 	ans:=readarrowkey;
 	case ans of
 	 'v','V':begin

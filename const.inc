@@ -42,3 +42,5 @@
 	maxlevel	= 12;	{number of levels character can achieve}
 	ringmax		= 20;	{maximum charges a ring can have}
 
+    menumax     =   9;     {Max no of menu items}
+
