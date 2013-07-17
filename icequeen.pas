@@ -796,12 +796,12 @@ begin
 
     {reading monster data should be moved to dataio}
 
-	if not(exist(monsterdata)) then
+	if not(exist(monsterfile)) then
     begin
-        writeln('Could not find '+monsterdata);
+        writeln('Could not find '+monsterfile);
 	    halt(1);
     end;
-	assign(pasfile,monsterdata);
+	assign(pasfile,monsterfile);
 	reset(pasfile);
 
     lineoftext:='';
@@ -1135,7 +1135,7 @@ var
     loop    :   integer;
 
 begin
-    readchart(chartid,chart);
+    readchart(chartfile,chartid,chart);
     with chart do
     begin
         theroll:=roll(diceroll);
@@ -2706,15 +2706,15 @@ begin
 	                                   cleardevice;
 	                                   setfont('sanseri.ttf',2);
 	                                   case item[tempinteger] of
-	                                        bluepotion     :writefile(1,textdir+'blue.txt');
+	                                        bluepotion     :writemsg(msgfile,1,'blue');
 	                                        redpotion      :begin
-	                                                             writefile(1,textdir+'red.txt');
+	                                                             writemsg(msgfile,1,'red');
 	                                                             endurance:=endurance + roll('1d6')+1;
 	                                                             if (endurance>endurancemax) then
 	                                                                  endurance:=endurancemax;
 	                                                        end;
 	                                        greenpotion    :begin
-	                                                             writefile(1,textdir+'green.txt');
+	                                                             writemsg(msgfile,1,'green');
 	                                                             endurance:=endurancemax;
 	                                                        end;
 	                                   end;
@@ -3099,64 +3099,64 @@ begin
 	                                            setfont('default.ttf',2);
 	   {equal out the unused charge}            charges:=charges+1;
 	                                       end;
-	                              web:writefile(1,textdir+'027.txt');
+	                              web:writemsg(msgfile,1,'027');
 	                              callwild:if (area=wilderness) then
-	                                            writefile(1,textdir+'024.txt')
+	                                            writemsg(msgfile,1,'024')
 	                                       else
 	                                            if (area=dungeon) then
-	                                                 writefile(1,textdir+'025.txt')
+	                                                 writemsg(msgfile,1,'025')
 	                                            else
-	                                                 writefile(1,textdir+'007.txt');
+	                                                 writemsg(msgfile,1,'007');
 	                              heal:begin
-	                                        writefile(1,textdir+'008.txt');
+	                                        writemsg(msgfile,1,'008');
 	                                        endurance:=endurance + roll('1d6') +1;
 	                                        if (endurance>endurancemax) then
 	                                             endurance:=endurancemax;
 	                                   end;
 	                              obliterate:begin
-	                                              writefile(1,textdir+'026.txt');
+	                                              writemsg(msgfile,1,'026');
 	   {equal out the unused charge}              charges:=charges+1;
 	                                         end;
 	                              power:case roll('1d20') of
 	                                  1..3:begin
-	                                            writefile(1,textdir+'009.txt');
+	                                            writemsg(msgfile,1,'009');
 	                                            endurance:=endurance + roll('1d2');
 	                                            if (endurance>endurancemax) then
 	                                                 endurance:=endurancemax;
 	                                       end;
 	                                  4..6:begin
-	                                            writefile(1,textdir+'010.txt');
+	                                            writemsg(msgfile,1,'010');
 	                                            endurance:=endurance - roll('1d2');
 	                                       end;
 	                                  7..9:if (area=wilderness) then
-	                                            writefile(1,textdir+'023.txt')
+	                                            writemsg(msgfile,1,'023')
 	                                       else
-	                                            writefile(1,textdir+'011.txt');
-	                                10..12:writefile(1,textdir+'012.txt');
-	                                13..15:writefile(1,textdir+'028.txt');
+	                                            writemsg(msgfile,1,'011');
+	                                10..12:writemsg(msgfile,1,'012');
+	                                13..15:writemsg(msgfile,1,'028');
 	                                    16:if (area=town) then
-	                                            writefile(1,textdir+'032.txt')
+	                                            writemsg(msgfile,1,'032')
 	                                       else
 	                                            fakebattle(player);
 	                                    17:begin
-	                                            writefile(1,textdir+'033.txt');
+	                                            writemsg(msgfile,1,'033');
 	                                            endurance:=endurancemax;
 	                                       end;
-	                                18..20:writefile(1,textdir+'013.txt');
+	                                18..20:writemsg(msgfile,1,'013');
 	                                end;{case}
-	                             shatter:writefile(1,textdir+'014.txt');
+	                             shatter:writemsg(msgfile,1,'014');
 	                             dragonbreath:if(area=wilderness)then
-	                                               writefile(1,textdir+'029.txt')
+	                                               writemsg(msgfile,1,'029')
 	                                          else
 	                                               if (area=dungeon) then
-	                                                    writefile(1,textdir+'030.txt')
+	                                                    writemsg(msgfile,1,'030')
 	                                               else
-	                                                    writefile(1,textdir+'031.txt');
-	                             resistfire:writefile(1,textdir+'034.txt');
-	                             resistcold:writefile(1,textdir+'035.txt');
-	                             courage:writefile(1,textdir+'036.txt');
-	                             glacier:writefile(1,textdir+'037.txt');
-	                             freeze:writefile(1,textdir+'038.txt');
+	                                                    writemsg(msgfile,1,'031');
+	                             resistfire:writemsg(msgfile,1,'034');
+	                             resistcold:writemsg(msgfile,1,'035');
+	                             courage:writemsg(msgfile,1,'036');
+	                             glacier:writemsg(msgfile,1,'037');
+	                             freeze:writemsg(msgfile,1,'038');
 	                         end;{case}
 	                         charges:=charges-1;
 	                    end;
@@ -3422,14 +3422,14 @@ begin
 	          coins:=coins - tipprice;
 	          outtextxy(1,140,'You toss Roland a coin and he tells you:  ');
 	          case roll('1d8') of
-	               1:writefile(240,textdir+'015.txt');
-	               2:writefile(240,textdir+'016.txt');
-	               3:writefile(240,textdir+'017.txt');
-	               4:writefile(240,textdir+'018.txt');
-	               5:writefile(240,textdir+'019.txt');
-	               6:writefile(240,textdir+'020.txt');
-	               7:writefile(240,textdir+'021.txt');
-	               8:writefile(240,textdir+'022.txt');
+	               1:writemsg(msgfile,240,'015');
+	               2:writemsg(msgfile,240,'016');
+	               3:writemsg(msgfile,240,'017');
+	               4:writemsg(msgfile,240,'018');
+	               5:writemsg(msgfile,240,'019');
+	               6:writemsg(msgfile,240,'020');
+	               7:writemsg(msgfile,240,'021');
+	               8:writemsg(msgfile,240,'022');
 	          end;
 	          setfont('default.ttf',2);
 	          prompt;
@@ -3668,7 +3668,7 @@ begin
 	          cleardevice;
 	          setfont('triplex.ttf',3);
 	          setcolor(red);
-	          writefile(1,textdir+'081.txt');
+	          writemsg(msgfile,1,'081');
 	          prompt;
 	          player.coins:=player.coins+reward;
 	          player.stages:=player.stages + [endgame];
@@ -3713,14 +3713,14 @@ begin
 	graphwriteln(x,y,'You overhear some gossip...');
 	graphwriteln(x,y,'');
 	case roll('1d8') of
-	   1:writefile(250,textdir+'040.txt');
-	   2:writefile(250,textdir+'041.txt');
-	   3:writefile(250,textdir+'042.txt');
-	   4:writefile(250,textdir+'043.txt');
-	   5:writefile(250,textdir+'044.txt');
-	   6:writefile(250,textdir+'045.txt');
-	   7:writefile(250,textdir+'046.txt');
-	   8:writefile(250,textdir+'047.txt');
+	   1:writemsg(msgfile,250,'040');
+	   2:writemsg(msgfile,250,'041');
+	   3:writemsg(msgfile,250,'042');
+	   4:writemsg(msgfile,250,'043');
+	   5:writemsg(msgfile,250,'044');
+	   6:writemsg(msgfile,250,'045');
+	   7:writemsg(msgfile,250,'046');
+	   8:writemsg(msgfile,250,'047');
 	end;{case}
 
 end;
@@ -3733,14 +3733,14 @@ var
 
 begin
 	setcolor(green);
-	writefile(200,textdir+'048.txt');
+	writemsg(msgfile,200,'048');
 	repeat
 	     ans:=readarrowkey;
 	until (ans in ['y','Y','n','N']);
 	if (ans in ['y','Y']) then
 	     begin
 	          clearesi;
-	          writefile(175,textdir+'049.txt');
+	          writemsg(msgfile,175,'049');
 	          repeat
 	               ans:=readarrowkey;
 	          until (ans in ['a','A','s','S']);
@@ -3776,10 +3776,10 @@ begin
 	          else
 	               begin
 	                    clearesi;
-	                    writefile(175,textdir+'050.txt');
+	                    writemsg(msgfile,175,'050');
 	                    prompt;
 	                    clearesi;
-	                    writefile(175,textdir+'051.txt');
+	                    writemsg(msgfile,175,'051');
 	                    repeat
 	                         ans:=readarrowkey;
 	                    until (ans in ['y','Y','n','N']);
@@ -3822,23 +3822,23 @@ begin
 	   1:begin
 	          if not(baltar in player.stages) then
 	               begin
-	                    writefile(200,textdir+'052.txt');
+	                    writemsg(msgfile,200,'052');
 	                    repeat
 	                         ans:=readarrowkey;
 	                    until (ans in ['y','Y','n','N']);
 	                    clearesi;
 	                    if (ans in ['y','Y']) then
-	                         writefile(175,textdir+'058.txt')
+	                         writemsg(msgfile,175,'058')
 	                    else
 	                         begin
 	                              clearesi;
-	                              writefile(175,textdir+'059.txt');
+	                              writemsg(msgfile,175,'059');
 	                              repeat
 	                                   ans:=readarrowkey;
 	                              until (ans in ['y','Y','n','N']);
 	                              clearesi;
 	                              if (ans in ['n','N']) then
-	                                   writefile(175,textdir+'060.txt')
+	                                   writemsg(msgfile,175,'060')
 	                              else
 	                                   begin
 	                                        nummonsters:=1;
@@ -3866,19 +3866,19 @@ begin
 	               esi_gossip;
 	     end;
 	   2:begin
-	          writefile(200,textdir+'053.txt');
+	          writemsg(msgfile,200,'053');
 	     end;
 	   3:begin
-	          writefile(200,textdir+'054.txt');
+	          writemsg(msgfile,200,'054');
 	     end;
 	   4:begin
-	          writefile(200,textdir+'055.txt');
+	          writemsg(msgfile,200,'055');
 	     end;
 	   5:begin
-	          writefile(200,textdir+'056.txt');
+	          writemsg(msgfile,200,'056');
 	     end;
 	   6:begin
-	          writefile(200,textdir+'057.txt');
+	          writemsg(msgfile,200,'057');
 	     end;
 	end;{case}
 
@@ -3952,7 +3952,7 @@ begin
 	          graphwriteln(x,y,'');
 	          case roll('1d100') of
 	              1..20:begin
-	                         writefile(200,textdir+'061.txt');
+	                         writemsg(msgfile,200,'061');
 	                    end;
 	             21..80:begin
 	                         esi_gossip;
@@ -4025,13 +4025,13 @@ begin
 	          player.charges:=player.chargemax;
 	          if (company) then
 	               begin
-	                    writefile(200,textdir+'062.txt');
+	                    writemsg(msgfile,200,'062');
 	                    prompt;
 	                    clearesi;
 	                    y:=175;
 	                    if (roll('1d100')<=6) then
 	                         begin
-	                              writefile(175,textdir+'063.txt');
+	                              writemsg(msgfile,175,'063');
 	                              prompt;
 	                              nummonsters:=1;
 	                              rollmonsters(monster,nummonsters,'succubus');
@@ -4286,7 +4286,7 @@ var
 
 begin
 	setcolor(lightgreen);
-	writefile(175,textdir+'064.txt');
+	writemsg(msgfile,175,'064');
 	repeat
 	     ans:=readarrowkey;
 	until (ans in ['y','Y','n','N']);
@@ -4425,7 +4425,7 @@ var
 
 begin
 	setcolor(lightgray);
-	writefile(175,textdir+'065.txt');
+	writemsg(msgfile,175,'065');
 	repeat
 	     ans:=readarrowkey;
 	until (ans in ['y','Y','n','N']);
@@ -4669,14 +4669,14 @@ begin
 	                         setcolor(white);
 	                         case (roll('4d8')) of
 	                            4:begin
-	                                   writefile(350,textdir+'066.txt');
+	                                   writemsg(msgfile,350,'066');
                                            drawpic(165,180,'wheel1.ln1');
                                            drawpic(300,220,'wheart.ln1');
 	                                   player.endurancemax:=player.endurancemax+100;
 	                                   player.endurance:=player.endurance+100;
 	                              end;
 	                           32:begin
-	                                   writefile(350,textdir+'067.txt');
+	                                   writemsg(msgfile,350,'067');
                                            drawpic(165,180,'wheel3.ln1');
                                            drawpic(300,220,'bskull.ln1');
 	                                   prompt;
@@ -4686,7 +4686,7 @@ begin
 	                         else
 	                              case roll('1d8') of
 	                                 1:begin
-	                                        writefile(350,textdir+'068.txt');
+	                                        writemsg(msgfile,350,'068');
                                                 drawpic(165,180,'wheel3.ln1');
                                                 drawpic(300,220,'moon.ln1');
 	                                        if (player.coins>1000) then
@@ -4699,28 +4699,28 @@ begin
 	                                             player.experience:=0;
 	                                   end;
 	                                 2:begin
-	                                        writefile(350,textdir+'069.txt');
+	                                        writemsg(msgfile,350,'069');
                                                 drawpic(165,180,'wheel1.ln1');
                                                 drawpic(300,220,'candle.ln1');
 	                                        if (player.strength<20) then
 	                                             player.strength:=player.strength + 1;
 	                                   end;
 	                                 3:begin
-	                                        writefile(350,textdir+'070.txt');
+	                                        writemsg(msgfile,350,'070');
                                                 drawpic(165,180,'wheel3.ln1');
                                                 drawpic(300,220,'lit.ln1');
 	                                        if (player.dexterity>1) then
 	                                             player.dexterity:=player.dexterity - 1;
 	                                   end;
 	                                 4:begin
-	                                        writefile(350,textdir+'071.txt');
+	                                        writemsg(msgfile,350,'071');
                                                 drawpic(165,180,'wheel1.ln1');
                                                 drawpic(300,220,'heart.ln1');
 	                                        player.endurancemax:=player.endurancemax+1;
 	                                        player.endurance:=player.endurance+1;
 	                                   end;
 	                                 5:begin
-	                                        writefile(350,textdir+'072.txt');
+	                                        writemsg(msgfile,350,'072');
                                                 drawpic(165,180,'wheel3.ln1');
                                                 drawpic(300,220,'skull.ln1');
 	                                        if (player.endurancemax>1) then
@@ -4729,21 +4729,21 @@ begin
 	                                             player.endurance:=player.endurance - 1;
 	                                   end;
 	                                 6:begin
-	                                        writefile(350,textdir+'073.txt');
+	                                        writemsg(msgfile,350,'073');
                                                 drawpic(165,180,'wheel1.ln1');
                                                 drawpic(300,220,'water.ln1');
 	                                        if (player.dexterity<20) then
 	                                             player.dexterity:=player.dexterity + 1;
 	                                   end;
 	                                 7:begin
-	                                        writefile(350,textdir+'074.txt');
+	                                        writemsg(msgfile,350,'074');
                                                 drawpic(165,180,'wheel3.ln1');
                                                 drawpic(300,220,'eye.ln1');
 	                                        if (player.strength>1) then
 	                                             player.strength:=player.strength - 1;
 	                                   end;
 	                                 8:begin
-	                                        writefile(350,textdir+'075.txt');
+	                                        writemsg(msgfile,350,'075');
                                                 drawpic(165,180,'wheel1.ln1');
                                                 drawpic(300,220,'sun.ln1');
 	                                        player.coins:=player.coins + 1000;
@@ -4768,7 +4768,7 @@ begin
         drawpic(70,10,'esi.ln1');
 	setcolor(yellow);
 	setfont('default.ttf',2);
-	writefile(175,textdir+'039.txt');
+	writemsg(msgfile,180,'039');
 	prompt;
 	repeat
 	     clearesi;
@@ -4811,7 +4811,7 @@ begin
                         drawpic(70,10,'esi.ln1');
 	               end;
 	           '1':begin
-	                    writefile(175,textdir+'039.txt');
+	                    writemsg(msgfile,180,'039');
 	                    prompt;
 	               end;
 	           '2':begin
@@ -5222,7 +5222,7 @@ begin
 	          cleardevice;
 	          setcolor(magenta);
 	          setfont('sanseri.ttf',2);
-	          writefile(1,textdir+'076.txt');
+	          writemsg(msgfile,1,'076');
 	          prompt;
 	          died;
 	     end;
@@ -5491,7 +5491,7 @@ begin
 	                    cleardevice;
 	                    setcolor(yellow);
 	                    setfont('triplex.ttf',3);
-	                    writefile(1,textdir+'080.txt');
+	                    writemsg(msgfile,1,'080');
 	                    prompt;
 	               end
 	          else
@@ -5889,7 +5889,7 @@ begin
 	repeat
 	     cleardevice;
 	     setcolor(white);
-	     writefile(1,textdir+'077.txt');
+	     writemsg(msgfile,1,'077');
 	     repeat
 	          ans:=readarrowkey;
 	     until (ans in ['b','B','o','O','c','C','l','L']);
@@ -5897,11 +5897,11 @@ begin
 	     homecursor(x,y);
 	     case ans of
 	        'b','B':begin
-	                     writefile(1,textdir+'078.txt');
+	                     writemsg(msgfile,1,'078');
 	                     prompt;
 	                end;
 	        'o','O':begin
-	                     writefile(1,textdir+'079.txt');
+	                     writemsg(msgfile,1,'079');
 	                     prompt;
 	                end;
 	        'c','C':if (player.charges>0) then
@@ -6162,7 +6162,7 @@ begin
 	                homecursor(x,y);
 	                setfont('default.ttf',2);
 	                setcolor(lightblue);
-	                writefile(y,textdir+'intro.txt');
+	                writemsg(msgfile,y,'intro');
 	                prompt;
 	                cleardevice;
 	                setfont('gothic.ttf',8);
