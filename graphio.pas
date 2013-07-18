@@ -155,14 +155,14 @@ end;
 function getSDLfontsize     :   word;
 
 const
-    scale           =   8; {converts legacy sizes to pts}
+    scale           =   4; {converts legacy sizes to pts}
 
 var
     size            :   word;
 
 begin
     size:=textsize * scale;
-    if (size = 0) then size:=4 * scale;
+    if (size = 0) then size:=8 * scale;
     getSDLfontsize:=size;
 end;
 {--------------------------------------------------------------------------}

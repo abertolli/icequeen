@@ -124,14 +124,14 @@ procedure titlescreen;
 
 begin
     x:=getmaxx DIV 2;
-    setfont('gothic.ttf',8);
+    setfont('gothic.ttf',16);
     setcolor(lightblue);
     centerwrite(x+5,385,'The Ice Queen');
     setcolor(white);
     centerwrite(x,380,'The Ice Queen');
-    setfont('default.ttf',2);
+    setfont('default.ttf',4);
     drawpic(120,10,'tcastle.ln1');
-    setfont('default.ttf',2);
+    setfont('default.ttf',4);
     setcolor(lightgray);
     prompt;
 end;
@@ -160,11 +160,11 @@ begin
 	repeat
 	     cleardevice;
 	     homecursor(x,y);
-         setfont('gothic.ttf',7);
+         setfont('gothic.ttf',14);
 	     setcolor(lightgray);
 	     centerwrite(getmaxx DIV 2,y,'Start a New Character');
 	     graphwriteln(x,y,'');
-         setfont('default.ttf',2);
+         setfont('default.ttf',4);
 	     graphwriteln(x,y,'');
 	     setcolor(white);
 	     with player do
@@ -323,11 +323,11 @@ begin
 	     cleardevice;
 	     homecursor(x,y);
          setcolor(white);
-         setfont('gothic.ttf',7);
+         setfont('gothic.ttf',14);
          centerwrite(getmaxx DIV 2,y,'Load Game');
          graphwriteln(x,y,'');
 	     setcolor(lightgray);
-	     setfont('default.ttf',3);
+	     setfont('default.ttf',6);
          graphwriteln(x,y,'');
 	     graphwrite(x,y,'Enter File Name: ');
 	     setcolor(lightblue);
@@ -641,12 +641,12 @@ begin
 	     with player do
 	          begin
 	               drawpic(20,20,picfile);
-	               setfont('gothic.ttf',6);
+	               setfont('gothic.ttf',12);
 	               setcolor(white);
 	               x:=200;
 	               y:=25;
 	               graphwriteln(x,y,name);
-	               setfont('default.ttf',2);
+	               setfont('default.ttf',4);
 
 	               x:=200;
 	               str(level,s);
@@ -664,7 +664,7 @@ begin
                    }
 
 	               setcolor(lightred);
-                   setfont('default.ttf',3);
+                   setfont('default.ttf',6);
 	               str(endurance,s);
 	               s:='Endurance: ' + s;
 	               y:=145;
@@ -711,7 +711,7 @@ begin
 
 	               y:=125;
 	               setcolor(lightmagenta);
-	               setfont('default.ttf',2);
+	               setfont('default.ttf',4);
 	               if (ring in stages) then
 	                    begin
                         graphwritelncol3(x,y,'Magic Ring');
@@ -721,7 +721,7 @@ begin
 	                    graphwritelncol3(x,y,s);
 	                    end;
 	               setcolor(magenta);
-	               setfont('default.ttf',3);
+	               setfont('default.ttf',6);
 	               for count:=1 to numspells do
 	                    begin
 	                         s:=spellstring(spell[count]);
@@ -729,7 +729,7 @@ begin
 	                    end;
 
                    setcolor(white);
-                   setfont('default.ttf',2);
+                   setfont('default.ttf',4);
 	               score:=0;
 	               totalscore:=0;
 	               for stageloop:=ring to endgame do
@@ -746,7 +746,7 @@ begin
 	               centerwrite(x,y,s);
 	          end;
 	     setcolor(lightgreen);
-	     setfont('default.ttf',3);
+	     setfont('default.ttf',6);
 	     y:=420;
 	     centerwrite(x,y,'(D)rop or (E)xit');
 	     repeat
@@ -768,7 +768,7 @@ var
 begin
 	cleardevice;
 	setcolor(lightgray);
-	setfont('gothic.ttf',6);
+	setfont('gothic.ttf',12);
 	centerwrite(getmaxx DIV 2,80,'You have died...');
 	setfont('gothic.ttf',10);
 	setcolor(lightblue);
@@ -871,7 +871,7 @@ var ch:char;
 begin
     x:=120;
 	y:=440;
-	setfont('default.ttf',2);
+	setfont('default.ttf',4);
 	centerwrite(x,y,'<press space>');
 	ch:=readarrowkey;
 end;
@@ -894,7 +894,7 @@ var
 	hitbar         :    word;
 
 begin
-    setfont('default.ttf',2);
+    setfont('default.ttf',4);
 	setcolor(blue);
 	bar(420,300,600,460);
 	setcolor(lightblue);
@@ -945,7 +945,7 @@ var
 
 begin
 	cleardevice;
-	setfont('default.ttf',2);
+	setfont('default.ttf',4);
 
 	{draw the monsters & write names}
 	row1width:=(nummonsters * 120) + ((nummonsters - 1) * spacing);
@@ -1016,7 +1016,7 @@ var
 
 begin
 	clearcombatmenu;
-	setfont('default.ttf',2);
+	setfont('default.ttf',4);
 	y:=300;
 	graphwriteln(x,y,'');
 	ac:=themonster.armorclass;
@@ -1518,7 +1518,7 @@ var
 
 begin
 
-	setfont('default.ttf',2);
+	setfont('default.ttf',4);
 	done:=false;
 	repeat
 	     clearcombatmenu;
@@ -2137,7 +2137,7 @@ procedure writeflee;
 
 begin
 	setcolor(lightcyan);
-	setfont('default.ttf',2);
+	setfont('default.ttf',4);
 	centerwrite(120,360,'You run away...');
 end;
 {---------------------------------------------------------------------------}
@@ -2301,14 +2301,14 @@ begin
 	     begin
               center:=540;
               y:=50;
-	          setfont('gothic.ttf',4);
+	          setfont('gothic.ttf',8);
 	          s1:=name;
 	          while (textwidth(s1)>120) do
 	               delete(s1,length(s1),1);
 	          centerwrite(center,y,s1);
               graphwriteln(x,y,'');
 
-	          setfont('default.ttf',2);
+	          setfont('default.ttf',4);
 	          str(endurance,s1);
               str(endurancemax,s2);
               centerwrite(center,y,'ENDURANCE');
@@ -2366,7 +2366,7 @@ procedure surfacemessage;
 begin
 	clearmessage;
 	homemessage(x,y);
-	setfont('default.ttf',3);
+	setfont('default.ttf',6);
 	setcolor(black);
 	centerwrite(getmaxx DIV 2,y,'Use arrow keys or keypad to move');
 	graphwriteln(x,y,'');
@@ -2387,11 +2387,11 @@ begin
 	cleardevice;
 	homecursor(x,y);
     setcolor(white);
-    setfont('gothic.ttf',7);
+    setfont('gothic.ttf',14);
     centerwrite(getmaxx DIV 2,y,'Save Game');
     graphwriteln(x,y,'');
 	setcolor(lightgray);
-	setfont('default.ttf',3);
+	setfont('default.ttf',6);
     graphwriteln(x,y,'');
 	graphwrite(x,y,'Enter File Name: ');
 	setcolor(lightblue);
@@ -2425,9 +2425,9 @@ end;
 procedure broke;
 
 begin
-	setfont('default.ttf',5);
+	setfont('default.ttf',10);
 	centerwrite(getmaxx DIV 2,200,'You do not have the funds!!');
-	setfont('default.ttf',2);
+	setfont('default.ttf',4);
 	prompt;
 end;
 {---------------------------------------------------------------------------}
@@ -2446,13 +2446,13 @@ begin
 	          begin
 	               setcolor(lightgray);
 	               centerwrite(getmaxx DIV 2,420,'Sorry, but you don''t have room in your pack!');
-	               setfont('default.ttf',2);
+	               setfont('default.ttf',4);
 	               prompt;
 	          end
 	     else
 	          begin
 	            setcolor(white);
-	               setfont('default.ttf',2);
+	               setfont('default.ttf',4);
 	               outtextxy(120,155,'(1) SWORD');
 	               outtextxy(120,170,'   10 coins');
 	               outtextxy(120,255,'(2) SHIELD');
@@ -2471,7 +2471,7 @@ begin
 	               outtextxy(420,270,'    5 coins');
 	               outtextxy(420,355,'(9) HAMMER OF WAR');
 	               outtextxy(420,370,'    5 coins');
-	               setfont('default.ttf',3);
+	               setfont('default.ttf',6);
 	               setcolor(lightgray);
 	               x:=10;
 	               y:=420;
@@ -2550,7 +2550,7 @@ var
 begin
 	cleardevice;
 	homecursor(x,y);
-	setfont('default.ttf',3);
+	setfont('default.ttf',6);
 	with player do
 	     if (numitems>0) then
 	          begin
@@ -2621,7 +2621,7 @@ var
 begin
 	repeat
 	     cleardevice;
-	     setfont('gothic.ttf',6);
+	     setfont('gothic.ttf',12);
 	     homecursor(x,y);
          x:=getmaxx DIV 2;
 	     setcolor(darkgray);
@@ -2629,12 +2629,12 @@ begin
 	     setcolor(lightgray);
 	     centerwrite(x,y,'Ye Olde Equipment Shop');
 	     graphwriteln(x,y,'');
-	     setfont('default.ttf',3);
+	     setfont('default.ttf',6);
 	     y:=420;
          x:=getmaxx DIV 2;
 	     centerwrite(x,y,'(B)uy, (S)ell, or (E)xit');
 	     str(player.coins,tempstring);
-	     setfont('default.ttf',2);
+	     setfont('default.ttf',4);
 	     setcolor(white);
          x:=getmaxx DIV 2;
 	     centerwrite(x,400,('You have ' + tempstring + ' coins'));
@@ -2679,7 +2679,7 @@ begin
 	               cleardevice;
 	               setfont('sanseri.ttf',5);
 	               outtextxy(150,150,'You have no items');
-	               setfont('default.ttf',2);
+	               setfont('default.ttf',4);
 	               prompt;
 	          end;
 	with player do
@@ -2738,7 +2738,7 @@ begin
 	                                   numitems:=numitems - 1;
 	                              end;
 	                    end;
-	               setfont('default.ttf',2);
+	               setfont('default.ttf',4);
 	               prompt;
 	          end;
 end;
@@ -2759,13 +2759,13 @@ begin
 	          begin
 	            setcolor(lightgray);
 	               centerwrite(getmaxx DIV 2,420,'Sorry, but you don''t have room in your pack!');
-	               setfont('default.ttf',2);
+	               setfont('default.ttf',4);
 	               prompt;
 	          end
 	     else
 	          begin
 	            setcolor(white);
-	               setfont('default.ttf',2);
+	               setfont('default.ttf',4);
 	               outtextxy(110,155,'(1) BLUE POTION');
 	               outtextxy(110,170,'    100 coins');
 	               outtextxy(110,255,'(2) RED POTION');
@@ -2777,7 +2777,7 @@ begin
 	               x:=10;
 	               y:=420;
 	               setcolor(lightgray);
-	               setfont('default.ttf',3);
+	               setfont('default.ttf',6);
 	               graphwrite(x,y,'Which item:  ');
 	               repeat
 	                    ans:=readarrowkey;
@@ -2825,7 +2825,7 @@ begin
 	                                        bar(0,400,getmaxx,getmaxy);
                                             setcolor(lightgray);
 	                                        centerwrite(getmaxx DIV 2,420,'You already have one.');
-	                                        setfont('default.ttf',2);
+	                                        setfont('default.ttf',4);
 	                                        prompt;
 	                                   end
 	                              else
@@ -2872,7 +2872,7 @@ begin
 	                    centerwrite(x,420,'Sorry, you can''t learn any more spells.')
 	               else
 	                    centerwrite(x,420,'You need a ring to store your spells.');
-	               setfont('default.ttf',2);
+	               setfont('default.ttf',4);
 	               prompt;
 	          end
 	     else
@@ -2880,13 +2880,13 @@ begin
                 setcolor(black);
 	               bar(320,260,getmaxx,360);
                    setcolor(white);
-	               setfont('default.ttf',2);
+	               setfont('default.ttf',4);
 	               outtextxy(320,260,'(1) CALL WILD   100 coins');
 	               outtextxy(320,280,'(2) COURAGE     300 coins');
 	               outtextxy(320,300,'(3) WEB         400 coins');
 	               outtextxy(320,320,'(4) HEAL        500 coins');
 	               outtextxy(320,340,'(5) FIRE BLAST  600 coins');
-	               setfont('default.ttf',3);
+	               setfont('default.ttf',6);
 	               setcolor(lightgray);
 	               x:=10;
 	               y:=420;
@@ -2936,9 +2936,9 @@ begin
 	                         if (present) then
 	                              begin
 	                                   setcolor(lightgreen);
-	                                   setfont('default.ttf',5);
+	                                   setfont('default.ttf',10);
 	                                   centerwrite(getmaxx DIV 2,200,'You already know that!');
-	                                   setfont('default.ttf',2);
+	                                   setfont('default.ttf',4);
 	                                   prompt;
 	                              end
 	                         else
@@ -2966,7 +2966,7 @@ var
 begin
 	repeat
 	     cleardevice;
-	     setfont('gothic.ttf',6);
+	     setfont('gothic.ttf',12);
 	     homecursor(x,y);
          x:=getmaxx DIV 2;
 	     setcolor(magenta);
@@ -2974,12 +2974,12 @@ begin
 	     setcolor(cyan);
 	     centerwrite(x,y,'Magic Shop');
          setcolor(lightgray);
-	     setfont('default.ttf',3);
+	     setfont('default.ttf',6);
 	     y:=420;
 	     centerwrite(x,y,'(B)uy, (S)ell, (L)earn or (E)xit');
 	     str(player.coins,tempstring);
          setcolor(white);
-	     setfont('default.ttf',2);
+	     setfont('default.ttf',4);
 	     centerwrite(x,400,('You have ' + tempstring + ' coins'));
              drawpic(20,280,'wizard.ln1');
              drawpic(150,100,'potion-b.ln1'); {number based on color}
@@ -3063,7 +3063,7 @@ begin
 	               cleardevice;
 	               setfont('sanseri.ttf',5);
 	               outtextxy(150,150,'You have no spells');
-	               setfont('default.ttf',2);
+	               setfont('default.ttf',4);
 	               prompt;
 	          end;
 	with player do
@@ -3111,7 +3111,7 @@ begin
 	                                      :begin
 	                                            setfont('sanseri.ttf',4);
 	                                            outtextxy(120,180,'That''s a battle-time spell');
-	                                            setfont('default.ttf',2);
+	                                            setfont('default.ttf',4);
 	   {equal out the unused charge}            charges:=charges+1;
 	                                       end;
 	                              web:writetext(textfile,1,'027');
@@ -3212,7 +3212,7 @@ begin
 	graphwriteln(x,y,'');
 	graphwriteln(x,y,'                 What do you take?');
 	str(coins,tempstring);
-	setfont('default.ttf',2);
+	setfont('default.ttf',4);
 	setcolor(white);
 	outtextxy(240,400,('You have ' + tempstring + ' coins'));
 	repeat
@@ -3228,7 +3228,7 @@ begin
 	else
 	     begin
 	          clearpub;
-	          setfont('default.ttf',4);
+	          setfont('default.ttf',8);
 	          setcolor(red);
               x:=getmaxx DIV 2;
 	          case ans of
@@ -3237,7 +3237,7 @@ begin
 	             '5':centerwrite(x,220,'It really burns as it goes down!');
 	          end;{case}
 	          coins:=coins - drinkprice;
-	          setfont('default.ttf',2);
+	          setfont('default.ttf',4);
 	          prompt;
 	     end;
 end;
@@ -3263,12 +3263,12 @@ begin
 	tempstring:='It will cost '+tempstring+' coins to play a game of Skull Dice';
 	outtextxy(1,180,tempstring);
 	str(player.coins,tempstring);
-	setfont('default.ttf',2);
+	setfont('default.ttf',4);
 	setcolor(white);
     x:=getmaxx DIV 2;
 	centerwrite(x,400,('You have ' + tempstring + ' coins'));
 	setcolor(lightmagenta);
-	setfont('default.ttf',3);
+	setfont('default.ttf',6);
 	centerwrite(x,420,'Go ahead? (y/n)');
 	repeat
 	     ans:=readarrowkey;
@@ -3314,7 +3314,7 @@ begin
                         graphwriteln(x,y,'with that Roland pulls out his french fry wand.');
                         graphwriteln(x,y,'After an hour of dodgin his attacks, you begin to');
 	                    graphwriteln(x,y,'tire.  Then, Roland just obliterates you.');
-	                    setfont('default.ttf',2);
+	                    setfont('default.ttf',4);
 	                    prompt;
 	                    died;
 	                    exit;
@@ -3328,7 +3328,7 @@ begin
 	                              centerwrite(x,y,'"YOU WIN THE GRAND PRIZE!');
                                   graphwriteln(x,y,'');
                                   graphwriteln(x,y,'');
-                                  setfont('default.ttf',2);
+                                  setfont('default.ttf',4);
 	                              graphwriteln(x,y,'Roland teaches you OBLITERATE"');
 	                              if (numspells=spellmax) then
 	                                    graphwriteln(x,y,'but you can''t learn anymore spells!')
@@ -3362,7 +3362,7 @@ begin
 	                                   centerwrite(x,y,'"You are the proud owner of a Ring of Power."');
                                        graphwriteln(x,y,'');
                                        graphwriteln(x,y,'');
-                                       setfont('default.ttf',2);
+                                       setfont('default.ttf',4);
 	                                   if (ring in stages) then
 	                                        begin
 	                                        graphwriteln(x,y,'You already have one...');
@@ -3390,7 +3390,7 @@ begin
 	                                        centerwrite(x,y,'"Here''s a green potion with your name on it."');
                                             graphwriteln(x,y,'');
                                             graphwriteln(x,y,'');
-                                            setfont('default.ttf',2);
+                                            setfont('default.ttf',4);
 	                                        if (numitems=itemmax) then
 	                                            graphwriteln(x,y,'You must decline since you cannot carry anymore.')
 	                                        else
@@ -3405,7 +3405,7 @@ begin
 	                                            centerwrite(x,y,'"You win. Your prize is a blue potion."');
                                                 graphwriteln(x,y,'');
                                                 graphwriteln(x,y,'');
-                                                setfont('default.ttf',2);
+                                                setfont('default.ttf',4);
 	                                            if (numitems=itemmax) then
 	                                                graphwriteln(x,y,'You must decline since you cannot carry anymore.')
 	                                            else
@@ -3416,7 +3416,7 @@ begin
 	                                            end
 	                                        else
 	                                            centerwrite(x,y,'"Sorry, no prize."');
-	               setfont('default.ttf',2);
+	               setfont('default.ttf',4);
 	               prompt;
 	          end;
 end;
@@ -3446,7 +3446,7 @@ begin
 	               7:writetext(textfile,240,'021');
 	               8:writetext(textfile,240,'022');
 	          end;
-	          setfont('default.ttf',2);
+	          setfont('default.ttf',4);
 	          prompt;
 	     end;
 end;
@@ -3487,7 +3487,7 @@ begin
     cleardevice;
     drawpic(2,1,'pub.ln1');
     drawpic(40,160,'dwarf.ln1');
-	setfont('default.ttf',3);
+	setfont('default.ttf',6);
 	setcolor(magenta);
 	x:=210;
 	y:=200;
@@ -3505,31 +3505,31 @@ begin
 	if not(capitalize(password)='CRYSTAL SHARD') then
 	     begin
 	          graphwriteln(x,y,'"No password, no service"');
-	          setfont('default.ttf',2);
+	          setfont('default.ttf',4);
 	          prompt;
 	     end
 	else
 	     begin
 	          graphwriteln(x,y,'"Great! Come on in..."');
-	          setfont('default.ttf',2);
+	          setfont('default.ttf',4);
 	          prompt;
 	          repeat
 	               clearpub;
                    drawpic(240,140,'roland.ln1');
-	               setfont('default.ttf',3);
+	               setfont('default.ttf',6);
 	               setcolor(lightmagenta);
                    x:=getmaxx DIV 2;
 	               centerwrite(x,280,'"So, what''ll it be," asks Roland McDoland');
 	               centerwrite(x,420,'(B)uy, (P)lay, (T)ip or (E)xit');
 	               str(player.coins,tempstring);
-	               setfont('default.ttf',2);
+	               setfont('default.ttf',4);
 	               setcolor(white);
 	               centerwrite(x,400,('You have ' + tempstring + ' coins'));
 	               repeat
 	                    ans:=readarrowkey;
 	               until (ans in ['e','E','b','B','p','P','t','T','*']);
 	               clearpub;
-	               setfont('default.ttf',3);
+	               setfont('default.ttf',6);
 	               setcolor(magenta);
 	               homecursor(x,y);
 	               case ans of
@@ -3555,7 +3555,7 @@ var
 
 begin
 	cleardevice;
-	setfont('gothic.ttf',6);
+	setfont('gothic.ttf',12);
 	homecursor(x,y);
     x:=getmaxx DIV 2;
 	setcolor(darkgray);
@@ -3563,14 +3563,14 @@ begin
 	setcolor(cyan);
 	centerwrite(x,y,'The Eagle Talon Inn');
     drawpic(420,120,'innkeep.ln1');
-	setfont('default.ttf',3);
+	setfont('default.ttf',6);
 	setcolor(lightblue);
 	str(innprice,tempstring);
 	outtextxy(10,160,'"We charge '+ tempstring + ' coins a night."');
 	setcolor(lightcyan);
 	centerwrite(x,420,'Do you stay the night? (y/n)');
 	str(player.coins,tempstring);
-	setfont('default.ttf',2);
+	setfont('default.ttf',4);
 	setcolor(white);
 	centerwrite(x,400,'You have ' + tempstring + ' coins');
 	repeat
@@ -3586,7 +3586,7 @@ begin
 	          else
 	               begin
 	                    cleardevice;
-                        setfont('default.ttf',3);
+                        setfont('default.ttf',6);
 	                    setcolor(yellow);
 	                    y:=200;
 	                    centerwrite(x,y,'Zzzzzzzz....');
@@ -3598,7 +3598,7 @@ begin
 	                    if(endurance>endurancemax)then
 	                         endurance:=endurancemax;
 	                    charges:=chargemax;
-                        setfont('default.ttf',2);
+                        setfont('default.ttf',4);
 	                    if (roll('1d100')<=5) then
 	                         begin
 	                              graphwriteln(x,y,'');
@@ -3620,11 +3620,11 @@ var
 
 begin
 	setcolor(c2);
-	setfont('default.ttf',6);
+	setfont('default.ttf',12);
 	x:=10;
 	y:=40;
 	centerwrite(getmaxx DIV 2,y,title);
-	setfont('default.ttf',4);
+	setfont('default.ttf',8);
     graphwriteln(x,y,'');
 	graphwriteln(x,y,'');
     for loop:=1 to menumax do
@@ -3638,7 +3638,7 @@ begin
         else
             graphwriteln(x,y,'');
 	setcolor(white);
-    setfont('default.ttf',2);
+    setfont('default.ttf',4);
 	centerwrite(getmaxx DIV 2,y,'Press any other key to go back to town');
 end;
 
@@ -3692,7 +3692,7 @@ begin
 	repeat
 	     cleardevice;
          drawpic(45,45,'thetown.ln1');
-	     setfont('default.ttf',2);
+	     setfont('default.ttf',4);
 	     setcolor(white);
 	     centerwrite(getmaxx DIV 2,400,'Choose a door (1-4) or');
 	     centerwrite(getmaxx DIV 2,425,'press <SPACE> for other options');
@@ -3775,7 +3775,7 @@ begin
 	                    combat(player,nummonsters,monster);
 	                    cleardevice;
                             drawpic(70,10,'esi.ln1');
-	                    setfont('default.ttf',6);
+	                    setfont('default.ttf',12);
 	                    setcolor(green);
 	                    y:=175;
 	                    graphwriteln(x,y,'');
@@ -3861,7 +3861,7 @@ begin
 	                                        combat(player,nummonsters,monster);
 	                                        cleardevice;
                                                 drawpic(70,10,'esi.ln1');
-	                                        setfont('default.ttf',6);
+	                                        setfont('default.ttf',12);
 	                                        setcolor(lightblue);
 	                                        y:=175;
 	                                        graphwriteln(x,y,'');
@@ -3910,7 +3910,7 @@ var
 begin
 	y:=175;
     center:=getmaxx DIV 2;
-	setfont('default.ttf',2);
+	setfont('default.ttf',4);
 	setcolor(yellow);
 	graphwriteln(x,y,'"What''ll ya have?" asks Ahab the one-eyed bartender.');
 	graphwriteln(x,y,'He points to a sign over the bar...');
@@ -3935,7 +3935,7 @@ begin
 	     begin
 	          setcolor(lightblue);
 	          graphwriteln(x,y,'                         Ahab grumbles');
-	          setfont('default.ttf',2);
+	          setfont('default.ttf',4);
 	          prompt;
 	          exit;
 	     end;
@@ -3985,7 +3985,7 @@ begin
 	                         esi_encounter(player);
 	                    end;
 	           end;{case}
-	          setfont('default.ttf',6);
+	          setfont('default.ttf',12);
 	          prompt;
 	     end;
 
@@ -4050,7 +4050,7 @@ begin
 	                              combat(player,nummonsters,monster);
 	                              cleardevice;
                                       drawpic(70,10,'esi.ln1');
-	                              setfont('default.ttf',6);
+	                              setfont('default.ttf',12);
 	                              x:=10;
 	                              y:=175;
 	                              setcolor(magenta);
@@ -4406,7 +4406,7 @@ begin
 	                              cleardevice;
 	                              if GAMEOVER then exit;
                                       drawpic(70,10,'esi.ln1');
-	                              setfont('default.ttf',6);
+	                              setfont('default.ttf',12);
 	                              x:=10;
 	                              y:=175;
 	                              setcolor(lightgreen);
@@ -4570,7 +4570,7 @@ begin
 	                              combat(player,nummonsters,monster);
 	                              cleardevice;
                                       drawpic(70,10,'esi.ln1');
-	                              setfont('default.ttf',6);
+	                              setfont('default.ttf',12);
 	                              x:=10;
 	                              y:=175;
 	                              setcolor(lightgray);
@@ -4628,7 +4628,7 @@ begin
 	               x:=10;
 	               y:=175;
 	               setcolor(red);
-	               setfont('default.ttf',3);
+	               setfont('default.ttf',6);
 	               graphwriteln(x,y,'Welcome to Roland McDoland''s');
 	               graphwriteln(x,y,'    Wheel of Fortune!');
 	               graphwriteln(x,y,'');
@@ -4674,7 +4674,7 @@ begin
 	                                   delay(delayvalue);
 	                              until keypressed;
 	                         y:=350;
-	                         setfont('default.ttf',2);
+	                         setfont('default.ttf',4);
 	                         setcolor(white);
 	                         case (roll('4d8')) of
 	                            4:begin
@@ -4777,7 +4777,7 @@ begin
 	cleardevice;
         drawpic(70,10,'esi.ln1');
 	setcolor(yellow);
-	setfont('default.ttf',2);
+	setfont('default.ttf',4);
 	writetext(textfile,175,'039');
 	prompt;
 	repeat
@@ -4785,7 +4785,7 @@ begin
 	     homecursor(x,y);
 	     y:=240;
 	     setcolor(yellow);
-	     setfont('default.ttf',3);
+	     setfont('default.ttf',6);
 	     graphwriteln(x,y,' 1) Look around');
 	     graphwriteln(x,y,' 2) Order a drink');
 	     graphwriteln(x,y,' 3) Rent a room');
@@ -4805,7 +4805,7 @@ begin
          graphwriteln(x,y,'');
 	     centerwrite(center,y,'(E)xit the Elf Skull Inn');
 	     str(player.coins,tempstring);
-	     setfont('default.ttf',2);
+	     setfont('default.ttf',4);
 	     setcolor(white);
 	     outtextxy(240,460,('You have ' + tempstring + ' coins'));
 	     repeat
@@ -4813,7 +4813,7 @@ begin
 	     until (ans in ['1'..'8','e','E','v','V']);
 	     clearesi;
 	     setcolor(yellow);
-	     setfont('default.ttf',2);
+	     setfont('default.ttf',4);
 	     homecursor(x,y);
 	     case ans of
 	       'e','E':exit;
@@ -4863,7 +4863,7 @@ var
 begin
 	clearmessage;
 	homemessage(x,y);
-	setfont('default.ttf',3);
+	setfont('default.ttf',6);
 	setcolor(black);
 	centerwrite(getmaxx DIV 2,y,'You encounter');
 	graphwriteln(x,y,'');
@@ -5048,7 +5048,7 @@ procedure cave_staircase;
 begin
 	clearmessage;
 	homemessage(x,y);
-	setfont('default.ttf',2);
+	setfont('default.ttf',4);
 	setcolor(black);
 	message(x,y,'    You are on a staircase that');
 	message(x,y,'      descends to the north.');
@@ -5059,7 +5059,7 @@ procedure secret_passage;
 begin
 	clearmessage;
 	homemessage(x,y);
-	setfont('default.ttf',2);
+	setfont('default.ttf',4);
 	setcolor(black);
 	message(x,y,'');
 	message(x,y,'   You are in a secret passage.');
@@ -5070,7 +5070,7 @@ procedure castle_courtyard;
 begin
 	clearmessage;
 	homemessage(x,y);
-	setfont('default.ttf',2);
+	setfont('default.ttf',4);
 	setcolor(black);
 	message(x,y,'');
 	message(x,y,' You are in the castle courtyard.');
@@ -5081,7 +5081,7 @@ procedure castle_guest;
 begin
 	clearmessage;
 	homemessage(x,y);
-	setfont('default.ttf',2);
+	setfont('default.ttf',4);
 	setcolor(black);
 	message(x,y,'');
 	message(x,y,' This appears to be a guest room.');
@@ -5092,7 +5092,7 @@ procedure castle_banquet;
 begin
 	clearmessage;
 	homemessage(x,y);
-	setfont('default.ttf',2);
+	setfont('default.ttf',4);
 	setcolor(black);
 	message(x,y,'');
 	message(x,y,'   This is a vast banquet hall.');
@@ -5103,7 +5103,7 @@ procedure castle_master;
 begin
 	clearmessage;
 	homemessage(x,y);
-	setfont('default.ttf',2);
+	setfont('default.ttf',4);
 	setcolor(black);
 	message(x,y,'');
 	message(x,y,'       The Queen''s bedroom.');
@@ -5114,7 +5114,7 @@ procedure castle_kitchen;
 begin
 	clearmessage;
 	homemessage(x,y);
-	setfont('default.ttf',2);
+	setfont('default.ttf',4);
 	setcolor(black);
 	message(x,y,'');
 	message(x,y,'        An empty kitchen.');
@@ -5129,7 +5129,7 @@ begin
 	     begin
 	          clearmessage;
 	          homemessage(x,y);
-	          setfont('default.ttf',2);
+	          setfont('default.ttf',4);
 	          setcolor(black);
 	          message(x,y,'          You find a key.');
 	          message(x,y,'');
@@ -5152,7 +5152,7 @@ begin
 	     begin
 	          clearmessage;
 	          homemessage(x,y);
-	          setfont('default.ttf',2);
+	          setfont('default.ttf',4);
 	          setcolor(black);
 	          message(x,y,'     You find some treasure.');
 	          message(x,y,'');
@@ -5188,7 +5188,7 @@ begin
 	dmg:=roll('2d6');
 	clearmessage;
 	homemessage(x,y);
-	setfont('default.ttf',2);
+	setfont('default.ttf',4);
 	setcolor(black);
 	if (roll('1d20')>player.savingthrow) then
 	     begin
@@ -5221,7 +5221,7 @@ var ans:char;
 begin
 	clearmessage;
 	homemessage(x,y);
-	setfont('default.ttf',2);
+	setfont('default.ttf',4);
 	setcolor(black);
 	message(x,y,'You find a massive book on a podium.');
 	message(x,y,'');
@@ -5435,7 +5435,7 @@ procedure castle_barracks;
 begin
 	clearmessage;
 	homemessage(x,y);
-	setfont('default.ttf',2);
+	setfont('default.ttf',4);
 	setcolor(black);
 	message(x,y,'');
 	message(x,y,'You find yourself in the barracks.');
@@ -5526,7 +5526,7 @@ procedure stair_up;
 begin
 	clearmessage;
 	homemessage(x,y);
-	setfont('default.ttf',2);
+	setfont('default.ttf',4);
 	setcolor(black);
 	message(x,y,'');
 	message(x,y,'  There are stairs going up here.');
@@ -5634,7 +5634,7 @@ begin
 begin
 	clearmessage;
 	homemessage(x,y);
-	setfont('default.ttf',2);
+	setfont('default.ttf',4);
 	setcolor(black);
 	message(x,y,' There are stairs going down here.');
 	message(x,y,'');
@@ -5663,7 +5663,7 @@ end;
 	                    begin
 	                         clearmessage;
 	                         homemessage(x,y);
-	                         setfont('default.ttf',2);
+	                         setfont('default.ttf',4);
 	                         setcolor(black);
 	                         message(x,y,'');
 	                         message(x,y,'            Exit? (y/n)');
@@ -5818,7 +5818,7 @@ var ans:char;
 begin
 	clearmessage;
 	homemessage(x,y);
-	setfont('default.ttf',3);
+	setfont('default.ttf',6);
 	setcolor(black);
 	graphwriteln(x,y,'');
 	centerwrite(getmaxx DIV 2,y,'The Elf Skull Inn (y/n)');
@@ -5838,7 +5838,7 @@ var ans:char;
 begin
 	clearmessage;
 	homemessage(x,y);
-	setfont('default.ttf',3);
+	setfont('default.ttf',6);
 	setcolor(black);
 	graphwriteln(x,y,'');
 	centerwrite(getmaxx DIV 2,y,'Gilantry City (y/n)');
@@ -5858,7 +5858,7 @@ var ans:char;
 begin
 	clearmessage;
 	homemessage(x,y);
-	setfont('default.ttf',2);
+	setfont('default.ttf',4);
 	setcolor(black);
 	message(x,y,'');
 	message(x,y,'       A Cave -- enter? (y/n)');
@@ -6135,12 +6135,12 @@ begin
     center:=getmaxx DIV 2;
 	repeat
 	     cleardevice;
-	     setfont('gothic.ttf',8);
+	     setfont('gothic.ttf',16);
 	     setcolor(lightgray);
 	     centerwrite(center,10,'The Ice Queen');
 	     ans:='L';
 	     repeat
-	          setfont('default.ttf',5);
+	          setfont('default.ttf',10);
 	          setcolor(lightblue);
 	          centerwrite(center,120,'Introduction');
 	          centerwrite(center,180,'Start New Game');
@@ -6172,12 +6172,12 @@ begin
               begin
 	                cleardevice;
 	                homecursor(x,y);
-	                setfont('default.ttf',2);
+	                setfont('default.ttf',4);
 	                setcolor(lightblue);
 	                writetext(textfile,y,'intro');
 	                prompt;
 	                cleardevice;
-	                setfont('gothic.ttf',8);
+	                setfont('gothic.ttf',16);
 	                setcolor(lightgray);
 	                centerwrite(center,10,'The Ice Queen');
 	          end;
