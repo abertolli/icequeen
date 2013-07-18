@@ -3890,38 +3890,37 @@ var
 	tempstring     :    string;
 	drinkprice     :    integer;
 	ans            :    char;
+    center          :   integer;
 
 begin
 	y:=175;
-	graphwriteln(x,y,'''''What''ll ya have?'''' asks Ahab the one-eyed bartender.');
+    center:=getmaxx DIV 2;
+	setfont('default.ttf',2);
+	setcolor(yellow);
+	graphwriteln(x,y,'"What''ll ya have?" asks Ahab the one-eyed bartender.');
 	graphwriteln(x,y,'He points to a sign over the bar...');
 	graphwriteln(x,y,'');
 	graphwriteln(x,y,'     (1) beer           (1 coins)');
 	graphwriteln(x,y,'     (2) ale            (1 coins)');
 	graphwriteln(x,y,'     (3) mead           (2 coins)');
 	graphwriteln(x,y,'     (4) wine           (2 coins)');
-	graphwriteln(x,y,'     (5) rum            (3 coins)');
+	graphwriteln(x,y,'     (5) brandy         (3 coins)');
 	graphwriteln(x,y,'     (6) whiskey        (3 coins)');
-	graphwriteln(x,y,'     (7) gin            (3 coins)');
-	graphwriteln(x,y,'     (8) vodka          (3 coins)');
-	graphwriteln(x,y,'     (9) Gorgon''s Milk   (5 coins)');
+	graphwriteln(x,y,'     (7) Gorgon''s Milk  (5 coins)');
 	graphwriteln(x,y,'     (N) No thanks');
-	str(player.coins,tempstring);
-	setfont('default.ttf',1);
-	setcolor(white);
-	outtextxy(250,460,('You have ' + tempstring + ' coins'));
-	setcolor(yellow);
-	setfont('default.ttf',6);
 	graphwriteln(x,y,'');
 	graphwriteln(x,y,'What do you take?');
+	str(player.coins,tempstring);
+	setcolor(white);
+	centerwrite(center,440,('You have ' + tempstring + ' coins'));
 	repeat
 	     ans:=readarrowkey;
-	until (ans in ['1'..'9','n','N']);
+	until (ans in ['1'..'7','n','N']);
 	if (ans in ['n','N']) then
 	     begin
 	          setcolor(lightblue);
 	          graphwriteln(x,y,'                         Ahab grumbles');
-	          setfont('default.ttf',6);
+	          setfont('default.ttf',2);
 	          prompt;
 	          exit;
 	     end;
@@ -3932,8 +3931,6 @@ begin
 	     '4':drinkprice:=2;
 	     '5':drinkprice:=3;
 	     '6':drinkprice:=3;
-	     '7':drinkprice:=3;
-	     '8':drinkprice:=3;
 	     else
 	          drinkprice:=5;
 	end;
@@ -3950,7 +3947,7 @@ begin
 	          graphwriteln(x,y,'You sit down and have you''re drink.');
 	          player.coins:=player.coins - drinkprice;
 	          graphwriteln(x,y,'');
-	          case roll('1d100') of
+	          case (roll('1d100') + drinkprice) of
 	              1..20:begin
 	                         writetext(textfile,200,'061');
 	                    end;
@@ -3959,8 +3956,8 @@ begin
 	                    end;
 	             81..90:begin
 	                         graphwriteln(x,y,'Ahab leans over to tell you a secret.');
-	                         graphwriteln(x,y,'     ''''Should ye wish to stay the night, I could send a little');
-	                         graphwriteln(x,y,'     company up to yer room, if ya know what I mean.''''');
+	                         graphwriteln(x,y,'     "Should ye wish to stay the night, I could send a little');
+	                         graphwriteln(x,y,'     company up to yer room, if ya know what I mean."');
 	                         graphwriteln(x,y,'Ahab lifts the patch over his eye to give you a wink.');
 	                    end;
 	             91..95:begin
@@ -3989,7 +3986,7 @@ var
 
 begin
 	y:=175;
-	graphwriteln(x,y,'''''Rooms are 5 coins per night,'''' says Ahab.');
+	graphwriteln(x,y,'"Rooms are 5 coins per night," says Ahab.');
 	roomprice:=5;
 	graphwriteln(x,y,'');
 	graphwrite(x,y,'Do you want a room?  (y/n)');
@@ -4199,7 +4196,7 @@ begin
 	graphwriteln(x,y,'     4) Ring Charge   ONLY 400 coins!');
 	graphwriteln(x,y,'     N)one');
 	graphwriteln(x,y,'');
-	graphwriteln(x,y,'''''What do you like?'''' grins the Magic Merchant.');
+	graphwriteln(x,y,'"What do you like?" grins the Magic Merchant.');
 	graphwriteln(x,y,'');
 	repeat
 	     ans:=readarrowkey;
@@ -4241,7 +4238,7 @@ begin
 	                        player.charges:=player.charges+1;
 	                        player.chargemax:=player.chargemax+1;
 	                        player.coins:=player.coins-price;
-	                        graphwriteln(x,y,'''''Pleasure doing business with you!''''');
+	                        graphwriteln(x,y,'"Pleasure doing business with you!"');
 	                        prompt;
 	                   end;
 	         end;
@@ -4308,7 +4305,7 @@ begin
 	               end;
 	          if (bet>100) then
 	               begin
-	                    graphwriteln(x,y,'''''Too high for my taste.''''');
+	                    graphwriteln(x,y,'"Too high for my taste."');
 	                    prompt;
 	                    exit;
 	               end;
@@ -4385,7 +4382,7 @@ begin
 	                    graphwriteln(x,y,'');
 	                    if (bet>player.coins) then
 	                         begin
-	                              graphwriteln(x,y,'''''We don''t like people who bet with no money!''''');
+	                              graphwriteln(x,y,'"We don''t like people who bet with no money!"');
 	                              graphwriteln(x,y,'They attack.');
 	                              prompt;
 	                              nummonsters:=roll('1d4')+2;
@@ -4402,7 +4399,7 @@ begin
 	                         end
 	                    else
 	                         begin
-	                              graphwriteln(x,y,'''''Thanks,'''' he laughs.  ''''Come back any time.''''');
+	                              graphwriteln(x,y,'"Thanks," he laughs. "Come back any time."');
 	                              player.coins:=player.coins-bet;
 	                         end;
 	               end;
@@ -4578,7 +4575,7 @@ end;
 procedure esi_wheel(var player:character_t);
 
 const
-	delayvalue     =    1000;
+	delayvalue     =    200;
 
 var
 	password       :    string;
@@ -4616,7 +4613,7 @@ begin
 	               x:=10;
 	               y:=175;
 	               setcolor(red);
-	               setfont('default.ttf',6);
+	               setfont('default.ttf',3);
 	               graphwriteln(x,y,'Welcome to Roland McDoland''s');
 	               graphwriteln(x,y,'    Wheel of Fortune!');
 	               graphwriteln(x,y,'');
@@ -4625,7 +4622,7 @@ begin
 	               graphwriteln(x,y,'the wheel of fortune!');
 	               graphwriteln(x,y,'');
 	               graphwriteln(x,y,'Do you want to spin?  (y/n)');
-                       drawpic(350,175,'wheel.ln1');
+                   drawpic(350,175,'wheel.ln1');
 	               repeat
 	                    ans:=readarrowkey;
 	               until (ans in ['y','Y','n','N']);
@@ -4645,13 +4642,12 @@ begin
 	                         graphwriteln(x,y,'You spin the wheel...');
 	                         prompt;
 	                         clearesi;
-	                         x:=15;
+	                         x:=getmaxx DIV 2;
 	                         y:=300;
 	                         setcolor(red);
-	                         graphwriteln(x,y,'                 press space to stop the wheel');
+	                         centerwrite(x,y,'press space to stop the wheel');
 	                         x:=165;
 	                         y:=180;
-	                         repeat
 	                              repeat
                                            drawpic(x,y,'wheel1.ln1');
 	                                   delay(delayvalue);
@@ -4662,10 +4658,8 @@ begin
                                            drawpic(x,y,'wheel4.ln1');
 	                                   delay(delayvalue);
 	                              until keypressed;
-	                              ch:=readarrowkey;
-	                         until (ch=' ');
 	                         y:=350;
-	                         setfont('default.ttf',1);
+	                         setfont('default.ttf',2);
 	                         setcolor(white);
 	                         case (roll('4d8')) of
 	                            4:begin
@@ -4762,6 +4756,7 @@ procedure elfskullinn(var player:character_t);
 var
 	tempstring  :    string;
 	ans         :    char;
+    center      :   integer;
 
 begin
 	cleardevice;
@@ -4790,8 +4785,10 @@ begin
 	     x:=320;
 	     graphwriteln(x,y,' 8) Go over to the jester');
 	     graphwriteln(x,y,'');
-	     graphwriteln(x,y,'                       (V)iew your stats');
-	     graphwriteln(x,y,'                    (E)xit the Elf Skull Inn');
+         center:=getmaxx DIV 2;
+	     centerwrite(center,y,'(V)iew your stats');
+         graphwriteln(x,y,'');
+	     centerwrite(center,y,'(E)xit the Elf Skull Inn');
 	     str(player.coins,tempstring);
 	     setfont('default.ttf',2);
 	     setcolor(white);
