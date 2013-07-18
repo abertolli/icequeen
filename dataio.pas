@@ -328,9 +328,10 @@ begin
         readln(savefile,dexterity);
         readln(savefile,charges);
         readln(savefile,chargemax);
+        stages:=[];
         while not(eof(savefile)) do
         begin
-            readln(st);
+            readln(savefile,st);
             stages:=stages + [st];
         end;
     end;
