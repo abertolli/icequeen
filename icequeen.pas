@@ -1523,6 +1523,7 @@ begin
 	repeat
 	     clearcombatmenu;
 	     y:=300;
+	     graphwriteln(x,y,'');
 	     centerwrite(120,y,'(A)ttack');
 	     graphwriteln(x,y,'');
 	     graphwriteln(x,y,'');
@@ -1550,26 +1551,27 @@ begin
 
 	     clearcombatmenu;
 	     y:=300;
+         setfont('default.ttf',3);
 	     if (action=attack) then
 	          begin
                 {
 	               centerwrite(120,y,'ATTACK');
-	               graphwriteln(x,y,'');
 	               graphwriteln(x,y,'');
                 }
 	               for count:=1 to nummonsters do
 	                    begin
 	                         str(count,tempstring);
 	                         ch:=tempstring[1];
-	                         tempstring:='     ';
+	                         tempstring:='       ';
 	                         tempstring:=tempstring + ch + ') ';
 	                         tempstring:=tempstring + monster[count].name;
 	                         graphwriteln(x,y,tempstring);
 	                    end;
-	               graphwriteln(x,y,'     N)one');
+	               graphwriteln(x,y,'       N)one');
 	               repeat
 	                    ans:=readarrowkey;
 	               until (ans in ['1'..ch,'n','N']);
+                   setfont('default.ttf',4);
 	               done:=not(ans in ['n','N']);
 	               val(ans,tempint,errcode);
 	               if done then
@@ -1580,7 +1582,6 @@ begin
                 {
 	               centerwrite(120,y,'USE ITEM');
 	               graphwriteln(x,y,'');
-	               graphwriteln(x,y,'');
                 }
 	               for count:=1 to player.numitems do
 	                    begin
@@ -1590,16 +1591,17 @@ begin
 	                              setcolor(lightcyan);
 	                         str(count,tempstring);
 	                         ch:=tempstring[1];
-	                         tempstring:='      ';
+	                         tempstring:='       ';
 	                         tempstring:=tempstring + ch + ') ';
 	                         tempstring:=tempstring + itemstring(player.item[count]);
 	                         graphwriteln(x,y,tempstring);
 	                    end;
 	               setcolor(lightcyan);
-	               graphwriteln(x,y,'      N)one');
+	               graphwriteln(x,y,'       N)one');
 	               repeat
 	                    ans:=readarrowkey;
 	               until (ans in ['1'..ch,'n','N']);
+                   setfont('default.ttf',4);
 	               done:=not(ans in ['n','N']);
 	               if done then
 	                    begin
@@ -1620,7 +1622,6 @@ begin
                 {
 	               centerwrite(120,y,'CAST SPELL');
 	               graphwriteln(x,y,'');
-	               graphwriteln(x,y,'');
                 }
 	               for count:=1 to player.numspells do
 	               begin
@@ -1630,16 +1631,17 @@ begin
 	                         setcolor(lightcyan);
 	                    str(count,tempstring);
 	                    ch:=tempstring[1];
-	                    tempstring:='      ';
-	                    tempstring:=tempstring + ch + '. ';
+	                    tempstring:='       ';
+	                    tempstring:=tempstring + ch + ') ';
 	                    tempstring:=tempstring + spellstring(player.spell[count]);
 	                    graphwriteln(x,y,tempstring);
 	               end;
 	               setcolor(lightcyan);
-	               graphwriteln(x,y,'      N)one');
+	               graphwriteln(x,y,'       N)one');
 	               repeat
 	                    ans:=readarrowkey;
 	               until (ans in ['1'..ch,'n','N']);
+                   setfont('default.ttf',4);
 	               done:=not(ans in ['n','N']);
 	               if done and (player.charges=0) then
 	                    begin

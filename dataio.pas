@@ -13,7 +13,7 @@ const
 	rowmax	= 14;	  {number of rows on a map}
 	colmax	= 20;	  {number of columns on a map}
 	
-	itemmax		= 9;
+	itemmax		= 8;
 	spellmax	= 8;	{number of spells that can be in the ring}
 
 
