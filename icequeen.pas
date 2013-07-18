@@ -1518,19 +1518,20 @@ var
 
 begin
 
+	setfont('default.ttf',2);
 	done:=false;
 	repeat
 	     clearcombatmenu;
-	     setfont('sanseri.ttf',1);
 	     y:=300;
+	     centerwrite(120,y,'(A)ttack');
 	     graphwriteln(x,y,'');
-	     graphwriteln(x,y,'     (A)ttack');
 	     graphwriteln(x,y,'');
-	     graphwriteln(x,y,'     (U)se an item');
+	     centerwrite(120,y,'(U)se an item');
 	     if (ring in player.stages) then
 	          begin
 	               graphwriteln(x,y,'');
-	               graphwriteln(x,y,'     (C)ast a spell');
+	               graphwriteln(x,y,'');
+	               centerwrite(120,y,'(C)ast a spell');
 	               repeat
 	                     ans:=readarrowkey;
 	               until (ans in ['a','A','u','U','c','C']);
@@ -1546,15 +1547,16 @@ begin
 	        'u','U':action:=use;
 	        'c','C':action:=cast;
 	     end;{case}
+
 	     clearcombatmenu;
-	     setfont('default.ttf',1);
 	     y:=300;
-	     graphwriteln(x,y,'');
-	     graphwriteln(x,y,'');
 	     if (action=attack) then
 	          begin
-	               graphwriteln(x,y,'           ATTACK');
+                {
+	               centerwrite(120,y,'ATTACK');
 	               graphwriteln(x,y,'');
+	               graphwriteln(x,y,'');
+                }
 	               for count:=1 to nummonsters do
 	                    begin
 	                         str(count,tempstring);
@@ -1575,8 +1577,11 @@ begin
 	          end;
 	     if (action=use) then
 	          begin
-	               graphwriteln(x,y,'          USE ITEM');
+                {
+	               centerwrite(120,y,'USE ITEM');
 	               graphwriteln(x,y,'');
+	               graphwriteln(x,y,'');
+                }
 	               for count:=1 to player.numitems do
 	                    begin
 	                         if (not(player.item[count] in [redpotion,greenpotion,bluepotion])) then
@@ -1586,7 +1591,7 @@ begin
 	                         str(count,tempstring);
 	                         ch:=tempstring[1];
 	                         tempstring:='      ';
-	                         tempstring:=tempstring + ch + '. ';
+	                         tempstring:=tempstring + ch + ') ';
 	                         tempstring:=tempstring + itemstring(player.item[count]);
 	                         graphwriteln(x,y,tempstring);
 	                    end;
@@ -1612,8 +1617,11 @@ begin
 	          end;
 	     if (action=cast) then
 	          begin
-	               graphwriteln(x,y,'         CAST SPELL');
+                {
+	               centerwrite(120,y,'CAST SPELL');
 	               graphwriteln(x,y,'');
+	               graphwriteln(x,y,'');
+                }
 	               for count:=1 to player.numspells do
 	               begin
 	                    if (player.spell[count] in [callwild,shatter]) then
@@ -2323,6 +2331,12 @@ begin
               graphwriteln(x,y,'');
 	          centerwrite(center,y,s1 + '/' + s2);
               graphwriteln(x,y,'');
+              graphwriteln(x,y,'');
+
+              str(experience,s1);
+              centerwrite(center,y,'EXPERIENCE');
+              graphwriteln(x,y,'');
+              centerwrite(center,y,s1);
 
 	     end;
 
@@ -2809,6 +2823,7 @@ begin
 	                                   begin
 	                                        setcolor(black);
 	                                        bar(0,400,getmaxx,getmaxy);
+                                            setcolor(lightgray);
 	                                        centerwrite(getmaxx DIV 2,420,'You already have one.');
 	                                        setfont('default.ttf',2);
 	                                        prompt;
