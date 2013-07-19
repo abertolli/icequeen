@@ -36,6 +36,7 @@ var
 	GAMEOVER	: boolean;
 	x			: integer;
 	y			: integer;
+    center      : integer;
 	nummonsters	: integer;
 	monster		: monsterlist;
 	player		: character_t;
@@ -123,12 +124,12 @@ procedure titlescreen;
 {Ice Queen title screen}
 
 begin
-    x:=getmaxx DIV 2;
+    center:=getmaxx DIV 2;
     setfont('gothic.ttf',16);
     setcolor(lightblue);
-    centerwrite(x+5,385,'The Ice Queen');
+    centerwrite(center+5,385,'The Ice Queen');
     setcolor(white);
-    centerwrite(x,380,'The Ice Queen');
+    centerwrite(center,380,'The Ice Queen');
     setfont('default.ttf',4);
     drawpic(120,10,'tcastle.ln1');
     setfont('default.ttf',4);
@@ -157,12 +158,13 @@ var
 	ans            :    char;
 
 begin
+    center:=getmaxx DIV 2;
 	repeat
 	     cleardevice;
 	     homecursor(x,y);
          setfont('gothic.ttf',14);
 	     setcolor(lightgray);
-	     centerwrite(getmaxx DIV 2,y,'Start a New Character');
+	     centerwrite(center,y,'Start a New Character');
 	     graphwriteln(x,y,'');
          setfont('default.ttf',4);
 	     graphwriteln(x,y,'');
@@ -318,13 +320,14 @@ var
 	ans            :    char;
 
 begin
+    center:=getmaxx DIV 2;
 	done:=false;
 	repeat
 	     cleardevice;
 	     homecursor(x,y);
          setcolor(white);
          setfont('gothic.ttf',14);
-         centerwrite(getmaxx DIV 2,y,'Load Game');
+         centerwrite(center,y,'Load Game');
          graphwriteln(x,y,'');
 	     setcolor(lightgray);
 	     setfont('default.ttf',6);
@@ -349,7 +352,7 @@ begin
 	               setcolor(red);
 	               graphwriteln(x,y,'File ('+dosname+') not found.');
 	               setcolor(lightgray);
-	               centerwrite(getmaxx DIV 2,300,'(L)oad or (S)tart');
+	               centerwrite(center,300,'(L)oad or (S)tart');
 	               repeat
 	                    ans:=readarrowkey;
 	               until (ans in ['l','L','s','S']);
@@ -741,14 +744,13 @@ begin
 	               score:=(score * 100) DIV totalscore;
 	               str(score,s);
 	               s:='Total Progress: ' + s + '%';
-                   x:=getmaxx DIV 2;
                    y:=400;
-	               centerwrite(x,y,s);
+	               centerwrite(center,y,s);
 	          end;
 	     setcolor(lightgreen);
 	     setfont('default.ttf',6);
 	     y:=420;
-	     centerwrite(x,y,'(D)rop or (E)xit');
+	     centerwrite(center,y,'(D)rop or (E)xit');
 	     repeat
 	          ans:=readarrowkey;
 	     until (ans in ['d','D','e','E']);
@@ -766,15 +768,16 @@ var
    ch:char;
 
 begin
+    center:=getmaxx DIV 2;
 	cleardevice;
 	setcolor(lightgray);
 	setfont('gothic.ttf',12);
-	centerwrite(getmaxx DIV 2,80,'You have died...');
+	centerwrite(center,80,'You have died...');
 	setfont('gothic.ttf',10);
 	setcolor(lightblue);
-    centerwrite(getmaxx DIV 2 + 5,225,'Game Over');
+    centerwrite(center + 5,225,'Game Over');
 	setcolor(white);
-    centerwrite(getmaxx DIV 2,220,'Game Over');
+    centerwrite(center,220,'Game Over');
 	ch:=readarrowkey;
 	GAMEOVER:=TRUE;
 end;
@@ -869,10 +872,10 @@ procedure combatmenuprompt;
 var ch:char;
 
 begin
-    x:=120;
+    center:=120;
 	y:=440;
 	setfont('default.ttf',4);
-	centerwrite(x,y,'<press space>');
+	centerwrite(center,y,'<press space>');
 	ch:=readarrowkey;
 end;
 {---------------------------------------------------------------------------}
@@ -901,9 +904,9 @@ begin
 	rectangle(420,300,600,460);
 	setcolor(lightcyan);
 	calcstats(player);
-	x:=510;
+	center:=510;
 	y:=300;
-	centerwrite(x,y,player.name);
+	centerwrite(center,y,player.name);
 	graphwriteln(x,y,'');
 	graphwriteln(x,y,'');
 	x:=440;
@@ -1015,6 +1018,7 @@ var
 	hitroll   :    integer;
 
 begin
+    center:=120;
 	clearcombatmenu;
 	setfont('default.ttf',4);
 	y:=300;
@@ -1026,8 +1030,7 @@ begin
 	if ((hitroll>=(player.thac0-ac))and(hitroll>1))or(hitroll=20) then
 	     begin
 	          graphwriteln(x,y,'');
-              x:=120;
-	          centerwrite(x,y,'You hit!');
+	          centerwrite(center,y,'You hit!');
 	          graphwriteln(x,y,'');
 	          graphwriteln(x,y,'');
 	          dmg:=roll(player.damage);
@@ -1041,26 +1044,20 @@ begin
 	               dmg:=(dmg DIV 2)+1;
 	          str(dmg,s);
 	          s:='('+s+')';
-	          x:=120;
-	          centerwrite(x,y,s);
+	          centerwrite(center,y,s);
               graphwriteln(x,y,'');
 	          if (dmg>themonster.endurance) then
 	               themonster.endurance:=0
 	          else
 	               themonster.endurance:=themonster.endurance-dmg;
 	          if (themonster.endurance=0) then
-	               begin
-	                    x:=120;
-	                    centerwrite(x,y,'KILLED');
-                        graphwriteln(x,y,'');
-	               end;
+	              centerwrite(center,y,'KILLED');
 	     end
 	else
 	     begin
 	          graphwriteln(x,y,'');
 	          graphwriteln(x,y,'');
-              x:=120;
-	          centerwrite(x,y,'You missed');
+	          centerwrite(center,y,'You missed');
 	     end;
 end;
 {---------------------------------------------------------------------------}
@@ -1079,10 +1076,11 @@ procedure combatuse(var player:character_t;itemnum:integer;
 	               var playereffect:effectrecord);
 
 begin
+    center:=120;
 	y:=360;
 	if (not (player.item[itemnum] in [redpotion,bluepotion,greenpotion])) then
 	   begin
-	      graphwriteln(x,y,'        Not usable.');
+	      centerwrite(center,y,'Not usable.');
 	   end;
 	if (player.item[itemnum] in [redpotion,greenpotion,bluepotion]) then
        case player.item[itemnum] of
@@ -1517,22 +1515,22 @@ var
 	ch             :    char;
 
 begin
-
+    center:=120;
 	setfont('default.ttf',4);
 	done:=false;
 	repeat
 	     clearcombatmenu;
 	     y:=300;
 	     graphwriteln(x,y,'');
-	     centerwrite(120,y,'(A)ttack');
+	     centerwrite(center,y,'(A)ttack');
 	     graphwriteln(x,y,'');
 	     graphwriteln(x,y,'');
-	     centerwrite(120,y,'(U)se an item');
+	     centerwrite(center,y,'(U)se an item');
 	     if (ring in player.stages) then
 	          begin
 	               graphwriteln(x,y,'');
 	               graphwriteln(x,y,'');
-	               centerwrite(120,y,'(C)ast a spell');
+	               centerwrite(center,y,'(C)ast a spell');
 	               repeat
 	                     ans:=readarrowkey;
 	               until (ans in ['a','A','u','U','c','C']);
@@ -1554,10 +1552,6 @@ begin
          setfont('default.ttf',3);
 	     if (action=attack) then
 	          begin
-                {
-	               centerwrite(120,y,'ATTACK');
-	               graphwriteln(x,y,'');
-                }
 	               for count:=1 to nummonsters do
 	                    begin
 	                         str(count,tempstring);
@@ -1579,10 +1573,6 @@ begin
 	          end;
 	     if (action=use) then
 	          begin
-                {
-	               centerwrite(120,y,'USE ITEM');
-	               graphwriteln(x,y,'');
-                }
 	               for count:=1 to player.numitems do
 	                    begin
 	                         if (not(player.item[count] in [redpotion,greenpotion,bluepotion])) then
@@ -1619,10 +1609,6 @@ begin
 	          end;
 	     if (action=cast) then
 	          begin
-                {
-	               centerwrite(120,y,'CAST SPELL');
-	               graphwriteln(x,y,'');
-                }
 	               for count:=1 to player.numspells do
 	               begin
 	                    if (player.spell[count] in [callwild,shatter]) then
@@ -1647,8 +1633,9 @@ begin
 	                    begin
 	                         clearcombatmenu;
 	                         y:=340;
-	                         graphwriteln(x,y,'       You''re out of');
-	                         graphwriteln(x,y,'           magic.');
+	                         centerwrite(center,y,'You''re out of');
+                             graphwriteln(x,y,'');
+	                         centerwrite(center,y,'magic.');
 	                         done:=false;
 	                    end;
 	               if done then
@@ -1707,11 +1694,10 @@ var
 	hitroll   :    integer;
 
 begin
-	setfont('default.ttf',1);
+	setfont('default.ttf',4);
 	ac:=player.armorclass;
 	if (playereffect.glacier) and (ac>4) then
 	     ac:=4;
-	y:=360;
 	if (nummonsters>1) then
 	     begin
 	          str(monsternum,tempstring);
@@ -1719,21 +1705,22 @@ begin
 	     end
 	else
 	     tempstring:=themonster.name;
-	x:=120-(textwidth(tempstring) DIV 2);
-	graphwriteln(x,y,tempstring);
+    center:=120;
+	y:=360;
+	centerwrite(center,y,tempstring);
+    graphwriteln(x,y,'');
 	hitroll:=roll('1d20');
 	if ((roll('1d20')>=(themonster.thac0-ac))and(hitroll>1))or(hitroll=20) then
 	     begin
-	          tempstring:=themonster.attacktype + ' YOU!';
-	          x:=120-(textwidth(tempstring) DIV 2);
-	          graphwriteln(x,y,tempstring);
+	          centerwrite(center,y,themonster.attacktype + ' YOU!');
+              graphwriteln(x,y,'');
 	          dmg:=roll(themonster.damage);
 	          if (dmg<1) then
 	               dmg:=1;
 	          str(dmg,tempstring);
 	          tempstring:='('+tempstring+')';
-	          x:=120-(textwidth(tempstring) DIV 2);
-	          graphwriteln(x,y,tempstring);
+	          centerwrite(center,y,tempstring);
+              graphwriteln(x,y,'');
 	          if (dmg>player.endurance) then
 	               player.endurance:=0
 	          else
@@ -1741,16 +1728,13 @@ begin
 	          if (player.endurance=0) then
 	               begin
 	                    graphwriteln(x,y,'');
-	                    x:=120-(textwidth('KILLED') DIV 2);
-	                    graphwriteln(x,y,'KILLED');
+	                    centerwrite(center,y,'KILLED');
 	               end;
 	     end
 	else
 	     begin
 	          graphwriteln(x,y,'');
-	          tempstring:='misses';
-	          x:=120-(textwidth(tempstring) DIV 2);
-	          graphwriteln(x,y,tempstring);
+	          centerwrite(center,y,'misses');
 	     end;
 
 end;
@@ -1772,7 +1756,7 @@ var
 	saveroll       :    integer;
 
 begin
-	setfont('default.ttf',1);
+	setfont('default.ttf',4);
 	y:=340;
 	if (nummonsters>1) then
 	     begin
@@ -2183,9 +2167,9 @@ begin
 	     calcstats(player);
 	     combatscreen(player,nummonsters,monster);
 	     setcolor(lightcyan);
-         x:=120;
+         center:=120;
 	     y:=360;
-	     centerwrite(x,y,'(F)ight or (R)un ');
+	     centerwrite(center,y,'(F)ight or (R)un ');
 	     repeat
 	          ch:=readarrowkey;
 	     until (ch in ['f','F','r','R']);
@@ -2293,7 +2277,6 @@ var
 
 	s1          :   string;
 	s2          :   string;
-    center      :   integer;
 
 begin
 	clearstats;
@@ -2370,9 +2353,10 @@ begin
 	homemessage(x,y);
 	setfont('default.ttf',6);
 	setcolor(black);
-	centerwrite(getmaxx DIV 2,y,'Use arrow keys or keypad to move');
+    center:=getmaxx DIV 2;
+	centerwrite(center,y,'Use arrow keys or keypad to move');
 	graphwriteln(x,y,'');
-	centerwrite(getmaxx DIV 2,y,'Press <SPACE> for options');
+	centerwrite(center,y,'Press <SPACE> for options');
 end;
 
 {Town Procedures and functions}
@@ -2390,7 +2374,8 @@ begin
 	homecursor(x,y);
     setcolor(white);
     setfont('gothic.ttf',14);
-    centerwrite(getmaxx DIV 2,y,'Save Game');
+    center:=getmaxx DIV 2;
+    centerwrite(center,y,'Save Game');
     graphwriteln(x,y,'');
 	setcolor(lightgray);
 	setfont('default.ttf',6);
@@ -2443,11 +2428,12 @@ var
 begin
 	setcolor(black);
     bar(0,400,getmaxx,getmaxy);
+    center:=getmaxx DIV 2;
 	with player do
 	     if (numitems=itemmax) then
 	          begin
 	               setcolor(lightgray);
-	               centerwrite(getmaxx DIV 2,420,'Sorry, but you don''t have room in your pack!');
+	               centerwrite(center,420,'Sorry, but you don''t have room in your pack!');
 	               setfont('default.ttf',4);
 	               prompt;
 	          end
@@ -2625,21 +2611,19 @@ begin
 	     cleardevice;
 	     setfont('gothic.ttf',12);
 	     homecursor(x,y);
-         x:=getmaxx DIV 2;
+         center:=getmaxx DIV 2;
 	     setcolor(darkgray);
-	     centerwrite(x+3,y+3,'Ye Olde Equipment Shop');
+	     centerwrite(center+3,y+3,'Ye Olde Equipment Shop');
 	     setcolor(lightgray);
-	     centerwrite(x,y,'Ye Olde Equipment Shop');
+	     centerwrite(center,y,'Ye Olde Equipment Shop');
 	     graphwriteln(x,y,'');
 	     setfont('default.ttf',6);
 	     y:=420;
-         x:=getmaxx DIV 2;
-	     centerwrite(x,y,'(B)uy, (S)ell, or (E)xit');
+	     centerwrite(center,y,'(B)uy, (S)ell, or (E)xit');
 	     str(player.coins,tempstring);
 	     setfont('default.ttf',4);
 	     setcolor(white);
-         x:=getmaxx DIV 2;
-	     centerwrite(x,400,('You have ' + tempstring + ' coins'));
+	     centerwrite(center,400,('You have ' + tempstring + ' coins'));
 
 	     drawpic(150,100,'sword.ln1');
 		 drawpic(150,200,'shield.ln1');
@@ -2756,11 +2740,12 @@ var
 begin
 	setcolor(black);
     bar(0,400,getmaxx,getmaxy);
+    center:=getmaxx DIV 2;
 	with player do
 	     if (numitems=itemmax) then
 	          begin
 	            setcolor(lightgray);
-	               centerwrite(getmaxx DIV 2,420,'Sorry, but you don''t have room in your pack!');
+	               centerwrite(center,420,'Sorry, but you don''t have room in your pack!');
 	               setfont('default.ttf',4);
 	               prompt;
 	          end
@@ -2826,7 +2811,7 @@ begin
 	                                        setcolor(black);
 	                                        bar(0,400,getmaxx,getmaxy);
                                             setcolor(lightgray);
-	                                        centerwrite(getmaxx DIV 2,420,'You already have one.');
+	                                        centerwrite(center,420,'You already have one.');
 	                                        setfont('default.ttf',4);
 	                                        prompt;
 	                                   end
@@ -2865,15 +2850,15 @@ begin
 	setcolor(black);
     bar(0,400,getmaxx,getmaxy);
 	setcolor(white);
+    center:=getmaxx DIV 2;
 	with player do
 	     if (numspells=spellmax) or not(ring in stages) then
 	          begin
 	               setcolor(lightgray);
-                   x:=getmaxx DIV 2;
 	               if (ring in stages) then
-	                    centerwrite(x,420,'Sorry, you can''t learn any more spells.')
+	                    centerwrite(center,420,'Sorry, you can''t learn any more spells.')
 	               else
-	                    centerwrite(x,420,'You need a ring to store your spells.');
+	                    centerwrite(center,420,'You need a ring to store your spells.');
 	               setfont('default.ttf',4);
 	               prompt;
 	          end
@@ -2939,7 +2924,7 @@ begin
 	                              begin
 	                                   setcolor(lightgreen);
 	                                   setfont('default.ttf',10);
-	                                   centerwrite(getmaxx DIV 2,200,'You already know that!');
+	                                   centerwrite(center,200,'You already know that!');
 	                                   setfont('default.ttf',4);
 	                                   prompt;
 	                              end
@@ -2966,23 +2951,23 @@ var
 	ans            :    char;
 
 begin
+    center:=getmaxx DIV 2;
 	repeat
 	     cleardevice;
 	     setfont('gothic.ttf',12);
 	     homecursor(x,y);
-         x:=getmaxx DIV 2;
 	     setcolor(magenta);
-	     centerwrite(x+3,y+3,'Magic Shop');
+	     centerwrite(center+3,y+3,'Magic Shop');
 	     setcolor(cyan);
-	     centerwrite(x,y,'Magic Shop');
+	     centerwrite(center,y,'Magic Shop');
          setcolor(lightgray);
 	     setfont('default.ttf',6);
 	     y:=420;
-	     centerwrite(x,y,'(B)uy, (S)ell, (L)earn or (E)xit');
+	     centerwrite(center,y,'(B)uy, (S)ell, (L)earn or (E)xit');
 	     str(player.coins,tempstring);
          setcolor(white);
 	     setfont('default.ttf',4);
-	     centerwrite(x,400,('You have ' + tempstring + ' coins'));
+	     centerwrite(center,400,('You have ' + tempstring + ' coins'));
              drawpic(20,280,'wizard.ln1');
              drawpic(150,100,'potion-b.ln1'); {number based on color}
              drawpic(150,200,'potion-r.ln1');
@@ -3232,11 +3217,11 @@ begin
 	          clearpub;
 	          setfont('default.ttf',8);
 	          setcolor(red);
-              x:=getmaxx DIV 2;
+              center:=getmaxx DIV 2;
 	          case ans of
-	             '1','2','3':centerwrite(x,180,'Hey, that''s not bad.  (Burp)');
-	             '4':centerwrite(x,200,'My, that''s good stuff!');
-	             '5':centerwrite(x,220,'It really burns as it goes down!');
+	             '1','2','3':centerwrite(center,180,'Hey, that''s not bad.  (Burp)');
+	             '4':centerwrite(center,200,'My, that''s good stuff!');
+	             '5':centerwrite(center,220,'It really burns as it goes down!');
 	          end;{case}
 	          coins:=coins - drinkprice;
 	          setfont('default.ttf',4);
@@ -3267,11 +3252,11 @@ begin
 	str(player.coins,tempstring);
 	setfont('default.ttf',4);
 	setcolor(white);
-    x:=getmaxx DIV 2;
-	centerwrite(x,400,('You have ' + tempstring + ' coins'));
+    center:=getmaxx DIV 2;
+	centerwrite(center,400,('You have ' + tempstring + ' coins'));
 	setcolor(lightmagenta);
 	setfont('default.ttf',6);
-	centerwrite(x,420,'Go ahead? (y/n)');
+	centerwrite(center,420,'Go ahead? (y/n)');
 	repeat
 	     ans:=readarrowkey;
 	until (ans in ['y','Y','n','N']);
@@ -3323,11 +3308,11 @@ begin
 	                    end
 	               else
 	                    if (skulldice=3) then
-	                         centerwrite(x,y,'"Watch out!  Almost had to kill ya there."')
+	                         centerwrite(center,y,'"Watch out!  Almost had to kill ya there."')
 	                    else
 	                         if (blackdice=4) then
 	                              begin
-	                              centerwrite(x,y,'"YOU WIN THE GRAND PRIZE!');
+	                              centerwrite(center,y,'"YOU WIN THE GRAND PRIZE!');
                                   graphwriteln(x,y,'');
                                   graphwriteln(x,y,'');
                                   setfont('default.ttf',4);
@@ -3361,7 +3346,7 @@ begin
 	                         else
 	                              if (whitedice=4) then
 	                                   begin
-	                                   centerwrite(x,y,'"You are the proud owner of a Ring of Power."');
+	                                   centerwrite(center,y,'"You are the proud owner of a Ring of Power."');
                                        graphwriteln(x,y,'');
                                        graphwriteln(x,y,'');
                                        setfont('default.ttf',4);
@@ -3389,7 +3374,7 @@ begin
 	                              else
 	                                   if (blackdice=3) then
 	                                        begin
-	                                        centerwrite(x,y,'"Here''s a green potion with your name on it."');
+	                                        centerwrite(center,y,'"Here''s a green potion with your name on it."');
                                             graphwriteln(x,y,'');
                                             graphwriteln(x,y,'');
                                             setfont('default.ttf',4);
@@ -3404,7 +3389,7 @@ begin
 	                                   else
 	                                        if (whitedice=3) then
 	                                            begin
-	                                            centerwrite(x,y,'"You win. Your prize is a blue potion."');
+	                                            centerwrite(center,y,'"You win. Your prize is a blue potion."');
                                                 graphwriteln(x,y,'');
                                                 graphwriteln(x,y,'');
                                                 setfont('default.ttf',4);
@@ -3417,7 +3402,7 @@ begin
 	                                                end;
 	                                            end
 	                                        else
-	                                            centerwrite(x,y,'"Sorry, no prize."');
+	                                            centerwrite(center,y,'"Sorry, no prize."');
 	               setfont('default.ttf',4);
 	               prompt;
 	          end;
@@ -3493,6 +3478,7 @@ begin
 	setcolor(magenta);
 	x:=210;
 	y:=200;
+    center:=getmaxx DIV 2;
 	graphwriteln(x,y,'Bobo the Dwarf is the bouncer here.');
 	x:=210;
 	graphwriteln(x,y,'   "What''s the password?"');
@@ -3520,13 +3506,12 @@ begin
                    drawpic(240,140,'roland.ln1');
 	               setfont('default.ttf',6);
 	               setcolor(lightmagenta);
-                   x:=getmaxx DIV 2;
-	               centerwrite(x,280,'"So, what''ll it be," asks Roland McDoland');
-	               centerwrite(x,420,'(B)uy, (P)lay, (T)ip or (E)xit');
+	               centerwrite(center,280,'"So, what''ll it be," asks Roland McDoland');
+	               centerwrite(center,420,'(B)uy, (P)lay, (T)ip or (E)xit');
 	               str(player.coins,tempstring);
 	               setfont('default.ttf',4);
 	               setcolor(white);
-	               centerwrite(x,400,('You have ' + tempstring + ' coins'));
+	               centerwrite(center,400,('You have ' + tempstring + ' coins'));
 	               repeat
 	                    ans:=readarrowkey;
 	               until (ans in ['e','E','b','B','p','P','t','T','*']);
@@ -3559,22 +3544,22 @@ begin
 	cleardevice;
 	setfont('gothic.ttf',12);
 	homecursor(x,y);
-    x:=getmaxx DIV 2;
+    center:=getmaxx DIV 2;
 	setcolor(darkgray);
-	centerwrite(x+3,y+3,'The Eagle Talon Inn');
+	centerwrite(center+3,y+3,'The Eagle Talon Inn');
 	setcolor(cyan);
-	centerwrite(x,y,'The Eagle Talon Inn');
+	centerwrite(center,y,'The Eagle Talon Inn');
     drawpic(420,120,'innkeep.ln1');
 	setfont('default.ttf',6);
 	setcolor(lightblue);
 	str(innprice,tempstring);
 	outtextxy(10,160,'"We charge '+ tempstring + ' coins a night."');
 	setcolor(lightcyan);
-	centerwrite(x,420,'Do you stay the night? (y/n)');
+	centerwrite(center,420,'Do you stay the night? (y/n)');
 	str(player.coins,tempstring);
 	setfont('default.ttf',4);
 	setcolor(white);
-	centerwrite(x,400,'You have ' + tempstring + ' coins');
+	centerwrite(center,400,'You have ' + tempstring + ' coins');
 	repeat
 	     ans:=readarrowkey;
 	until (ans in ['n','N','y','Y']);
@@ -3591,10 +3576,10 @@ begin
                         setfont('default.ttf',6);
 	                    setcolor(yellow);
 	                    y:=200;
-	                    centerwrite(x,y,'Zzzzzzzz....');
+	                    centerwrite(center,y,'Zzzzzzzz....');
                         y:=y+30;
 	                    setcolor(cyan);
-	                    centerwrite(x,y,'You sleep the night and gain a little health.');
+	                    centerwrite(center,y,'You sleep the night and gain a little health.');
 	                    coins:=coins - innprice;
 	                    endurance:=endurance + roll('1d4');
 	                    if(endurance>endurancemax)then
@@ -3623,9 +3608,9 @@ var
 begin
 	setcolor(c2);
 	setfont('default.ttf',12);
-	x:=10;
 	y:=40;
-	centerwrite(getmaxx DIV 2,y,title);
+    center:=getmaxx DIV 2;
+	centerwrite(center,y,title);
 	setfont('default.ttf',8);
     graphwriteln(x,y,'');
 	graphwriteln(x,y,'');
@@ -3641,7 +3626,7 @@ begin
             graphwriteln(x,y,'');
 	setcolor(white);
     setfont('default.ttf',4);
-	centerwrite(getmaxx DIV 2,y,'Press any other key to go back to town');
+	centerwrite(center,y,'Press any other key to go back to town');
 end;
 
 {---------------------------------------------------------------------------}
@@ -3691,13 +3676,14 @@ begin
 	          player.stages:=player.stages + [endgame];
 	     end;
 	leavetown:=false;
+    center:=getmaxx DIV 2;
 	repeat
 	     cleardevice;
          drawpic(45,45,'thetown.ln1');
 	     setfont('default.ttf',4);
 	     setcolor(white);
-	     centerwrite(getmaxx DIV 2,400,'Choose a door (1-4) or');
-	     centerwrite(getmaxx DIV 2,425,'press <SPACE> for other options');
+	     centerwrite(center,400,'Choose a door (1-4) or');
+	     centerwrite(center,425,'press <SPACE> for other options');
 	     repeat
 	          ans:=readarrowkey;
 	     until (ans in ['1'..'4',' ']);
@@ -3907,7 +3893,6 @@ var
 	tempstring     :    string;
 	drinkprice     :    integer;
 	ans            :    char;
-    center          :   integer;
 
 begin
 	y:=175;
@@ -4603,6 +4588,7 @@ var
 begin
 	x:=10;
 	y:=175;
+    center:=getmaxx DIV 2;
 	setcolor(red);
 	graphwriteln(x,y,'You walk over to one of Roland''s Roving Jesters who is clad in');
 	graphwriteln(x,y,'red and yellow.  He guardes a barred door.');
@@ -4659,10 +4645,9 @@ begin
 	                         graphwriteln(x,y,'You spin the wheel...');
 	                         prompt;
 	                         clearesi;
-	                         x:=getmaxx DIV 2;
 	                         y:=300;
 	                         setcolor(red);
-	                         centerwrite(x,y,'press space to stop the wheel');
+	                         centerwrite(center,y,'press space to stop the wheel');
 	                         x:=165;
 	                         y:=180;
 	                              repeat
@@ -4773,7 +4758,6 @@ procedure elfskullinn(var player:character_t);
 var
 	tempstring  :    string;
 	ans         :    char;
-    center      :   integer;
 
 begin
 	cleardevice;
@@ -4782,6 +4766,7 @@ begin
 	setfont('default.ttf',4);
 	writetext(textfile,175,'039');
 	prompt;
+    center:=getmaxx DIV 2;
 	repeat
 	     clearesi;
 	     homecursor(x,y);
@@ -4802,7 +4787,6 @@ begin
 	     x:=320;
 	     graphwriteln(x,y,' 8) Go over to the jester');
 	     graphwriteln(x,y,'');
-         center:=getmaxx DIV 2;
 	     centerwrite(center,y,'(V)iew your stats');
          graphwriteln(x,y,'');
 	     centerwrite(center,y,'(E)xit the Elf Skull Inn');
@@ -4867,9 +4851,10 @@ begin
 	homemessage(x,y);
 	setfont('default.ttf',6);
 	setcolor(black);
-	centerwrite(getmaxx DIV 2,y,'You encounter');
+    center:=getmaxx DIV 2;
+	centerwrite(center,y,'You encounter');
 	graphwriteln(x,y,'');
-	centerwrite(getmaxx DIV 2,y,'MONSTERS!');
+	centerwrite(center,y,'MONSTERS!');
 	prompt;
 
     rollchart(chartid,nummonsters,monsterid);
@@ -5823,7 +5808,8 @@ begin
 	setfont('default.ttf',6);
 	setcolor(black);
 	graphwriteln(x,y,'');
-	centerwrite(getmaxx DIV 2,y,'The Elf Skull Inn (y/n)');
+    center:=getmaxx DIV 2;
+	centerwrite(center,y,'The Elf Skull Inn (y/n)');
 	repeat
 	     ans:=readarrowkey;
 	until (ans in ['y','Y','n','N']);
@@ -5843,7 +5829,8 @@ begin
 	setfont('default.ttf',6);
 	setcolor(black);
 	graphwriteln(x,y,'');
-	centerwrite(getmaxx DIV 2,y,'Gilantry City (y/n)');
+    center:=getmaxx DIV 2;
+	centerwrite(center,y,'Gilantry City (y/n)');
 	repeat
 	     ans:=readarrowkey;
 	until (ans in ['y','Y','n','N']);
@@ -6131,7 +6118,6 @@ procedure mainmenu;
 var
    ans          :   char;
    ch           :   char;
-   center       :   integer;
 
 begin
     center:=getmaxx DIV 2;
