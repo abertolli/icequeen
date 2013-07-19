@@ -149,7 +149,6 @@ begin
     else
         writeln('Warning:  '+fullpath+' not found');
     textsize:=charsize;
-    if textsize > 24 then textsize:=24;
 end;
 {--------------------------------------------------------------------------}
 function getSDLfontsize     :   word;

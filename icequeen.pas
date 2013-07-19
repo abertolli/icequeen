@@ -773,7 +773,7 @@ begin
 	setcolor(lightgray);
 	setfont('gothic.ttf',12);
 	centerwrite(center,80,'You have died...');
-	setfont('gothic.ttf',10);
+	setfont('gothic.ttf',20);
 	setcolor(lightblue);
     centerwrite(center + 5,225,'Game Over');
 	setcolor(white);
@@ -1706,7 +1706,7 @@ begin
 	else
 	     tempstring:=themonster.name;
     center:=120;
-	y:=360;
+	y:=320;
 	centerwrite(center,y,tempstring);
     graphwriteln(x,y,'');
 	hitroll:=roll('1d20');
@@ -1726,10 +1726,7 @@ begin
 	          else
 	               player.endurance:=player.endurance-dmg;
 	          if (player.endurance=0) then
-	               begin
-	                    graphwriteln(x,y,'');
 	                    centerwrite(center,y,'KILLED');
-	               end;
 	     end
 	else
 	     begin
@@ -2220,7 +2217,6 @@ begin
 	          setcolor(white);
 	          setfont('default.ttf',4);
 	          y:=460;
-	          graphwriteln(x,y,'');
 	          graphwrite(x,y,'You gain:');
 	          str(xppool,tempstring);
 	          tempstring:='  ' + tempstring + ' exp, ';
