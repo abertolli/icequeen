@@ -562,7 +562,7 @@ var
 begin
 	cleardevice;
 	homecursor(x,y);
-	setfont('sanseri.ttf',3);
+	setfont('default.ttf',6);
 	with player do
 	     if (numitems>0) then
 	          begin
@@ -2008,7 +2008,7 @@ var
 
 begin
 	y:=300;
-	setfont('sanseri.ttf',1);
+	setfont('default.ttf',4);
 	setcolor(lightcyan);
 	clearcombatmenu;
 	graphwriteln(x,y,'');
@@ -2218,7 +2218,7 @@ begin
 	          experience:=experience + xppool;
 	          coins:=coins + coinpool;
 	          setcolor(white);
-	          setfont('default.ttf',1);
+	          setfont('default.ttf',4);
 	          y:=460;
 	          graphwriteln(x,y,'');
 	          graphwrite(x,y,'You gain:');
@@ -2658,13 +2658,14 @@ var
 begin
 	cleardevice;
 	homecursor(x,y);
-	setfont('sanseri.ttf',3);
+	setfont('default.ttf',6);
+    center:=getmaxx DIV 2;
 	with player do
 	     if (numitems=0) then
 	          begin
 	               cleardevice;
-	               setfont('sanseri.ttf',5);
-	               outtextxy(150,150,'You have no items');
+	               setfont('default.ttf',8);
+	               centerwrite(center,200,'You have no items');
 	               setfont('default.ttf',4);
 	               prompt;
 	          end;
@@ -2704,7 +2705,7 @@ begin
 	                              begin
 	                                   setcolor(green);
 	                                   cleardevice;
-	                                   setfont('sanseri.ttf',2);
+	                                   setfont('default.ttf',4);
 	                                   case item[tempinteger] of
 	                                        bluepotion     :writetext(textfile,1,'blue');
 	                                        redpotion      :begin
@@ -2993,7 +2994,7 @@ var ch:char;
 begin
 	cleardevice;
 	setcolor(red);
-	setfont('sanseri.ttf',4);
+	setfont('default.ttf',8);
 	outtextxy(1,200,'You must now battle the Great Demon...');
 	prompt;
 	cleardevice;
@@ -3002,7 +3003,7 @@ begin
 	x:=(getmaxx DIV 2) - 60;
 	drawpic(x,300,player.picfile);
 	setcolor(red);
-	setfont('sanseri.ttf',2);
+	setfont('default.ttf',4);
 	x:=(getmaxx DIV 2) - (textwidth('(A)ttack or (R)un') DIV 2);
 	outtextxy(x,240,'(A)ttack or (R)un');
 	repeat
@@ -3022,11 +3023,10 @@ begin
 	     end;
 	ch:=readarrowkey;
 	bar(1,240,640,300);
-	setfont('sanseri.ttf',2);
 	outtextxy(1,240,'The Great Demon decimates you for 9999 points of damage!');
 	ch:=readarrowkey;
 	bar(1,240,640,300);
-	setfont('sanseri.ttf',4);
+	setfont('default.ttf',8);
 	outtextxy(100,240,'Everything starts to go black...');
 	player.endurance:=1;
 end;
@@ -3043,12 +3043,12 @@ var
 begin
 	cleardevice;
 	homecursor(x,y);
-	setfont('sanseri.ttf',3);
+	setfont('default.ttf',6);
 	with player do
 	     if (numspells=0) then
 	          begin
 	               cleardevice;
-	               setfont('sanseri.ttf',5);
+	               setfont('default.ttf',10);
 	               outtextxy(150,150,'You have no spells');
 	               setfont('default.ttf',4);
 	               prompt;
@@ -3082,7 +3082,7 @@ begin
 	               if(charges<1)then
 	                    begin
 	                         setcolor(lightblue);
-	                         setfont('sanseri.ttf',3);
+	                         setfont('default.ttf',6);
 	                         graphwriteln(x,y,'');
 	                         graphwriteln(x,y,'  Your ring is out of power for today.');
 	                         graphwriteln(x,y,'  Sleep and try again tomorrow.');
@@ -3092,11 +3092,11 @@ begin
 	                    begin
 	                         setcolor(green);
 	                         cleardevice;
-	                         setfont('sanseri.ttf',2);
+	                         setfont('default.ttf',4);
 	                         case spell[tempinteger] of
 	                              icestorm,fireblast,icicle
 	                                      :begin
-	                                            setfont('sanseri.ttf',4);
+	                                            setfont('default.ttf',8);
 	                                            outtextxy(120,180,'That''s a battle-time spell');
 	                                            setfont('default.ttf',4);
 	   {equal out the unused charge}            charges:=charges+1;
@@ -3450,7 +3450,7 @@ begin
 	     begin
 	          cleardevice;
 	          setcolor(red);
-	          setfont('triplex.ttf',3);
+	          setfont('default.ttf',6);
 	          homecursor(x,y);
 	          graphwriteln(x,y,'');
 	          graphwriteln(x,y,'');
@@ -3668,7 +3668,7 @@ begin
 	if (not(endgame in player.stages))and(iceq in player.stages) then
 	     begin
 	          cleardevice;
-	          setfont('triplex.ttf',3);
+	          setfont('default.ttf',6);
 	          setcolor(red);
 	          writetext(textfile,1,'081');
 	          prompt;
@@ -4913,7 +4913,7 @@ begin
 	          setcolor(lightmagenta);
 	          x:=10;
 	          y:=300;
-	          setfont('sanseri.ttf',2);
+	          setfont('default.ttf',4);
 	          graphwriteln(x,y,'You come across a locked door.');
 	          graphwriteln(x,y,'(A)ttack it');
 	          graphwriteln(x,y,'(U)se an item');
@@ -5220,7 +5220,7 @@ begin
 	     begin
 	          cleardevice;
 	          setcolor(magenta);
-	          setfont('sanseri.ttf',2);
+	          setfont('default.ttf',4);
 	          writetext(textfile,1,'076');
 	          prompt;
 	          died;
@@ -5235,7 +5235,7 @@ var ch:char;
 begin
 	cleardevice;
 	setcolor(brown);
-	setfont('triplex.ttf',3);
+	setfont('default.ttf',6);
 	homecursor(x,y);
 	if not(msword in player.stages) then
 	     begin
@@ -5254,7 +5254,7 @@ begin
 	                    player.stages:=player.stages + [msword];
 	                    cleardevice;
 	                    setcolor(lightblue);
-	                    setfont('triplex.ttf',3);
+	                    setfont('default.ttf',6);
 	                    homecursor(x,y);
 	                    graphwriteln(x,y,'');
 	                    graphwriteln(x,y,'');
@@ -5316,7 +5316,7 @@ var ch:char;
 begin
 	cleardevice;
 	setcolor(darkgray);
-	setfont('triplex.ttf',3);
+	setfont('default.ttf',6);
 	homecursor(x,y);
 	if not(mshield in player.stages) then
 	     begin
@@ -5335,7 +5335,7 @@ begin
 	                    player.stages:=player.stages + [mshield];
 	                    cleardevice;
 	                    setcolor(lightblue);
-	                    setfont('triplex.ttf',3);
+	                    setfont('default.ttf',6);
 	                    homecursor(x,y);
 	                    graphwriteln(x,y,'');
 	                    graphwriteln(x,y,'');
@@ -5393,7 +5393,7 @@ procedure dungeon_lizard(var player:character_t;var px,py:integer;lastx,lasty:in
 begin
 	cleardevice;
 	setcolor(lightblue);
-	setfont('triplex.ttf',3);
+	setfont('default.ttf',6);
 	homecursor(x,y);
 	if not(lizard in player.stages) then
 	     begin
@@ -5437,7 +5437,7 @@ procedure castle_knight(var player:character_t;var px,py:integer;lastx,lasty:int
 begin
 	cleardevice;
 	setcolor(cyan);
-	setfont('triplex.ttf',3);
+	setfont('default.ttf',6);
 	homecursor(x,y);
 	if not(knight in player.stages) then
 	     begin
@@ -5466,7 +5466,7 @@ procedure castle_throne(var player:character_t;var px,py:integer;lastx,lasty:int
 begin
 	cleardevice;
 	setcolor(blue);
-	setfont('triplex.ttf',3);
+	setfont('default.ttf',6);
 	homecursor(x,y);
 	if not(iceq in player.stages) then
 	     begin
@@ -5489,7 +5489,7 @@ begin
 	                    player.stages:=player.stages + [iceq];
 	                    cleardevice;
 	                    setcolor(yellow);
-	                    setfont('triplex.ttf',3);
+	                    setfont('default.ttf',6);
 	                    writetext(textfile,1,'080');
 	                    prompt;
 	               end
@@ -5675,7 +5675,7 @@ var ch:char;
 begin
 	cleardevice;
 	setcolor(red);
-	setfont('triplex.ttf',3);
+	setfont('default.ttf',6);
 	homecursor(x,y);
 	if not(dragon in player.stages) then
 	     begin
@@ -5717,7 +5717,7 @@ begin
 	                              player.stages:=player.stages + [dragon];
 	                              cleardevice;
 	                              setcolor(lightblue);
-	                              setfont('triplex.ttf',3);
+	                              setfont('default.ttf',6);
 	                              homecursor(x,y);
 	                              graphwriteln(x,y,'');
 	                              graphwriteln(x,y,'');
@@ -5781,18 +5781,19 @@ procedure thepassword;
 begin
 	cleardevice;
 	homecursor(x,y);
-	setfont('sanseri.ttf',4);
+	setfont('default.ttf',8);
 	setcolor(lightblue);
 	graphwriteln(x,y,'');
 	graphwriteln(x,y,'');
 	graphwriteln(x,y,'   In the side of the icy rock');
 	graphwriteln(x,y,'mountains you see something written');
 	graphwriteln(x,y,'etched in the stone.  It says:');
-	setfont('triplex.ttf',6);
+	setfont('gothic.ttf',10);
 	graphwriteln(x,y,'');
+    center:=getmaxx DIV 2;
 	repeat
 	    setcolor(roll('1d15'));
-	    outtextxy(x,y,'     crystal shard');
+	    centerwrite(center,y,'crystal shard');
 	until keypressed;
 	prompt;
 end;
@@ -5877,7 +5878,7 @@ begin
         drawpic(120,1,'tcastle.ln1');
 	setcolor(white);
 	message(x,y,'');
-	setfont('sanseri.ttf',2);
+	setfont('default.ttf',4);
 	graphwriteln(x,y,'You approach the ice castle.  A cold wind blows.');
 	if (endgame in player.stages) then
 	     begin
