@@ -3788,6 +3788,9 @@ begin
 	               begin
 	                    clearesi;
 	                    writetext(textfile,175,'050');
+                        prompt;
+                        clearesi;
+	                    writetext(textfile,175,'051');
 	                    repeat
 	                         ans:=readarrowkey;
 	                    until (ans in ['y','Y','n','N']);
@@ -3958,8 +3961,7 @@ begin
 	                         writetext(textfile,200,'061');
 	                    end;
 	             21..80:begin
-	                         {esi_gossip;}
-                            esi_dilvish(player);
+	                        esi_gossip;
 	                    end;
 	             81..90:begin
 	                         graphwriteln(x,y,'Ahab leans over to tell you a secret.');

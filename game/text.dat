@@ -286,50 +286,45 @@ Do you wish to follow?  (y/n)
 ~
 
 ~049
-     You follow him down a hallway with doors along both
-sides.  These are the rooms for rent at the Elf Skull Inn.
-You hear some loud grunting and other noises coming from some
-of the rooms.  The elf enters a door at the very end.
+   You follow him down a hallway with doors along both sides.  These are the
+rooms for rent at the Elf Skull Inn.  You hear some loud grunting and other
+noises coming from some of the rooms.  The elf enters a door at the very end.
 
-    You go up to the door and listen, but hear nothing.  You
-open the door just a little and notice that no one is in the
-room.  However, the rug has been moved to reveal a trap door
-in the floor.
+   You go up to the door and listen, but hear nothing.  You open the door
+just a little and notice that no one is in the room.  However, the rug has
+been moved to reveal a trap door in the floor.
 
-    No sooner have you descended down the trap door when you
-are surprised by the elf and his companions in their little
-hideout.  "What are you doing here?" he demands.
+   No sooner have you descended down the trap door when you are surprised by
+the elf and his companions in their little hideout.  "What are you doing
+here?" he demands.
 
 Do you want to attack or speak to them?  (a/s)
 ~
 
 ~050
-     You explain that you are not here to harm them, only
-want to find out more information about the Ice Queen.  You
-introduce yourself.
+   You explain that you are not here to harm them, only want to find out more
+information about the Ice Queen.  You introduce yourself.
 
-     "My name is Dilvish," the elf tells you.  "And these
-are my friends, Prudence, Spirit, and Marcus."  You greet
-them all individually.  They go back to what they were doing
-as Dilvish talks to you.
+   "My name is Dilvish," the elf tells you.  "And these are my friends,
+Prudence, Spirit, and Marcus."  You greet them all individually.  They go
+back to what they were doing as Dilvish talks to you.
 
-     "I too am trying to defeat the Ice Queen.  I have not
-found a way into the castle yet.  I hope that this will gain
-my seat as the rightful heir to the throne of Gilantry back.
-I married the princess Avena, but since she passed away, the
-Council has done away with the throne."  You get a sense of
-sorrow in Dilvish's voice when he talks about Avena.
+   "I too am trying to defeat the Ice Queen.  I have not found a way into the
+castle yet.  I hope that this will gain my seat as the rightful heir to the
+throne of Gilantry back.  I married the princess Avena, but since she passed
+away, the Council has done away with the throne."  You get a sense of sorrow
+in Dilvish's voice when he talks about Avena.
+~
 
-{prompt}
-     You look around.  This is a simple hideout: one room,
-one entrance, one passage.  A lantern is placed in the center
-of the room.  On one side is Spirit sitting on a stone,
-playing a harp, and Marcus on the floor, deeply mezmorized by
-the lantern's flickering flame.
+~051
+   You look around.  This is a simple hideout: one room, one entrance, one
+passage.  A lantern is placed in the center of the room.  On one side is
+Spirit sitting on a stone, playing a harp, and Marcus on the floor, deeply
+mezmorized by the lantern's flickering flame.
 
-     Dilvish offers to teach you a spell called SHATTER.
-"It allows you to freeze small objects, making them brittle
-so that you can shatter them with a strong blow."
+   Dilvish offers to teach you a spell called SHATTER.  "It allows you to
+freeze small objects, making them brittle so that you can shatter them with
+a single blow."
 
 Do you want to learn SHATTER?  (y/n)
 ~
