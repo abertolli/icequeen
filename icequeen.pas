@@ -221,6 +221,7 @@ begin
 	               repeat
 	                  setcolor(black);
 	                  bar(0,200,300,300);
+                      setcolor(white);
 	                  y:=200;
 	                  graphwriteln(x,y,'Use the arrow keys to assign points');
 	                  graphwrite(x,y,'   Points: ');
@@ -3007,6 +3008,7 @@ begin
 	until (ch in ['a','A','r','R']);
 	setcolor(black);
 	bar(1,240,640,300);
+    setcolor(red);
 	if (ch in ['r','R']) then
 	     begin
 	          x:=(getmaxx DIV 2) - (textwidth('You''re legs won''t move!') DIV 2);
@@ -3166,9 +3168,14 @@ end;
 {---------------------------------------------------------------------------}
 procedure clearpub;
 
+var
+    fgcolor     :   byte;
+
 begin
+    fgcolor:=getcolor;
 	setcolor(black);
 	bar(1,120,640,480);
+    setcolor(fgcolor);
 end;
 {---------------------------------------------------------------------------}
 procedure buydrink(var coins:longint);
@@ -3700,9 +3707,14 @@ end;
 {---------------------------------------------------------------------------}
 procedure clearesi;
 
+var
+    fgcolor     :   byte;
+
 begin
+    fgcolor:=getcolor;
 	setcolor(black);
 	bar(0,175,640,480);
+    setcolor(fgcolor);
 end;
 {---------------------------------------------------------------------------}
 procedure esi_gossip;
@@ -3758,8 +3770,8 @@ begin
 	                    nummonsters:=4;
 	                    combat(player,nummonsters,monster);
 	                    cleardevice;
-                            drawpic(70,10,'esi.ln1');
-	                    setfont('default.ttf',12);
+                        drawpic(70,10,'esi.ln1');
+	                    setfont('default.ttf',4);
 	                    setcolor(green);
 	                    y:=175;
 	                    graphwriteln(x,y,'');
@@ -3776,16 +3788,12 @@ begin
 	               begin
 	                    clearesi;
 	                    writetext(textfile,175,'050');
-	                    prompt;
-	                    clearesi;
-	                    writetext(textfile,175,'051');
 	                    repeat
 	                         ans:=readarrowkey;
 	                    until (ans in ['y','Y','n','N']);
 	                    clearesi;
 	                    y:=175;
-	                    if (ans in ['y','Y']) and
-	                       not((player.numspells=spellmax) or not(ring in player.stages))then
+	                    if (ans in ['y','Y']) and (player.numspells<spellmax) and (ring in player.stages) then
 	                         with player do
 	                              begin
 	                                   graphwriteln(x,y,'You learn SHATTER.');
@@ -3950,7 +3958,8 @@ begin
 	                         writetext(textfile,200,'061');
 	                    end;
 	             21..80:begin
-	                         esi_gossip;
+	                         {esi_gossip;}
+                            esi_dilvish(player);
 	                    end;
 	             81..90:begin
 	                         graphwriteln(x,y,'Ahab leans over to tell you a secret.');
@@ -3964,11 +3973,10 @@ begin
 	                         else
 	                              esi_dilvish(player);
 	                    end;
-	            96..100:begin
-	                         esi_encounter(player);
-	                    end;
+	            else
+	                    esi_encounter(player);
 	           end;{case}
-	          setfont('default.ttf',12);
+	          setfont('default.ttf',4);
 	          prompt;
 	     end;
 
@@ -5031,7 +5039,7 @@ procedure cave_staircase;
 begin
 	clearmessage;
 	homemessage(x,y);
-	setfont('default.ttf',4);
+	setfont('default.ttf',6);
 	setcolor(black);
 	message(x,y,'    You are on a staircase that');
 	message(x,y,'      descends to the north.');
@@ -5042,7 +5050,7 @@ procedure secret_passage;
 begin
 	clearmessage;
 	homemessage(x,y);
-	setfont('default.ttf',4);
+	setfont('default.ttf',6);
 	setcolor(black);
 	message(x,y,'');
 	message(x,y,'   You are in a secret passage.');
@@ -5053,7 +5061,7 @@ procedure castle_courtyard;
 begin
 	clearmessage;
 	homemessage(x,y);
-	setfont('default.ttf',4);
+	setfont('default.ttf',6);
 	setcolor(black);
 	message(x,y,'');
 	message(x,y,' You are in the castle courtyard.');
@@ -5064,7 +5072,7 @@ procedure castle_guest;
 begin
 	clearmessage;
 	homemessage(x,y);
-	setfont('default.ttf',4);
+	setfont('default.ttf',6);
 	setcolor(black);
 	message(x,y,'');
 	message(x,y,' This appears to be a guest room.');
@@ -5075,7 +5083,7 @@ procedure castle_banquet;
 begin
 	clearmessage;
 	homemessage(x,y);
-	setfont('default.ttf',4);
+	setfont('default.ttf',6);
 	setcolor(black);
 	message(x,y,'');
 	message(x,y,'   This is a vast banquet hall.');
@@ -5086,7 +5094,7 @@ procedure castle_master;
 begin
 	clearmessage;
 	homemessage(x,y);
-	setfont('default.ttf',4);
+	setfont('default.ttf',6);
 	setcolor(black);
 	message(x,y,'');
 	message(x,y,'       The Queen''s bedroom.');
@@ -5097,7 +5105,7 @@ procedure castle_kitchen;
 begin
 	clearmessage;
 	homemessage(x,y);
-	setfont('default.ttf',4);
+	setfont('default.ttf',6);
 	setcolor(black);
 	message(x,y,'');
 	message(x,y,'        An empty kitchen.');
@@ -5112,7 +5120,7 @@ begin
 	     begin
 	          clearmessage;
 	          homemessage(x,y);
-	          setfont('default.ttf',4);
+	          setfont('default.ttf',6);
 	          setcolor(black);
 	          message(x,y,'          You find a key.');
 	          message(x,y,'');
@@ -5135,7 +5143,7 @@ begin
 	     begin
 	          clearmessage;
 	          homemessage(x,y);
-	          setfont('default.ttf',4);
+	          setfont('default.ttf',6);
 	          setcolor(black);
 	          message(x,y,'     You find some treasure.');
 	          message(x,y,'');
@@ -5171,7 +5179,7 @@ begin
 	dmg:=roll('2d6');
 	clearmessage;
 	homemessage(x,y);
-	setfont('default.ttf',4);
+	setfont('default.ttf',6);
 	setcolor(black);
 	if (roll('1d20')>player.savingthrow) then
 	     begin
@@ -5204,7 +5212,7 @@ var ans:char;
 begin
 	clearmessage;
 	homemessage(x,y);
-	setfont('default.ttf',4);
+	setfont('default.ttf',6);
 	setcolor(black);
 	message(x,y,'You find a massive book on a podium.');
 	message(x,y,'');
@@ -5418,7 +5426,7 @@ procedure castle_barracks;
 begin
 	clearmessage;
 	homemessage(x,y);
-	setfont('default.ttf',4);
+	setfont('default.ttf',6);
 	setcolor(black);
 	message(x,y,'');
 	message(x,y,'You find yourself in the barracks.');
@@ -5509,7 +5517,7 @@ procedure stair_up;
 begin
 	clearmessage;
 	homemessage(x,y);
-	setfont('default.ttf',4);
+	setfont('default.ttf',6);
 	setcolor(black);
 	message(x,y,'');
 	message(x,y,'  There are stairs going up here.');
@@ -5617,7 +5625,7 @@ begin
 begin
 	clearmessage;
 	homemessage(x,y);
-	setfont('default.ttf',4);
+	setfont('default.ttf',6);
 	setcolor(black);
 	message(x,y,' There are stairs going down here.');
 	message(x,y,'');
@@ -5646,7 +5654,7 @@ end;
 	                    begin
 	                         clearmessage;
 	                         homemessage(x,y);
-	                         setfont('default.ttf',4);
+	                         setfont('default.ttf',6);
 	                         setcolor(black);
 	                         message(x,y,'');
 	                         message(x,y,'            Exit? (y/n)');
@@ -5806,7 +5814,7 @@ begin
 	setcolor(black);
 	graphwriteln(x,y,'');
     center:=getmaxx DIV 2;
-	centerwrite(center,y,'The Elf Skull Inn (y/n)');
+	centerwrite(center,y,'Enter the Elf Skull Inn (y/n)');
 	repeat
 	     ans:=readarrowkey;
 	until (ans in ['y','Y','n','N']);
@@ -5827,7 +5835,7 @@ begin
 	setcolor(black);
 	graphwriteln(x,y,'');
     center:=getmaxx DIV 2;
-	centerwrite(center,y,'Gilantry City (y/n)');
+	centerwrite(center,y,'Enter Gilantry City (y/n)');
 	repeat
 	     ans:=readarrowkey;
 	until (ans in ['y','Y','n','N']);
@@ -5844,10 +5852,10 @@ var ans:char;
 begin
 	clearmessage;
 	homemessage(x,y);
-	setfont('default.ttf',4);
+	setfont('default.ttf',6);
 	setcolor(black);
 	message(x,y,'');
-	message(x,y,'       A Cave -- enter? (y/n)');
+	message(x,y,'       Enter Cave (y/n)');
 	repeat
 	     ans:=readarrowkey;
 	until (ans in ['y','Y','n','N']);

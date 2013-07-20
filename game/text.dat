@@ -239,42 +239,42 @@ Roland's Roving Jesters, dressed in red and yellow.
 ~
 
 ~040
-''I hear Baltar will be fighting Damian in The Cage tonight.
-It should be a great fight!''
+"I hear Baltar will be fighting Damian in The Cage tonight.
+It should be a great fight!"
 ~
 
 ~041
-''The King of Couringlane has found a new wife.  He's marrying
-a princess of the surrounding area.''
+"The King of Couringlane has found a new wife.  He's marrying
+a princess of the surrounding area."
 ~
 
 ~042
-''I saw an enormous bird flying over near the Ice Queen's castle
-yesterday!  It was as big as an elephant!''
+"I saw an enormous bird flying over near the Ice Queen's castle
+yesterday!  It was as big as an elephant!"
 ~
 
 ~043
-''I think Airk the Red could kick Pa-Kur's butt any day.  I'll
-put 100 gold coins on that wager!''
+"I think Airk the Red could kick Pa-Kur's butt any day.  I'll
+put 100 gold coins on that wager!"
 ~
 
 ~044
-''Drolen told me this damned cold is really the work of the
-wizards in Gilantry.''
+"Drolen told me this damned cold is really the work of the
+wizards in Gilantry."
 ~
 
 ~045
-''Some people from the south have come to destroy the Ice Queen.
-Last I heard they were in Gilantry on their way up here.''
+"Some people from the south have come to destroy the Ice Queen.
+Last I heard they were in Gilantry on their way up here."
 ~
 
 ~046
-''Vernan was killed in his room last night by an undead creature.''
+"Vernan was killed in his room last night by an undead creature."
 ~
 
 ~047
-''That Gorgon's Milk is some fine liquer!  I'm going to have me
-another.''
+"That Gorgon's Milk is some fine liquer!  I'm going to have me
+another."
 ~
 
 ~048
@@ -298,7 +298,7 @@ in the floor.
 
     No sooner have you descended down the trap door when you
 are surprised by the elf and his companions in their little
-hideout.  ''What are you doing here?'' he demands.
+hideout.  "What are you doing here?" he demands.
 
 Do you want to attack or speak to them?  (a/s)
 ~
@@ -308,20 +308,19 @@ Do you want to attack or speak to them?  (a/s)
 want to find out more information about the Ice Queen.  You
 introduce yourself.
 
-     ''My name is Dilvish,'' the elf tells you.  ''And these
-are my friends, Prudence, Spirit, and Marcus.''  You greet
+     "My name is Dilvish," the elf tells you.  "And these
+are my friends, Prudence, Spirit, and Marcus."  You greet
 them all individually.  They go back to what they were doing
 as Dilvish talks to you.
 
-     ''I too am trying to defeat the Ice Queen.  I have not
+     "I too am trying to defeat the Ice Queen.  I have not
 found a way into the castle yet.  I hope that this will gain
 my seat as the rightful heir to the throne of Gilantry back.
 I married the princess Avena, but since she passed away, the
-Council has done away with the throne.''  You get a sense of
+Council has done away with the throne."  You get a sense of
 sorrow in Dilvish's voice when he talks about Avena.
-~
 
-~051
+{prompt}
      You look around.  This is a simple hideout: one room,
 one entrance, one passage.  A lantern is placed in the center
 of the room.  On one side is Spirit sitting on a stone,
@@ -329,15 +328,15 @@ playing a harp, and Marcus on the floor, deeply mezmorized by
 the lantern's flickering flame.
 
      Dilvish offers to teach you a spell called SHATTER.
-''It allows you to freeze small objects, making them brittle
-so that you can shatter them with a strong blow.''
+"It allows you to freeze small objects, making them brittle
+so that you can shatter them with a strong blow."
 
 Do you want to learn SHATTER?  (y/n)
 ~
 
 ~052
-A fighter in dark armor bumps into you.  ''Hey watch where
-you're going.''  Suddenly the people around you get silent.
+A fighter in dark armor bumps into you.  "Hey watch where
+you're going."  Suddenly the people around you get silent.
 You hear muttering.
 
 Do you apologize and offer him a drink?  (y/n)
@@ -349,15 +348,15 @@ You meet a woman named Elyra.  She is incredibly beautiful
 with deep brown eyes and long hair as black as a moonless
 night.  You buy her a drink.
 
-''I miss Baltar,'' she says.
+"I miss Baltar," she says.
 ~
 
 ~054
 You see someone fingering a copper coin inlaid with
 different colored gems.  He tosses the coin around a bit.
 
-You approach him asking about the coin.  ''It's none of
-your business,'' he answers.  However, he buys you a
+You approach him asking about the coin.  "It's none of
+your business," he answers.  However, he buys you a
 drink.  You find out his name is Drolen, and you sit and
 chat with him.  He has stolen many a goods in the elven
 city of Elfhome.
@@ -375,11 +374,11 @@ You encounter a dark clothed, disheveled elf who looks like
 he's been spending just a little too much time with nature.
 
 As you approach him, he tells you to halt.  You do so.
-''Now, drop all your items,'' he commands.  Obviously a
+"Now, drop all your items," he commands.  Obviously a
 nutcase.
 
-Ahab the barkeep comes over, ''Don't be startin' any trouble
-Blackthorn, or ya know what'll happen.''  He points over to
+Ahab the barkeep comes over, "Don't be startin' any trouble
+Blackthorn, or ya know what'll happen."  He points over to
 a hulking, half naked barbarian named Warf.  Warf grunts.
 
 Blackthorn leaves you alone.
@@ -395,24 +394,24 @@ she didn't steal anything.
 ~
 
 ~058
-You offer him a drink and he gladly accepts.  ''Thanks man,
-my name is Baltar.''  He gives you a hardy handshake and
+You offer him a drink and he gladly accepts.  "Thanks man,
+my name is Baltar."  He gives you a hardy handshake and
 goes off to fight in The Cage.
 ~
 
 ~059
-He pushes you.  ''Do you even know who I am?'' he asks.
-You hear the crowd around you beginning to chant, ''fight!
-fight! fight!''
+He pushes you.  "Do you even know who I am?" he asks.
+You hear the crowd around you beginning to chant, "fight!
+fight! fight!"
 
-''Baltar challenges you to fight to the death in The
-Cage!'' shouts the fighter.
+"Baltar challenges you to fight to the death in The
+Cage!" shouts the fighter.
 
 Do you accept the challenge?  (y/n)
 ~
 
 ~060
-''Hahaha, you coward,'' laughs Baltar.  In fact, the whole
+"Hahaha, you coward," laughs Baltar.  In fact, the whole
 bar laughs at you.
 ~
 
@@ -436,10 +435,10 @@ yourself and your items.
 The creature grows wings, becoming angelic and demonic at
 once.  She is seductive but you stand your ground.  You
 have heard of these creatures in stories:
-     ''My face became like that of the nightitself and my
+     "My face became like that of the nightitself and my
 limbs grew into those of seductive beasts.  ...With nary a
 groan, I pierced his flesh with my talon-nails, gorging
-on the gouts of blood that spurted from his wounds.''
+on the gouts of blood that spurted from his wounds."
 
 It attacks!
 ~
@@ -457,7 +456,7 @@ Do you want to challenge the winner?  (y/n)
 You courageously walk over toward a group of thieves who
 are practicing their knife-throwing skills at a target on
 the wall.  They eye you suspiciously as you approach their
-corner of the Elf Skull Inn.  ''Care to try?'' asks one
+corner of the Elf Skull Inn.  "Care to try?" asks one
 with a grin.
 
 Do you accept the challenge?  (y/n)
