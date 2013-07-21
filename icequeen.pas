@@ -41,19 +41,6 @@ var
 	player		: character_t;
 
 
-{--------------------------------------------------------------------------}
-function CAPITALIZE(capstring:string):string;
-
-{CAPITALIZE is returned as capstring in all caps.}
-
-var
-   loop        : word;
-
-begin
-     for loop:=1 to length(capstring) do
-          capstring[loop]:=upcase(capstring[loop]);
-     capitalize:=capstring;
-end;
 
 {---------------------------------------------------------------------------}
 procedure drawmaptile(xpos,ypos:integer;themap:matrix);

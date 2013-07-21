@@ -105,16 +105,28 @@ type
 	end;
 
 
-function    itempicfile(theitem:item):string;
-function    spellstring(thespell:spell):string;
-function    itemstring(theitem:item):string;
-function    exist(dosname:string):boolean;
-procedure   readchart(chartfile,chartid:string;var chart:chartrecord);
-procedure   writegame(filename:string;player:character_t);
-procedure   readgame(filename:string;var player:character_t);
+function capitalize(capstring:string):string;
+function itempicfile(theitem:item):string;
+function spellstring(thespell:spell):string;
+function itemstring(theitem:item):string;
+function exist(dosname:string):boolean;
+procedure readchart(chartfile,chartid:string;var chart:chartrecord);
+procedure writegame(filename:string;player:character_t);
+procedure readgame(filename:string;var player:character_t);
 
 IMPLEMENTATION
 
+{--------------------------------------------------------------------------}
+function capitalize(capstring:string):string;
+
+var
+   loop        : word;
+
+begin
+     for loop:=1 to length(capstring) do
+          capstring[loop]:=upcase(capstring[loop]);
+     capitalize:=capstring;
+end;
 {---------------------------------------------------------------------------}
 function itempicfile(theitem:item):string;
 
