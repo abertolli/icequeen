@@ -766,60 +766,13 @@ procedure rollmonsters(var monster:monsterlist;nummonsters:integer;
 
 var
 
-	pasfile        :    text;
-    lineoftext     :    string;
+	loop           :    integer;
 	count          :    integer;
 	tempmonster    :    monsterrecord;
-	loop           :    word;
 
 begin
 
-    {reading monster data should be moved to dataio}
-
-	if not(exist(monsterfile)) then
-    begin
-        writeln('Could not find '+monsterfile);
-	    halt(1);
-    end;
-	assign(pasfile,monsterfile);
-	reset(pasfile);
-
-    lineoftext:='';
-    {Find the data}
-    while not ( (eof(pasfile)) or (pos('~'+monsterid,lineoftext)>0) ) do
-        readln(pasfile,lineoftext);
-
-    if not (pos('~'+monsterid,lineoftext)>0) then
-    begin
-        writeln('Could not find '+monsterid);
-        halt(1);
-    end;
-
-    {Load the data}
-    with tempmonster do
-    begin
-        readln(pasfile,name);
-        readln(pasfile,picfile);
-        readln(pasfile,sex);
-        readln(pasfile,alignment);
-        readln(pasfile,hitdice);
-        readln(pasfile,hpbonus);
-        {endurance}
-        {endurancemax}
-        readln(pasfile,armorclass);
-        readln(pasfile,thac0);
-        readln(pasfile,damage);
-        readln(pasfile,attacktype);
-        readln(pasfile,savingthrow);
-        readln(pasfile,morale);
-        readln(pasfile,xpvalue);
-        readln(pasfile,treasure);
-        {coins}
-        readln(pasfile,numspells);
-        for loop:=1 to numspells do
-             readln(pasfile,spell[loop]);
-    end;
-	close(pasfile);
+    readmonster(monsterfile,monsterid,tempmonster);
 
     {roll stats here}
 	for count:=1 to nummonsters do

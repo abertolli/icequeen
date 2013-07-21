@@ -492,17 +492,19 @@ end;
 {-------------------------------------------------------------------------}
 procedure drawpic(beginx,beginy:integer;dosname:string);
 
+const
+	imagedir	= 'img/';
+
 var
     ext     :   string;
 
 begin
     ext:=copy(dosname,pos('.',dosname)+1,length(dosname));
-    dosname:=imagedir+dosname;
-    if not(exist(dosname)) then
-        writeln('drawpic: '+dosname+' not found')
+    if not(exist(imagedir+dosname)) then
+        writeln('drawpic: '+imagedir+dosname+' not found')
     else
         case ext of
-            'ln1':drawln1(beginx,beginy,dosname);
+            'ln1':drawln1(beginx,beginy,imagedir+dosname);
         else
             writeln('drawpic: unknown file type '+ext);
         end;

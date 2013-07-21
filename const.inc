@@ -18,7 +18,6 @@
 	chartile	= 'chartile.ln1';
 	savedefault	= 'game.sav';
 
-	imagedir	= 'img/';
 	savedir		= 'save/';
 	itemdir		= 'item';
     chartfile   = 'game/charts.dat';

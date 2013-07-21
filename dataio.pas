@@ -113,6 +113,7 @@ function exist(dosname:string):boolean;
 procedure readchart(chartfile,chartid:string;var chart:chartrecord);
 procedure writegame(filename:string;player:character_t);
 procedure readgame(filename:string;var player:character_t);
+procedure readmonster(filename,monsterid:string;var monster:monsterrecord);
 
 IMPLEMENTATION
 
@@ -348,6 +349,63 @@ begin
         end;
     end;
 	close(savefile);
+end;
+{--------------------------------------------------------------------------}
+procedure readmonster(filename,monsterid:string;var monster:monsterrecord);
+
+var
+    f       :   text;
+    s       :   string;
+    loop    :   integer;
+
+begin
+    if not(exist(filename)) then
+    begin
+        writeln('Could not open '+filename);
+        halt(1);
+    end;
+
+    assign(f,filename);
+    reset(f);
+    s:='';
+
+    {search}
+    while not ( (eof(f)) or (pos('~'+monsterid,s)>0) ) do
+        readln(f,s);
+
+    if not (pos('~'+monsterid,s)>0) then
+    begin
+        writeln('Could not find '+monsterid);
+        halt(1);
+    end;
+
+    {load}
+    with monster do
+    begin
+        readln(f,name);
+        readln(f,picfile);
+        readln(f,sex);
+        readln(f,alignment);
+        readln(f,hitdice);
+        readln(f,hpbonus);
+        {endurance}
+        {endurancemax}
+        readln(f,armorclass);
+        readln(f,thac0);
+        readln(f,damage);
+        readln(f,attacktype);
+        readln(f,savingthrow);
+        readln(f,morale);
+        readln(f,xpvalue);
+        readln(f,treasure);
+        {coins}
+        readln(f,numspells);
+        for loop:=1 to numspells do
+             readln(f,spell[loop]);
+    end;
+
+    close(f);
+
 end;
 {--------------------------------------------------------------------------}
 
