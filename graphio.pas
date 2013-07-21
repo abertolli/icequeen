@@ -84,7 +84,8 @@ procedure centerwrite(x,y:integer;s:string);
 procedure graphwrite(var x,y:integer;s:string);
 procedure graphwriteln(var x,y:integer;s:string);
 procedure graphread(var x,y:integer;var s:string);
-procedure drawpicturebyline(beginx,beginy:integer;dosname:string);
+procedure drawln1(beginx,beginy:integer;dosname:string);
+procedure drawpic(beginx,beginy:integer;dosname:string);
 procedure writetext(textfile:string;beginy:integer;textid:string);
 procedure openscreen;
 procedure closescreen;
@@ -432,7 +433,7 @@ begin
      until(ch=#13);
 end;
 {--------------------------------------------------------------------------}
-procedure drawpicturebyline(beginx,beginy:integer;dosname:string);
+procedure drawln1(beginx,beginy:integer;dosname:string);
 
 {dosname            =    name of the file, including extention
 beginx, beginy      =    the coordinates of where the upper left hand corner
@@ -485,9 +486,27 @@ begin
         errormsg:=dosname+' not found';
 
     if (errormsg <> '') then
-        writeln('drawpicturebyline: '+errormsg);
+        writeln('drawln1: '+errormsg);
 end;
 
+{-------------------------------------------------------------------------}
+procedure drawpic(beginx,beginy:integer;dosname:string);
+
+var
+    ext     :   string;
+
+begin
+    ext:=copy(dosname,pos('.',dosname)+1,length(dosname));
+    dosname:=imagedir+dosname;
+    if not(exist(dosname)) then
+        writeln('drawpic: '+dosname+' not found')
+    else
+        case ext of
+            'ln1':drawln1(beginx,beginy,dosname);
+        else
+            writeln('drawpic: unknown file type '+ext);
+        end;
+end;
 {--------------------------------------------------------------------------}
 procedure writetext(textfile:string;beginy:integer;textid:string);
 

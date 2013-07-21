@@ -4,7 +4,6 @@
 	Copyright (C) 1996-2010 Angelo Bertolli
 }
 
-{$mode TP}
 {$ifdef Win32}
 {$apptype GUI}
 {$r icequeen.res}
@@ -56,16 +55,6 @@ begin
      capitalize:=capstring;
 end;
 
-{-------------------------------------------------------------------------}
-procedure drawpic(beginx,beginy:integer;dosname:string);
-
-begin
-   dosname:=imagedir+dosname;
-   if not(exist(dosname)) then
-        writeln('drawpic: '+dosname+' not found')
-   else
-      drawpicturebyline(beginx,beginy,dosname);
-end;
 {---------------------------------------------------------------------------}
 procedure drawmaptile(xpos,ypos:integer;themap:matrix);
 
