@@ -5463,7 +5463,6 @@ var
 	dcode          :    matrix;
 	lastx          :    integer;
 	lasty          :    integer;
-	pasfile        :    file of matrix;
 	exitx          :    integer;
 	exity          :    integer;
 	exitdungeon    :    boolean;
@@ -5472,14 +5471,8 @@ var
 begin
 	exitx:=px;
 	exity:=py;
-	assign(pasfile,themap);
-	reset(pasfile);
-	read(pasfile,dmap);
-	close(pasfile);
-	assign(pasfile,thecode);
-	reset(pasfile);
-	read(pasfile,dcode);
-	close(pasfile);
+    readmatrix(themap,dmap);
+    readmatrix(thecode,dcode);
 	exitdungeon:=false;
 	screensetup;
 	writestats(player);
@@ -5984,18 +5977,11 @@ var
 	lasty          :    integer;
 	code           :    matrix;
 	map            :    matrix;
-	pasfile        :    file of matrix;
-	ans:char;
+	ans             :   char;
 
 begin
-	assign(pasfile,surfacemap);
-	reset(pasfile);
-	read(pasfile,map);
-	close(pasfile);
-	assign(pasfile,surfacecode);
-	reset(pasfile);
-	read(pasfile,code);
-	close(pasfile);
+    readmatrix(surfacemap,map);
+    readmatrix(surfacecode,code);
 	surfacescreen(map);
 	px:=10;
 	py:=11;

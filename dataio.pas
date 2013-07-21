@@ -110,6 +110,8 @@ function itempicfile(theitem:item):string;
 function spellstring(thespell:spell):string;
 function itemstring(theitem:item):string;
 function exist(dosname:string):boolean;
+procedure existorquit(filename:string);
+procedure readmatrix(filename:string;var m:matrix);
 procedure readchart(chartfile,chartid:string;var chart:chartrecord);
 procedure writegame(filename:string;player:character_t);
 procedure readgame(filename:string;var player:character_t);
@@ -216,7 +218,32 @@ begin
      exist:=(IoResult=0);
 end;
 {--------------------------------------------------------------------------}
-procedure   readchart(chartfile,chartid:string;var chart:chartrecord);
+procedure existorquit(filename:string);
+
+{Basically die if file doesn't exist.}
+
+begin
+    if not(exist(filename)) then
+    begin
+        writeln('Could not open '+filename);
+        halt(1);
+    end;
+end;
+{--------------------------------------------------------------------------}
+procedure readmatrix(filename:string;var m:matrix);
+
+var
+    f       :   file of matrix;
+
+begin
+    existorquit(filename);
+    assign(f,filename);
+    reset(f);
+    read(f,m);
+    close(f);
+end;
+{--------------------------------------------------------------------------}
+procedure readchart(chartfile,chartid:string;var chart:chartrecord);
 
 var
     pasfile         :   text;
@@ -227,12 +254,7 @@ var
     split           :   integer;
 
 begin
-    
-    if not(exist(chartfile)) then
-    begin
-        writeln('Could not open '+chartfile);
-        halt(1);
-    end;
+    existorquit(chartfile);
     assign(pasfile,chartfile);
     reset(pasfile);
 
@@ -359,11 +381,7 @@ var
     loop    :   integer;
 
 begin
-    if not(exist(filename)) then
-    begin
-        writeln('Could not open '+filename);
-        halt(1);
-    end;
+    existorquit(filename);
 
     assign(f,filename);
     reset(f);
