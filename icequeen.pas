@@ -270,9 +270,9 @@ begin
 	               str(coins,tempstring);
 	               graphwriteln(x,y,tempstring);
 	               if (sex in ['m','M']) then
-                            picfile:='mplayer'
+                            picfile:='mplayer.ln1'
 	               else
-                            picfile:='fplayer';
+                            picfile:='fplayer.ln1';
 	               numitems:=0;
 	               numspells:=0;
 	               stages:=[];

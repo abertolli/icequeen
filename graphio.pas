@@ -486,15 +486,17 @@ var
     ext     :   string;
 
 begin
-    ext:=copy(filename,pos('.',filename)+1,length(filename));
     if not(exist(imagedir+filename)) then
         writeln('drawpic: '+imagedir+filename+' not found')
     else
+    begin
+        ext:=copy(filename,pos('.',filename)+1,length(filename));
         case ext of
             'ln1':drawln1(beginx,beginy,imagedir+filename);
         else
             writeln('drawpic: unknown file type '+ext);
         end;
+    end;
 end;
 {--------------------------------------------------------------------------}
 procedure writetext(textfile:string;beginy:integer;textid:string);
