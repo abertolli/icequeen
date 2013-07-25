@@ -447,7 +447,6 @@ var
     length          :   word;
     lineoftext      :   string;
     errormsg        :   string;
-    ch              :   char;
 
 begin
 
@@ -461,16 +460,17 @@ begin
         begin
             x:=beginx; {col}
             y:=beginy; {row}
-            while not eof(pasfile) do
+            while not seekeof(pasfile) do
             begin
-                while not eoln(pasfile) do
+                while not seekeoln(pasfile) do
                 begin
                     read(pasfile,color);
-                    read(pasfile,ch);       {read the space in betwen}
-                    read(pasfile,length);
-                    if not eoln(pasfile) then read(pasfile,ch);
-                    hlineRGBA(screen,x,x+length,y,r[color],g[color],b[color],255);
-                    x:=x + length;
+                    if not seekeoln(pasfile) then    {eat whitespace}
+                    begin
+                        read(pasfile,length);
+                        hlineRGBA(screen,x,x+length,y,r[color],g[color],b[color],255);
+                        x:=x + length;
+                    end;
                 end;
                 readln(pasfile);
                 y:=y + 1;
