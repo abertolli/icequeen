@@ -84,8 +84,8 @@ procedure centerwrite(x,y:integer;s:string);
 procedure graphwrite(var x,y:integer;s:string);
 procedure graphwriteln(var x,y:integer;s:string);
 procedure graphread(var x,y:integer;var s:string);
-procedure drawln1(beginx,beginy:integer;dosname:string);
-procedure drawpic(beginx,beginy:integer;dosname:string);
+procedure drawln1(beginx,beginy:integer;filename:string);
+procedure drawpic(beginx,beginy:integer;filename:string);
 procedure writetext(textfile:string;beginy:integer;textid:string);
 procedure openscreen;
 procedure closescreen;
@@ -433,64 +433,51 @@ begin
      until(ch=#13);
 end;
 {--------------------------------------------------------------------------}
-procedure drawln1(beginx,beginy:integer;dosname:string);
+procedure drawln1(beginx,beginy:integer;filename:string);
 
-{dosname            =    name of the file, including extention
+{filename            =    name of the file, including extention
 beginx, beginy      =    the coordinates of where the upper left hand corner
                          of where the picture will be.}
 
 var
-    pasfile         :   text;
+    f               :   text;
     x               :   word;
     y               :   word;
     color           :   word;
     length          :   word;
     lineoftext      :   string;
-    errormsg        :   string;
 
 begin
-
-    errormsg:='';
-    if exist(dosname) then
-    begin
-        assign(pasfile,dosname);
-        reset(pasfile);
-        readln(pasfile,lineoftext);
-        if  (lineoftext='FORMAT=LINE') then
-        begin
-            x:=beginx; {col}
-            y:=beginy; {row}
-            while not seekeof(pasfile) do
-            begin
-                while not seekeoln(pasfile) do
-                begin
-                    read(pasfile,color);
-                    if not seekeoln(pasfile) then    {eat whitespace}
-                    begin
-                        read(pasfile,length);
-                        hlineRGBA(screen,x,x+length,y,r[color],g[color],b[color],255);
-                        x:=x + length;
-                    end;
-                end;
-                readln(pasfile);
-                y:=y + 1;
-                x:=beginx;
-            end;
-            SDL_UpdateRect(screen, 0, 0, 0, 0);
-        end
-        else
-            errormsg:=dosname+' wrong format';
-        close(pasfile);
-    end
+    if not(openandseek(f,filename,'FORMAT=LINE')) then
+        writeln('drawln1: '+filename+' wrong format')
     else
-        errormsg:=dosname+' not found';
+    begin
+        x:=beginx; {col}
+        y:=beginy; {row}
+        while not seekeof(f) do
+        begin
+            while not seekeoln(f) do
+            begin
+                read(f,color);
+                if not seekeoln(f) then    {eat whitespace}
+                begin
+                    read(f,length);
+                    hlineRGBA(screen,x,x+length,y,r[color],g[color],b[color],255);
+                    x:=x + length;
+                end;
+            end;
+            readln(f);
+            y:=y + 1;
+            x:=beginx;
+        end;
+        SDL_UpdateRect(screen, 0, 0, 0, 0);
+    end;
+    close(f);
 
-    if (errormsg <> '') then
-        writeln('drawln1: '+errormsg);
 end;
 
 {-------------------------------------------------------------------------}
-procedure drawpic(beginx,beginy:integer;dosname:string);
+procedure drawpic(beginx,beginy:integer;filename:string);
 
 const
 	imagedir	= 'img/';
@@ -499,12 +486,12 @@ var
     ext     :   string;
 
 begin
-    ext:=copy(dosname,pos('.',dosname)+1,length(dosname));
-    if not(exist(imagedir+dosname)) then
-        writeln('drawpic: '+imagedir+dosname+' not found')
+    ext:=copy(filename,pos('.',filename)+1,length(filename));
+    if not(exist(imagedir+filename)) then
+        writeln('drawpic: '+imagedir+filename+' not found')
     else
         case ext of
-            'ln1':drawln1(beginx,beginy,imagedir+dosname);
+            'ln1':drawln1(beginx,beginy,imagedir+filename);
         else
             writeln('drawpic: unknown file type '+ext);
         end;
@@ -516,7 +503,7 @@ procedure writetext(textfile:string;beginy:integer;textid:string);
 somewhere other than the very top.}
 
 var
-     pasfile        :    text;
+     f              :    text;
      numlines       :    integer;
      lineoftext     :    string;
      x              :    integer;
@@ -524,34 +511,34 @@ var
      doprompt       :    boolean;
 
 begin
-     x:=10;
-     y:=beginy;
-     doprompt:=false;
-     numlines:=(screen^.h+1-y) DIV (textheight('M')+2) - 1;
-     assign(pasfile,textfile);
-     reset(pasfile);
-     lineoftext:='';
-     while not(eof(pasfile) or (pos('~'+textid,lineoftext) = 1)) do
-         readln(pasfile,lineoftext);
-     while not(eof(pasfile) or (lineoftext = '~')) do
-          begin
-               readln(pasfile,lineoftext);
-               doprompt:=(pos('{prompt}',lineoftext) = 1);
-               if not((doprompt) or (lineoftext = '~')) then
-               begin
-                    graphwriteln(x,y,lineoftext);
-                    numlines:=numlines - 1;
-               end;
-               doprompt:=( doprompt or (numlines=0));
-               if doprompt then
-               begin
-                    prompt;
-                    cleardevice;
-                    homecursor(x,y);
-                    numlines:=(screen^.h+1-y) DIV (textheight('M')+2) - 1;
-               end;
-          end;
-     close(pasfile);
+    if not(openandseek(f,textfile,'~'+textid)) then
+        writeln('writetext: '+textid+' not found')
+    else
+    begin
+        x:=10;
+        y:=beginy;
+        doprompt:=false;
+        numlines:=(screen^.h+1-y) DIV (textheight('M')+2) - 1;
+        while not(seekeof(f) or (lineoftext = '~')) do
+        begin
+            readln(f,lineoftext);
+            doprompt:=(pos('{prompt}',lineoftext) = 1);
+            if not((doprompt) or (lineoftext = '~')) then
+            begin
+                graphwriteln(x,y,lineoftext);
+                numlines:=numlines - 1;
+            end;
+            doprompt:=( doprompt or (numlines=0));
+            if doprompt then
+            begin
+                prompt;
+                cleardevice;
+                homecursor(x,y);
+                numlines:=(screen^.h+1-y) DIV (textheight('M')+2) - 1;
+            end;
+        end;
+    end;
+    close(f);
 end;
 {--------------------------------------------------------------------------}
 procedure openscreen;

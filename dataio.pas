@@ -111,6 +111,7 @@ function spellstring(thespell:spell):string;
 function itemstring(theitem:item):string;
 function exist(dosname:string):boolean;
 procedure existorquit(filename:string);
+function openandseek(var f:text;filename,search:string):boolean;
 procedure readmatrix(filename:string;var m:matrix);
 procedure readchart(chartfile,chartid:string;var chart:chartrecord);
 procedure writegame(filename:string;player:character_t);
@@ -230,6 +231,43 @@ begin
     end;
 end;
 {--------------------------------------------------------------------------}
+function openandseek(var f:text;filename,search:string):boolean;
+
+{
+Opens a file and searches for a line that matches a particular string.
+    * If the search is found:
+        1) f is returned opened with the pointer at the next line
+        2) function result is true
+    * If search is not found:
+        1) f is returned closed
+        2) function result is false
+}
+
+var
+    s           :   string;
+    loc         :   integer;
+    found       :   boolean;
+
+begin
+    existorquit(filename);
+    loc:=0;
+    found:=false;
+    assign(f,filename);
+    reset(f);
+    while not((seekeof(f)) or (loc>0)) do
+    begin
+        readln(f,s);
+        loc:=pos(search,s);
+    end;
+
+    if (loc>0) then
+        found:=true
+    else
+        close(f);
+
+    openandseek:=found;
+end;
+{--------------------------------------------------------------------------}
 procedure readmatrix(filename:string;var m:matrix);
 
 var
@@ -260,7 +298,7 @@ begin
 
     lineoftext:='';
     search:='~'+chartid;
-    while not ( (eof(pasfile)) or (pos(search,lineoftext)>0) ) do
+    while not ( (seekeof(pasfile)) or (pos(search,lineoftext)>0) ) do
         readln(pasfile,lineoftext);
 
     if not (pos(search,lineoftext)>0) then
@@ -364,7 +402,7 @@ begin
         readln(savefile,charges);
         readln(savefile,chargemax);
         stages:=[];
-        while not(eof(savefile)) do
+        while not(seekeof(savefile)) do
         begin
             readln(savefile,st);
             stages:=stages + [st];
@@ -377,21 +415,10 @@ procedure readmonster(filename,monsterid:string;var monster:monsterrecord);
 
 var
     f       :   text;
-    s       :   string;
     loop    :   integer;
 
 begin
-    existorquit(filename);
-
-    assign(f,filename);
-    reset(f);
-    s:='';
-
-    {search}
-    while not ( (eof(f)) or (pos('~'+monsterid,s)>0) ) do
-        readln(f,s);
-
-    if not (pos('~'+monsterid,s)>0) then
+    if not(openandseek(f,filename,'~'+monsterid)) then
     begin
         writeln('Could not find '+monsterid);
         halt(1);
