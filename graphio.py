@@ -63,6 +63,33 @@ fontpath        =   'fonts'
 fontfile        =   'default.ttf'
 
 
+def getpixel(x, y):
+    global screen
+    pixel = screen.get_at(x, y);
+    color = -1
+    for i in palette:
+        if pixel = palette[i]:
+            color = i
+    return i
+
+def setcolor(color):
+    global fgcolor
+    if 0 <= color <= 15:
+        fgcolor = color
+
+def getcolor:
+    global fgcolor
+    return fgcolor
+
+# getfont:  this can't work the same in python, so we'll skip it
+
+def setfont(font, charsize):
+    global fontfile
+    global fontsize
+    fontfile = font
+    fontsize = charsize
+
+
 def group(lst, n):
     for i in range(0, len(lst), n):
         val = lst[i:i+n]
