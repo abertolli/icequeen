@@ -65,19 +65,19 @@ fontfile        =   'default.ttf'
 
 def getpixel(x, y):
     global screen
-    pixel = screen.get_at(x, y);
+    pixel = screen.get_at((x, y))
     color = -1
-    for i in palette:
-        if pixel = palette[i]:
+    for i,c in enumerate(palette):
+        if pixel[0] == c[0] and pixel[1] == c[1] and pixel[2] == c[2]:
             color = i
-    return i
+    return color
 
 def setcolor(color):
     global fgcolor
     if 0 <= color <= 15:
         fgcolor = color
 
-def getcolor:
+def getcolor():
     global fgcolor
     return fgcolor
 
@@ -117,6 +117,8 @@ pygame.init()
 screen.fill(palette[black])
 
 drawln1(50,50,'img/thetown.ln1')
+print(getpixel(10,10))
+print(getpixel(52,52))
 
 # run the game loop
 while True:
