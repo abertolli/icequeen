@@ -9,7 +9,7 @@ Unit GraphIO;
 INTERFACE
 
 uses
-	sdl, sdl_gfx, sdl_ttf, sdlutils, dataio;
+	sdl, sdl_gfx, sdl_ttf, dataio;
 
 const
 
@@ -59,6 +59,7 @@ var
     fontfile        :   string;
 
 {legacy support}
+function SDL_GetPixel(surface:pSDL_Surface;x,y:word):longword;
 function getpixel(x,y:smallint):word;
 procedure setcolor(color:integer);
 function getcolor:byte;
@@ -91,6 +92,39 @@ procedure openscreen;
 procedure closescreen;
 
 IMPLEMENTATION
+{--------------------------------------------------------------------------}
+function SDL_GetPixel(surface:pSDL_Surface;x,y:word):longword;
+
+{ To replace SDL_GetPixel from unit sdlutils.
+Based on http://sdl.beuc.net/sdl.wiki/Pixel_Access }
+
+var
+  bpp          : longword;
+  p            : ^byte;
+
+begin
+
+  {Get the number of bytes per pixel: 1, 2, 3, or 4}
+  bpp:=surface^.format^.BytesPerPixel;
+
+  {Pointer to the data for this pixel}
+  p:=pointer(pbyte(surface^.pixels) + (y * surface^.pitch) + (x * bpp));
+
+  {Return pixel value depending on the format of the data}
+  case bpp of
+    1 : SDL_GetPixel:=pbyte(p)^;
+    2 : SDL_GetPixel:=pword(p)^;
+    3 :
+      if (SDL_BYTEORDER = SDL_BIG_ENDIAN) then
+        SDL_GetPixel:=pbytearray(p)^[0] shl 16 or pbytearray(p)^[1] shl 8 or pbytearray(p)^[2]
+      else
+        SDL_GetPixel:=pbytearray(p)^[0] or pbytearray(p)^[1] shl 8 or pbytearray(p)^[2] shl 16;
+    4 : SDL_GetPixel:=plongword(p)^;
+  else
+    SDL_GetPixel:=0;
+  end;
+end;
+
 {--------------------------------------------------------------------------}
 function getpixel(x,y:smallint):word;
 
