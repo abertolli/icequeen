@@ -169,7 +169,7 @@ begin
 	               setcolor(white);
 	               level:=1;
 	               experience:=0;
-	               endurancemax:=8;
+	               endurancemax:=10;   {Start with extra endurance.}
 	               endurance:=endurancemax;
 	               graphwrite(x,y,'     Endurance:  ');
 	               str(endurancemax,tempstring);
@@ -351,92 +351,40 @@ procedure calcstats(var player:character_t);
 
 
 var
-	tempinteger    :    integer;
-	count          :    integer;
-    tempset        :    set of item;
-    dmgbonus       :    integer;
-    tempstring      :   string;
+   tempinteger    :    integer;
+   count          :    integer;
+   tempset        :    set of item;
+   dmgbonus       :    integer;
+   tempstring     :   string;
+
+   xpchart	: array[1..maxlevel] of word;
 
 begin
+	{ Reduced xp requirements to gain levels}
+	xpchart[1]:=0;
+	xpchart[2]:=500;
+	xpchart[3]:=1000;
+	xpchart[4]:=2000;
+	xpchart[5]:=3000;
+	xpchart[6]:=5000;
+	xpchart[7]:=8000;
+	xpchart[8]:=12000;
+	xpchart[9]:=16000;
+	xpchart[10]:=20000;
+	xpchart[11]:=25000;
+	xpchart[maxlevel]:=30000;
+
 	with player do
-	     begin
-	          if(level=1)and(experience>=2000)then
-	               begin
-	                    level:=level + 1;
-	                    tempinteger:=roll('1d8');
-	                    endurancemax:=endurancemax+tempinteger;
-	                    endurance:=endurance+tempinteger;
-	               end;
-	          if(level=2)and(experience>=4000)then
-	               begin
-	                    level:=level + 1;
-	                    tempinteger:=roll('1d8');
-	                    endurancemax:=endurancemax+tempinteger;
-	                    endurance:=endurance+tempinteger;
-	               end;
-	          if(level=3)and(experience>=8000)then
-	               begin
-	                    level:=level + 1;
-	                    tempinteger:=roll('1d8');
-	                    endurancemax:=endurancemax+tempinteger;
-	                    endurance:=endurance+tempinteger;
-	               end;
-	          if(level=4)and(experience>=16000)then
-	               begin
-	                    level:=level + 1;
-	                    tempinteger:=roll('1d8');
-	                    endurancemax:=endurancemax+tempinteger;
-	                    endurance:=endurance+tempinteger;
-	               end;
-	          if(level=5)and(experience>=32000)then
-	               begin
-	                    level:=level + 1;
-	                    tempinteger:=roll('1d8');
-	                    endurancemax:=endurancemax+tempinteger;
-	                    endurance:=endurance+tempinteger;
-	               end;
-	          if(level=6)and(experience>=64000)then
-	               begin
-	                    level:=level + 1;
-	                    tempinteger:=roll('1d8');
-	                    endurancemax:=endurancemax+tempinteger;
-	                    endurance:=endurance+tempinteger;
-	               end;
-	          if(level=7)and(experience>=120000)then
-	               begin
-	                    level:=level + 1;
-	                    tempinteger:=roll('1d8');
-	                    endurancemax:=endurancemax+tempinteger;
-	                    endurance:=endurance+tempinteger;
-	               end;
-	          if(level=8)and(experience>=240000)then
-	               begin
-	                    level:=level + 1;
-	                    tempinteger:=roll('1d8');
-	                    endurancemax:=endurancemax+tempinteger;
-	                    endurance:=endurance+tempinteger;
-	               end;
-	          if(level=9)and(experience>=360000)then
-	               begin
-	                    level:=level + 1;
-	                    tempinteger:=roll('1d8');
-	                    endurancemax:=endurancemax+tempinteger;
-	                    endurance:=endurance+tempinteger;
-	               end;
-	          if(level=10)and(experience>=480000)then
-	               begin
-	                    level:=level + 1;
-	                    tempinteger:=roll('1d8');
-	                    endurancemax:=endurancemax+tempinteger;
-	                    endurance:=endurance+tempinteger;
-	               end;
-	          if(level=11)and(experience>=600000)then
-	               begin
-	                    level:=level + 1;
-	                    tempinteger:=roll('1d8');
-	                    endurancemax:=endurancemax+tempinteger;
-	                    endurance:=endurance+tempinteger;
-	               end;
+	begin
+		if (level < maxlevel) then
+			if (experience >= xpchart[level+1]) then
+			begin
+				level:=level + 1;
+				tempinteger:=roll('1d4+4'); {Better endurance per level on average}
+				endurancemax:=endurancemax+tempinteger;
+				endurance:=endurance+tempinteger;
+			end;
+
 	          case level of
 	            1..3:savingthrow:=16;
 	            4..6:savingthrow:=14;
@@ -524,7 +472,7 @@ begin
                     damage:=damage + tempstring;
               if (dmgbonus>0) then
                     damage:=damage + '+' + tempstring;
-	     end;
+    end;
 end;
 {---------------------------------------------------------------------------}
 procedure dropitem(var player:character_t);
@@ -1035,7 +983,7 @@ begin
 	                    end;
 	          redpotion:begin
 	                         graphwriteln(x,y,'    Healing soothes you.');
-	                         player.endurance:=player.endurance+roll('1d6')+1;
+	                         player.endurance:=player.endurance+roll('1d6')+6;
 	                         if (player.endurance>player.endurancemax) then
 	                              player.endurance:=player.endurancemax;
 	                         remove(player.numitems,player.item,itemnum);
@@ -3038,7 +2986,7 @@ begin
 	                                                 writetext(textfile,1,'007');
 	                              heal:begin
 	                                        writetext(textfile,1,'008');
-	                                        endurance:=endurance + roll('1d6') +1;
+	                                        endurance:=endurance + roll('1d6') + 6;
 	                                        if (endurance>endurancemax) then
 	                                             endurance:=endurancemax;
 	                                   end;
@@ -3049,7 +2997,7 @@ begin
 	                              power:case roll('1d20') of
 	                                  1..3:begin
 	                                            writetext(textfile,1,'009');
-	                                            endurance:=endurance + roll('1d2');
+	                                            endurance:=endurance + roll('1d2') + 2;
 	                                            if (endurance>endurancemax) then
 	                                                 endurance:=endurancemax;
 	                                       end;
@@ -3513,7 +3461,7 @@ begin
 	                    setcolor(cyan);
 	                    centerwrite(center,y,'You sleep the night and gain a little health.');
 	                    coins:=coins - innprice;
-	                    endurance:=endurance + roll('1d4');
+	                    endurance:=endurance + roll('1d4') + 4;
 	                    if(endurance>endurancemax)then
 	                         endurance:=endurancemax;
 	                    charges:=chargemax;
@@ -3885,7 +3833,7 @@ begin
 	          graphwriteln(x,y,'You sit down and have you''re drink.');
 	          player.coins:=player.coins - drinkprice;
 	          graphwriteln(x,y,'');
-	          case (roll('1d100') + drinkprice) of
+	          case (roll('1d100') + drinkprice - 1) of
 	              1..20:begin
 	                         writetext(textfile,200,'061');
 	                    end;
@@ -3982,7 +3930,7 @@ begin
 	                         begin
 	                              x:=10;
 	                              graphwriteln(x,y,'You enjoy yourselves, but don''t get much rest.');
-	                              player.endurance:=player.endurance + roll('1d2');
+	                              player.endurance:=player.endurance + roll('1d2') + 2;
 	                              if (player.endurance>player.endurancemax) then
 	                                   player.endurance:=player.endurancemax;
 	                         end;
@@ -3991,7 +3939,7 @@ begin
 	               begin
 	                    graphwriteln(x,y,'Loud parties and bouts of laughter keep you up half the night,');
 	                    graphwriteln(x,y,'but eventually you get to sleep.');
-	                    player.endurance:=player.endurance + roll('1d3');
+	                    player.endurance:=player.endurance + roll('1d3') + 3;
 	                    if (player.endurance>player.endurancemax) then
 	                         player.endurance:=player.endurancemax;
 	               end;
@@ -4381,7 +4329,7 @@ begin
 	               end;
 	          if (bet>100) then
 	               begin
-	                    graphwriteln(x,y,'''''Ahem.  I don''t carry that much money.''''');
+	                    graphwriteln(x,y,'"Ahem.  I don''t carry that much money."');
 	                    prompt;
 	                    exit;
 	               end;
@@ -4484,7 +4432,7 @@ begin
 	                    graphwriteln(x,y,'');
 	                    if (bet>player.coins) then
 	                         begin
-	                              graphwriteln(x,y,'''''Don''t have the money?!''''');
+	                              graphwriteln(x,y,'"Don''t have the money?!"');
 	                              graphwriteln(x,y,'They attack.');
 	                              prompt;
 	                              nummonsters:=roll('1d6')+2;
@@ -4500,7 +4448,7 @@ begin
 	                         end
 	                    else
 	                         begin
-	                              graphwriteln(x,y,'''''Pleasure doing business with you.''''');
+	                              graphwriteln(x,y,'"Pleasure doing business with you."');
 	                              player.coins:=player.coins-bet;
 	                         end;
 	               end;
@@ -4528,7 +4476,7 @@ begin
 	graphwriteln(x,y,'You walk over to one of Roland''s Roving Jesters who is clad in');
 	graphwriteln(x,y,'red and yellow.  He guardes a barred door.');
 	graphwriteln(x,y,'');
-	graphwriteln(x,y,'''''What do you want?'''' he asks.');
+	graphwriteln(x,y,'"What do you want?" he asks.');
 	graphwriteln(x,y,'');
 	graphwrite(x,y,'You say:  ');
 	graphread(x,y,password);
@@ -4537,7 +4485,7 @@ begin
 	if not(capitalize(password)='CRYSTAL SHARD') then
 	     begin
 	          setcolor(yellow);
-	          graphwriteln(x,y,'''''Bobo warned me about you.  I can''t let you in.''''');
+	          graphwriteln(x,y,'"Bobo warned me about you.  I can''t let you in."');
 	          prompt;
 	     end
 	else
@@ -4701,7 +4649,7 @@ begin
 	setfont('default.ttf',4);
 	writetext(textfile,175,'039');
 	prompt;
-    center:=getmaxx DIV 2;
+	center:=getmaxx DIV 2;
 	repeat
 	     clearesi;
 	     homecursor(x,y);
