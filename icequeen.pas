@@ -27,9 +27,9 @@ type
 		resistfire	: boolean;
 		resistcold	: boolean;
 		glacier		: boolean;
-					 end;
+	end;
 	effectlist	 = array[1..monstermax] of effectrecord;
-    menulist    =   array[1..menumax] of string;
+	menulist    =   array[1..menumax] of string;
 
 var
 	GAMEOVER	: boolean;
@@ -50,14 +50,17 @@ var
 	ypix           :    integer;
 	tilenum        :    integer;
 	filename       :    string;
+	draw		: boolean;
 
 begin
+	draw:=true;
 	xpix:=41;
 	ypix:=41;
 	xpix:=xpix + ((xpos - 1) * 20);         {tile size = 20}
 	ypix:=ypix + ((ypos - 1) * 20);
 	tilenum:=themap[xpos,ypos];
 	case tilenum of
+	     0:draw:=false;
              1:filename:='town.bmp';
              2:filename:='cave.bmp';
              3:filename:='grass.bmp';
@@ -86,11 +89,10 @@ begin
              26:filename:='dea.bmp';
              27:filename:='dwa.bmp';
              28:filename:='dsa.bmp';
-             29:filename:='blank.bmp';
 	else
-             filename:='blank';
+             writeln('Unknown tile no. ',tilenum);
 	end;
-	drawpic(xpix,ypix,filename);
+	if draw then drawpic(xpix,ypix,filename);
 end;
 
 {Title and Main Menu Functions and Procedures}
@@ -5419,8 +5421,8 @@ var
 begin
 	exitx:=px;
 	exity:=py;
-    readmatrix(themap,dmap);
-    readmatrix(thecode,dcode);
+	readmatrix(mapfile,themap,dmap);
+	readmatrix(mapfile,thecode,dcode);
 	exitdungeon:=false;
 	screensetup;
 	writestats(player);
@@ -5506,7 +5508,7 @@ begin
 	     ans:=readarrowkey;
 	until (ans in ['y','Y','n','N']);
 	if (ans in ['y','Y']) then
-	     dungeon_engine(player,dungeonmap,dungeoncode,'dungeon',px,py);
+	     dungeon_engine(player,'dungeon.map','dungeon.code','dungeon',px,py);
 	screensetup;
 end;
 
@@ -5732,7 +5734,7 @@ begin
 	     ans:=readarrowkey;
 	until (ans in ['y','Y','n','N']);
 	if (ans in ['Y','y']) then
-	     dungeon_engine(player,cavemap,cavecode,'cave',20,8)
+	     dungeon_engine(player,'cave.map','cave.code','cave',20,8)
 	else
 	     surfacemessage;
 end;
@@ -5847,7 +5849,7 @@ begin
 	     end;{case}
 	until done;
 	if (enter) then
-	     dungeon_engine(player,castlemap,castlecode,'castle',10,13);
+	     dungeon_engine(player,'castle.map','castle.code','castle',10,13);
 
 end;
 {---------------------------------------------------------------------------}
@@ -5928,8 +5930,8 @@ var
 	ans             :   char;
 
 begin
-    readmatrix(surfacemap,map);
-    readmatrix(surfacecode,code);
+    readmatrix(mapfile,'surface.map',map);
+    readmatrix(mapfile,'surface.code',code);
 	surfacescreen(map);
 	px:=10;
 	py:=11;

@@ -6,23 +6,20 @@
 
 program MapCreator;
 
-uses crt;
+uses crt, dataio;
 
-{$I h/game.pas}
+const
+{$I const.inc}
 
 var
      ch             :    char;
      loop           :    integer;
-     device         :    integer;
-     mode           :    integer;
      row            :    integer;
      col            :    integer;
-     dosname        :    string;
      map            :    matrix;
      ans            :    char;
      quit           :    boolean;
 
-{$I extras.pas}
 {--------------------------------------------------------------------------}
 procedure initmap(var map:matrix);
 
@@ -39,25 +36,25 @@ begin
      for loop:=beginx to endx do
           begin
                gotoxy(loop,beginy - 1);
-               write(chr(205));
+               write('-');
                gotoxy(loop,endy + 1);
-               write(chr(205));
+               write('-');
           end;
      for loop:=beginy to endy do
           begin
                gotoxy(beginx - 1,loop);
-               write(chr(186));
+               write('|');
                gotoxy(endx + 1,loop);
-               write(chr(186));
+               write('|');
           end;
      gotoxy(beginx-1,beginy-1);
-     write(chr(201));
+     write('/');
      gotoxy(beginx-1,endy+1);
-     write(chr(200));
+     write('\');
      gotoxy(endx+1,beginy-1);
-     write(chr(187));
+     write('\');
      gotoxy(endx+1,endy+1);
-     write(chr(188));
+     write('/');
      window(beginx,beginy,endx,endy);
 end;
 {--------------------------------------------------------------------------}
@@ -308,9 +305,13 @@ end;
 {--------------------------------------------------------------------------}
 procedure savemap(var map:matrix);
 
+const
+     mapdir    =    'game/';
+
 var
      dosname   :    string;
      pasfile   :    file of matrix;
+     textfile  :    text;
 
 begin
      write('Load or Save (L/S)');
@@ -322,7 +323,7 @@ begin
           begin
                write('Load filename: ');
                readln(dosname);
-               while not(exist(dosname)) do
+               while not(exist(mapdir+dosname)) do
                     begin
                          writeln('File not found.');
                          write('Load filename: ');
@@ -337,7 +338,7 @@ begin
           begin
                write('Save filename: ');
                readln(dosname);
-               if (exist(dosname)) then
+               if (exist(mapdir+dosname)) then
                     begin
                          writeln('File exists.');
                          write('Overwrite (y/n)');
@@ -345,12 +346,17 @@ begin
                               ans:=readkey;
                          until (ans in ['y','Y','n','N']);
                     end;
-               if (ans in ['y','Y']) or not(exist(dosname)) then
+               if (ans in ['y','Y']) or not(exist(mapdir+dosname)) then
                     begin
-                         assign(pasfile,mapdir+dosname);
-                         rewrite(pasfile);
-                         write(pasfile,map);
-                         close(pasfile);
+                         assign(textfile,mapdir+dosname);
+                         rewrite(textfile);
+			 for row:=1 to rowmax do
+			 begin
+				for col:=1 to colmax do
+					write(textfile,' ',map[col,row]);
+			 	writeln(textfile);
+			 end;
+                         close(textfile);
                     end;
           end;
      writeln;

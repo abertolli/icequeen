@@ -1,21 +1,8 @@
-	version		= '3.0';
+	version		= '0.3.1';
 
 	reward		= 100000;
 
-        {
-        maps - the displayed map
-        codes - the underlying meaning
-        }
-	surfacemap	= 'game/surface.map';
-	surfacecode	= 'game/surface.dat';
-	cavemap		= 'game/cave.map';
-	cavecode	= 'game/cave.dat';
-	castlemap	= 'game/castle.map';
-	castlecode	= 'game/castle.dat';
-	dungeonmap	= 'game/dungeon.map';
-	dungeoncode	= 'game/dungeon.dat';
-
-	chartile	= 'chartile.ln1';
+	chartile	= 'chartile.bmp';
 	savedefault	= 'game.sav';
 
 	savedir		= 'save/';
@@ -23,6 +10,7 @@
 	chartfile	= 'game/charts.dat';
 	monsterfile	= 'game/monsters.dat';
 	textfile	= 'game/text.dat';
+	mapfile		= 'game/maps.dat';
 
 	{used for text columns}
 	col1	= 20;	 {column 1 for viewing stats}

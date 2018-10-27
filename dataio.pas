@@ -112,7 +112,7 @@ function itemstring(theitem:item):string;
 function exist(dosname:string):boolean;
 procedure existorquit(filename:string);
 function openandseek(var f:text;filename,search:string):boolean;
-procedure readmatrix(filename:string;var m:matrix);
+procedure readmatrix(filename,matrixid:string;var m:matrix);
 procedure readchart(chartfile,chartid:string;var chart:chartrecord);
 procedure writegame(filename:string;player:character_t);
 procedure readgame(filename:string;var player:character_t);
@@ -136,23 +136,23 @@ function itempicfile(theitem:item):string;
 
 begin
     case theitem of
-        sword           :   itempicfile:='sword.ln1';
-        shield          :   itempicfile:='shield.ln1';
-        axe             :   itempicfile:='axe.ln1';
-        bluepotion      :   itempicfile:='potion-b.ln1';
-        redpotion       :   itempicfile:='potion-r.ln1';
-        greenpotion     :   itempicfile:='potion-g.ln1';
-        chainmail       :   itempicfile:='chain.ln1';
-        platemail       :   itempicfile:='plate.ln1';
-        dagger          :   itempicfile:='dagger.ln1';
-        club            :   itempicfile:='club.ln1';
-        staff           :   itempicfile:='staff.ln1';
-        hammer          :   itempicfile:='hammer.ln1';
-        magicsword      :   itempicfile:='magicswd.ln1';
-        magicshield     :   itempicfile:='magicshl.ln1';
-        flamewand       :   itempicfile:='flamewnd.ln1';
+        sword           :   itempicfile:='sword.bmp';
+        shield          :   itempicfile:='shield.bmp';
+        axe             :   itempicfile:='axe.bmp';
+        bluepotion      :   itempicfile:='potion-b.bmp';
+        redpotion       :   itempicfile:='potion-r.bmp';
+        greenpotion     :   itempicfile:='potion-g.bmp';
+        chainmail       :   itempicfile:='chain.bmp';
+        platemail       :   itempicfile:='plate.bmp';
+        dagger          :   itempicfile:='dagger.bmp';
+        club            :   itempicfile:='club.bmp';
+        staff           :   itempicfile:='staff.bmp';
+        hammer          :   itempicfile:='hammer.bmp';
+        magicsword      :   itempicfile:='magicswd.bmp';
+        magicshield     :   itempicfile:='magicshl.bmp';
+        flamewand       :   itempicfile:='flamewnd.bmp';
     else
-        itempicfile:='blank.ln1';
+        itempicfile:='blank.bmp';
     end;{case}
 
 end;
@@ -268,17 +268,29 @@ begin
     openandseek:=found;
 end;
 {--------------------------------------------------------------------------}
-procedure readmatrix(filename:string;var m:matrix);
+procedure readmatrix(filename,matrixid:string;var m:matrix);
 
 var
-    f       :   file of matrix;
+	f	: text;
+	row	: byte;
+	col	: byte;
 
 begin
-    existorquit(filename);
-    assign(f,filename);
-    reset(f);
-    read(f,m);
-    close(f);
+	existorquit(filename);
+
+	if not(openandseek(f,filename,'~'+matrixid)) then
+	begin
+		writeln('Could not find '+matrixid);
+		halt(1);
+	end;
+
+	for row:=1 to rowmax do
+	begin
+		for col:=1 to colmax do
+			read(f,m[col,row]);
+		readln(f);
+	end;
+	close(f);
 end;
 {--------------------------------------------------------------------------}
 procedure readchart(chartfile,chartid:string;var chart:chartrecord);
