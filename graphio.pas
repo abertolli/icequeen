@@ -86,6 +86,7 @@ procedure graphwrite(var x,y:integer;s:string);
 procedure graphwriteln(var x,y:integer;s:string);
 procedure graphread(var x,y:integer;var s:string);
 procedure drawln1(beginx,beginy:integer;filename:string);
+procedure drawbmp(beginx,beginy:integer;filename:string);
 procedure drawpic(beginx,beginy:integer;filename:string);
 procedure writetext(textfile:string;beginy:integer;textid:string);
 procedure openscreen;
@@ -486,10 +487,10 @@ begin
         writeln('drawln1: '+filename+' wrong format')
     else
     begin
-        x:=beginx; {col}
         y:=beginy; {row}
         while not seekeof(f) do
         begin
+            x:=beginx;
             while not seekeoln(f) do
             begin
                 read(f,color);
@@ -502,12 +503,41 @@ begin
             end;
             readln(f);
             y:=y + 1;
-            x:=beginx;
         end;
         SDL_UpdateRect(screen, 0, 0, 0, 0);
     end;
     close(f);
 
+end;
+{--------------------------------------------------------------------------}
+procedure drawbmp(beginx,beginy:integer;filename:string);
+
+var
+	imagecanvas	: pSDL_Surface;
+	destination	: tSDL_Rect;
+	colors		: pSDL_Color;
+	numcolors	: integer;
+
+begin
+
+	filename:=filename+#0#0;
+	imagecanvas:=SDL_LoadBMP(@filename[1]);
+	if (imagecanvas = nil) then
+		writeln('drawbmp: '+filename+': '+SDL_GetError)
+	else
+	begin
+		if (imagecanvas^.format^.palette<>nil)and(screen^.format^.palette<>nil) then
+		begin
+			numcolors:=imagecanvas^.format^.palette^.ncolors;
+			colors:=pSDL_Color(imagecanvas^.format^.palette^.colors);
+			SDL_SetColors(screen,colors,0,numcolors);
+		end;
+		destination.x:=beginx;
+		destination.y:=beginy;
+		SDL_BlitSurface(imagecanvas,nil,screen,@destination);
+		SDL_Flip(screen);
+		SDL_FreeSurface(imagecanvas);
+	end;
 end;
 
 {-------------------------------------------------------------------------}
@@ -527,6 +557,7 @@ begin
         ext:=copy(filename,pos('.',filename)+1,length(filename));
         case ext of
             'ln1':drawln1(beginx,beginy,imagedir+filename);
+            'bmp':drawbmp(beginx,beginy,imagedir+filename);
         else
             writeln('drawpic: unknown file type '+ext);
         end;
@@ -580,7 +611,7 @@ end;
 procedure openscreen;
 begin
     SDL_Init(SDL_INIT_VIDEO);
-    screen:=SDL_SetVideoMode(displaywidth,displayheight,colordepth,SDL_SWSURFACE or SDL_RESIZABLE);
+    screen:=SDL_SetVideoMode(displaywidth,displayheight,colordepth,SDL_SWSURFACE);
     if screen = nil then
     begin
         writeln('Error: couldn''t set video mode.');

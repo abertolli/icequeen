@@ -1,6 +1,6 @@
 ~wyvern
 wyvern
-wyvern.ln1
+wyvern.bmp
 M
 C
 7
@@ -17,7 +17,7 @@ thrashes
 ~
 ~centaur
 centaur
-centaur.ln1
+centaur.bmp
 M
 N
 4
@@ -34,7 +34,7 @@ kicks
 ~
 ~spider
 crab spider
-spider.ln1
+spider.bmp
 M
 N
 2
@@ -51,7 +51,7 @@ bites
 ~
 ~werewolf
 werewolf
-werewolf.ln1
+werewolf.bmp
 M
 C
 4
@@ -68,7 +68,7 @@ swipes
 ~
 ~ant
 giant ant
-ant.ln1
+ant.bmp
 M
 N
 4
@@ -85,7 +85,7 @@ bites
 ~
 ~beetle
 fire beetle
-beetle.ln1
+beetle.bmp
 M
 N
 1
@@ -102,7 +102,7 @@ bites
 ~
 ~wolf
 wolf
-wolf.ln1
+wolf.bmp
 M
 N
 2
@@ -119,7 +119,7 @@ bites
 ~
 ~berserker
 berserker
-berserke.ln1
+berserke.bmp
 M
 C
 1
@@ -136,7 +136,7 @@ smashes
 ~
 ~goblin
 goblin
-goblin.ln1
+goblin.bmp
 M
 C
 1
@@ -153,7 +153,7 @@ spears
 ~
 ~kobold
 kobold
-kobold.ln1
+kobold.bmp
 M
 C
 1
@@ -170,7 +170,7 @@ pokes
 ~
 ~orc
 orc
-orc.ln1
+orc.bmp
 M
 C
 1
@@ -187,7 +187,7 @@ slashes
 ~
 ~bandit
 bandit
-bandit.ln1
+bandit.bmp
 M
 C
 1
@@ -204,7 +204,7 @@ attacks
 ~
 ~ogre
 ogre
-ogre.ln1
+ogre.bmp
 M
 C
 4
@@ -221,7 +221,7 @@ clubs
 ~
 ~baboon
 rock baboon
-baboon.ln1
+baboon.bmp
 M
 N
 2
@@ -238,7 +238,7 @@ scratches
 ~
 ~bee
 giant bee
-bee.ln1
+bee.bmp
 M
 N
 1
@@ -255,7 +255,7 @@ stings
 ~
 ~centipede
 gnt centipede
-centiped.ln1
+centiped.bmp
 M
 N
 1
@@ -272,7 +272,7 @@ bites
 ~
 ~minotaur
 minotaur
-minotaur.ln1
+minotaur.bmp
 M
 C
 6
@@ -289,7 +289,7 @@ gores
 ~
 ~troll
 troll
-troll.ln1
+troll.bmp
 M
 C
 6
@@ -306,7 +306,7 @@ attacks
 ~
 ~giant
 hill giant
-giant.ln1
+giant.bmp
 M
 C
 8
@@ -323,7 +323,7 @@ decimates
 ~
 ~displacer
 displacer
-displace.ln1
+displace.bmp
 M
 N
 6
@@ -340,7 +340,7 @@ swipes
 ~
 ~manticore
 manticore
-manticor.ln1
+manticor.bmp
 M
 C
 6
@@ -357,7 +357,7 @@ punctures
 ~
 ~salamander
 frost lizard
-salamand.ln1
+salamand.bmp
 F
 C
 12
@@ -375,7 +375,7 @@ resistcold
 ~
 ~soldier
 Winter Soldier
-soldier.ln1
+soldier.bmp
 M
 N
 2
@@ -392,7 +392,7 @@ spears
 ~
 ~dragon
 Red Dragon
-dragon.ln1
+dragon.bmp
 M
 C
 10
@@ -411,7 +411,7 @@ dragonbreath
 ~
 ~icequeen
 Ice Queen
-icequeen.ln1
+icequeen.bmp
 F
 C
 12
@@ -434,7 +434,7 @@ glacier
 ~
 ~roland
 Roland McDoland
-roland.ln1
+roland.bmp
 M
 C
 20
@@ -452,7 +452,7 @@ obliterate
 ~
 ~slime
 green slime
-slime.ln1
+slime.bmp
 M
 N
 2
@@ -469,7 +469,7 @@ attacks
 ~
 ~shadow
 shadow
-shadow.ln1
+shadow.bmp
 M
 C
 2
@@ -486,7 +486,7 @@ attacks
 ~
 ~skeleton
 skeleton
-skeleton.ln1
+skeleton.bmp
 M
 C
 1
@@ -503,7 +503,7 @@ slashes
 ~
 ~gargoyle
 gargoyle
-gargoyle.ln1
+gargoyle.bmp
 M
 C
 4
@@ -520,7 +520,7 @@ claws
 ~
 ~ghoul
 ghoul
-ghoul.ln1
+ghoul.bmp
 M
 C
 2
@@ -537,7 +537,7 @@ gropes
 ~
 ~ooze
 purple ooze
-ooze.ln1
+ooze.bmp
 M
 N
 1
@@ -554,7 +554,7 @@ attacks
 ~
 ~wraith
 wraith
-wraith.ln1
+wraith.bmp
 M
 C
 4
@@ -571,7 +571,7 @@ attacks
 ~
 ~dilvish
 Dilvish
-dilvish.ln1
+dilvish.bmp
 M
 N
 4
@@ -590,7 +590,7 @@ fireblast
 ~
 ~prudence
 Prudence
-prudence.ln1
+prudence.bmp
 F
 L
 5
@@ -607,7 +607,7 @@ spears
 ~
 ~spirit
 Spirit
-spirit.ln1
+spirit.bmp
 F
 N
 4
@@ -625,7 +625,7 @@ heal
 ~
 ~marcus
 Marcus
-marcus.ln1
+marcus.bmp
 M
 N
 5
@@ -642,7 +642,7 @@ attacks
 ~
 ~baltar
 Baltar
-baltar.ln1
+baltar.bmp
 M
 C
 5
@@ -659,7 +659,7 @@ slices
 ~
 ~succubus
 Succubus
-succubus.ln1
+succubus.bmp
 F
 C
 6
@@ -676,7 +676,7 @@ claws
 ~
 ~brawler
 Brawler
-brawler.ln1
+brawler.bmp
 M
 N
 2
@@ -693,7 +693,7 @@ punches
 ~
 ~knight
 Ice Knight
-knight.ln1
+knight.bmp
 M
 C
 6

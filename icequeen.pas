@@ -58,35 +58,35 @@ begin
 	ypix:=ypix + ((ypos - 1) * 20);
 	tilenum:=themap[xpos,ypos];
 	case tilenum of
-             1:filename:='town.ln1';
-             2:filename:='cave.ln1';
-             3:filename:='grass.ln1';
-             4:filename:='hill.ln1';
-             5:filename:='mountain.ln1';
-             6:filename:='road.ln1';
-             7:filename:='swamp.ln1';
-             8:filename:='desert.ln1';
-             9:filename:='whitemt.ln1';
-             10:filename:='castle.ln1';
-             11:filename:='snow.ln1';
-             12:filename:='inn.ln1';
-             13:filename:='ground.ln1';
-             14:filename:='dgt.ln1';
-             15:filename:='dww.ln1';
-             16:filename:='dnw.ln1';
-             17:filename:='dew.ln1';
-             18:filename:='dsw.ln1';
-             19:filename:='dnwc.ln1';
-             20:filename:='dnsw.ln1';
-             21:filename:='dsec.ln1';
-             22:filename:='dnec.ln1';
-             23:filename:='dswc.ln1';
-             24:filename:='deww.ln1';
-             25:filename:='dna.ln1';
-             26:filename:='dea.ln1';
-             27:filename:='dwa.ln1';
-             28:filename:='dsa.ln1';
-             29:filename:='blank.ln1';
+             1:filename:='town.bmp';
+             2:filename:='cave.bmp';
+             3:filename:='grass.bmp';
+             4:filename:='hill.bmp';
+             5:filename:='mountain.bmp';
+             6:filename:='road.bmp';
+             7:filename:='swamp.bmp';
+             8:filename:='desert.bmp';
+             9:filename:='whitemt.bmp';
+             10:filename:='castle.bmp';
+             11:filename:='snow.bmp';
+             12:filename:='inn.bmp';
+             13:filename:='ground.bmp';
+             14:filename:='dgt.bmp';
+             15:filename:='dww.bmp';
+             16:filename:='dnw.bmp';
+             17:filename:='dew.bmp';
+             18:filename:='dsw.bmp';
+             19:filename:='dnwc.bmp';
+             20:filename:='dnsw.bmp';
+             21:filename:='dsec.bmp';
+             22:filename:='dnec.bmp';
+             23:filename:='dswc.bmp';
+             24:filename:='deww.bmp';
+             25:filename:='dna.bmp';
+             26:filename:='dea.bmp';
+             27:filename:='dwa.bmp';
+             28:filename:='dsa.bmp';
+             29:filename:='blank.bmp';
 	else
              filename:='blank';
 	end;
@@ -107,7 +107,7 @@ begin
     setcolor(white);
     centerwrite(center,380,'The Ice Queen');
     setfont('default.ttf',4);
-    drawpic(120,10,'tcastle.ln1');
+    drawpic(120,10,'tcastle.bmp');
     setfont('default.ttf',4);
     setcolor(lightgray);
     prompt;
@@ -163,9 +163,9 @@ begin
 	               outtextxy(x,y,sex);
 	               graphwriteln(x,y,'');
 	               if (sex in ['m','M']) then
-                            drawpic(getmaxx DIV 2,y,'mplayer.ln1')
+                            drawpic(getmaxx DIV 2,y,'mplayer.bmp')
 	               else
-                            drawpic(getmaxx DIV 2,y,'fplayer.ln1');
+                            drawpic(getmaxx DIV 2,y,'fplayer.bmp');
 	               setcolor(white);
 	               level:=1;
 	               experience:=0;
@@ -270,9 +270,9 @@ begin
 	               str(coins,tempstring);
 	               graphwriteln(x,y,tempstring);
 	               if (sex in ['m','M']) then
-                            picfile:='mplayer.ln1'
+                            picfile:='mplayer.bmp'
 	               else
-                            picfile:='fplayer.ln1';
+                            picfile:='fplayer.bmp';
 	               numitems:=0;
 	               numspells:=0;
 	               stages:=[];
@@ -365,14 +365,14 @@ begin
 	xpchart[2]:=500;
 	xpchart[3]:=1000;
 	xpchart[4]:=2000;
-	xpchart[5]:=3000;
-	xpchart[6]:=5000;
-	xpchart[7]:=8000;
-	xpchart[8]:=12000;
-	xpchart[9]:=16000;
-	xpchart[10]:=20000;
-	xpchart[11]:=25000;
-	xpchart[maxlevel]:=30000;
+	xpchart[5]:=4000;
+	xpchart[6]:=8000;
+	xpchart[7]:=12000;
+	xpchart[8]:=18000;
+	xpchart[9]:=25000;
+	xpchart[10]:=28000;
+	xpchart[11]:=40000;
+	xpchart[maxlevel]:=50000;
 
 	with player do
 	begin
@@ -2499,15 +2499,15 @@ begin
 	     setcolor(white);
 	     centerwrite(center,400,('You have ' + tempstring + ' coins'));
 
-	     drawpic(150,100,'sword.ln1');
-		 drawpic(150,200,'shield.ln1');
-         drawpic(150,300,'axe.ln1');
-         drawpic(300,100,'chain.ln1');
-         drawpic(300,200,'plate.ln1');
-         drawpic(300,300,'dagger.ln1');
-         drawpic(450,100,'club.ln1');
-         drawpic(450,200,'staff.ln1');
-         drawpic(450,300,'hammer.ln1');
+	     drawpic(150,100,'sword.bmp');
+		 drawpic(150,200,'shield.bmp');
+         drawpic(150,300,'axe.bmp');
+         drawpic(300,100,'chain.bmp');
+         drawpic(300,200,'plate.bmp');
+         drawpic(300,300,'dagger.bmp');
+         drawpic(450,100,'club.bmp');
+         drawpic(450,200,'staff.bmp');
+         drawpic(450,300,'hammer.bmp');
 
 	     repeat
 	          ans:=readarrowkey;
@@ -2843,12 +2843,12 @@ begin
          setcolor(white);
 	     setfont('default.ttf',4);
 	     centerwrite(center,400,('You have ' + tempstring + ' coins'));
-             drawpic(20,280,'wizard.ln1');
-             drawpic(150,100,'potion-b.ln1'); {number based on color}
-             drawpic(150,200,'potion-r.ln1');
-             drawpic(150,300,'potion-g.ln1');
-             drawpic(320,100,'skilbook.ln1');
-             drawpic(380,280,'ring.ln1');
+             drawpic(20,280,'wizard.bmp');
+             drawpic(150,100,'potion-b.bmp'); {number based on color}
+             drawpic(150,200,'potion-r.bmp');
+             drawpic(150,300,'potion-g.bmp');
+             drawpic(320,100,'skilbook.bmp');
+             drawpic(380,280,'ring.bmp');
 	     repeat
 	          ans:=readarrowkey;
 	     until (ans in ['e','E','b','B','s','S','l','L']);
@@ -2873,7 +2873,7 @@ begin
 	prompt;
 	cleardevice;
 	x:=(getmaxx DIV 2) - 100;
-        drawpic(x,1,'gdemon.ln1');
+        drawpic(x,1,'gdemon.bmp');
 	x:=(getmaxx DIV 2) - 60;
 	drawpic(x,300,player.picfile);
 	setcolor(red);
@@ -3159,15 +3159,15 @@ begin
 	                         case roll('1d6') of
 	                              1:begin
 	                                     blackdice:=blackdice + 1;
-                                             thepicture:='blackdie.ln1';
+                                             thepicture:='blackdie.bmp';
 	                                end;
 	                              2,3:begin
 	                                       whitedice:=whitedice + 1;
-                                               thepicture:='whitedie.ln1';
+                                               thepicture:='whitedie.bmp';
 	                                  end;
 	                              4,5,6:begin
 	                                         skulldice:=skulldice + 1;
-                                                 thepicture:='skulldie.ln1';
+                                                 thepicture:='skulldie.bmp';
 	                                    end;
 	                         end;{case}
 	                         drawpic(loop*115,240,thepicture);
@@ -3352,8 +3352,8 @@ var
 
 begin
     cleardevice;
-    drawpic(2,1,'pub.ln1');
-    drawpic(40,160,'dwarf.ln1');
+    drawpic(2,1,'pub.bmp');
+    drawpic(40,160,'dwarf.bmp');
 	setfont('default.ttf',6);
 	setcolor(magenta);
 	x:=210;
@@ -3383,7 +3383,7 @@ begin
 	          prompt;
 	          repeat
 	               clearpub;
-                   drawpic(240,140,'roland.ln1');
+                   drawpic(240,140,'roland.bmp');
 	               setfont('default.ttf',6);
 	               setcolor(lightmagenta);
 	               centerwrite(center,280,'"So, what''ll it be," asks Roland McDoland');
@@ -3429,7 +3429,7 @@ begin
 	centerwrite(center+3,y+3,'The Eagle Talon Inn');
 	setcolor(cyan);
 	centerwrite(center,y,'The Eagle Talon Inn');
-    drawpic(420,120,'innkeep.ln1');
+    drawpic(420,120,'innkeep.bmp');
 	setfont('default.ttf',6);
 	setcolor(lightblue);
 	str(innprice,tempstring);
@@ -3559,7 +3559,7 @@ begin
     center:=getmaxx DIV 2;
 	repeat
 	     cleardevice;
-         drawpic(45,45,'thetown.ln1');
+         drawpic(45,45,'thetown.bmp');
 	     setfont('default.ttf',4);
 	     setcolor(white);
 	     centerwrite(center,400,'Choose a door (1-4) or');
@@ -3647,7 +3647,7 @@ begin
 	                    nummonsters:=4;
 	                    combat(player,nummonsters,monster);
 	                    cleardevice;
-                        drawpic(70,10,'esi.ln1');
+                        drawpic(70,10,'esi.bmp');
 	                    setfont('default.ttf',4);
 	                    setcolor(green);
 	                    y:=175;
@@ -3732,7 +3732,7 @@ begin
 	                                        rollmonsters(monster,nummonsters,'baltar');
 	                                        combat(player,nummonsters,monster);
 	                                        cleardevice;
-                                                drawpic(70,10,'esi.ln1');
+                                                drawpic(70,10,'esi.bmp');
 	                                        setfont('default.ttf',12);
 	                                        setcolor(lightblue);
 	                                        y:=175;
@@ -3919,7 +3919,7 @@ begin
 	                              rollmonsters(monster,nummonsters,'succubus');
 	                              combat(player,nummonsters,monster);
 	                              cleardevice;
-                                      drawpic(70,10,'esi.ln1');
+                                      drawpic(70,10,'esi.bmp');
 	                              setfont('default.ttf',12);
 	                              x:=10;
 	                              y:=175;
@@ -4004,12 +4004,12 @@ begin
 	               begin
 	                    die[loop]:=roll('1d6');
 	                    case die[loop] of
-                                 1:drawpic(200+((loop-1)*50),200,'die1.ln1');
-                                 2:drawpic(200+((loop-1)*50),200,'die2.ln1');
-                                 3:drawpic(200+((loop-1)*50),200,'die3.ln1');
-                                 4:drawpic(200+((loop-1)*50),200,'die4.ln1');
-                                 5:drawpic(200+((loop-1)*50),200,'die5.ln1');
-                                 6:drawpic(200+((loop-1)*50),200,'die6.ln1');
+                                 1:drawpic(200+((loop-1)*50),200,'die1.bmp');
+                                 2:drawpic(200+((loop-1)*50),200,'die2.bmp');
+                                 3:drawpic(200+((loop-1)*50),200,'die3.bmp');
+                                 4:drawpic(200+((loop-1)*50),200,'die4.bmp');
+                                 5:drawpic(200+((loop-1)*50),200,'die5.bmp');
+                                 6:drawpic(200+((loop-1)*50),200,'die6.bmp');
 	                    end;{case}
 	               end;
 	          setcolor(cyan);
@@ -4038,12 +4038,12 @@ begin
 	               begin
 	                    die[loop]:=roll('1d6');
 	                    case die[loop] of
-                                 1:drawpic(200+((loop-1)*50),300,'die1.ln1');
-                                 2:drawpic(200+((loop-1)*50),300,'die2.ln1');
-                                 3:drawpic(200+((loop-1)*50),300,'die3.ln1');
-                                 4:drawpic(200+((loop-1)*50),300,'die4.ln1');
-                                 5:drawpic(200+((loop-1)*50),300,'die5.ln1');
-                                 6:drawpic(200+((loop-1)*50),300,'die6.ln1');
+                                 1:drawpic(200+((loop-1)*50),300,'die1.bmp');
+                                 2:drawpic(200+((loop-1)*50),300,'die2.bmp');
+                                 3:drawpic(200+((loop-1)*50),300,'die3.bmp');
+                                 4:drawpic(200+((loop-1)*50),300,'die4.bmp');
+                                 5:drawpic(200+((loop-1)*50),300,'die5.bmp');
+                                 6:drawpic(200+((loop-1)*50),300,'die6.bmp');
 	                    end;{case}
 	               end;
 	          setcolor(cyan);
@@ -4275,7 +4275,7 @@ begin
 	                              combat(player,nummonsters,monster);
 	                              cleardevice;
 	                              if GAMEOVER then exit;
-                                      drawpic(70,10,'esi.ln1');
+                                      drawpic(70,10,'esi.bmp');
 	                              setfont('default.ttf',12);
 	                              x:=10;
 	                              y:=175;
@@ -4439,7 +4439,7 @@ begin
 	                              rollmonsters(monster,nummonsters,'bandit');
 	                              combat(player,nummonsters,monster);
 	                              cleardevice;
-                                      drawpic(70,10,'esi.ln1');
+                                      drawpic(70,10,'esi.bmp');
 	                              setfont('default.ttf',12);
 	                              x:=10;
 	                              y:=175;
@@ -4508,7 +4508,7 @@ begin
 	               graphwriteln(x,y,'the wheel of fortune!');
 	               graphwriteln(x,y,'');
 	               graphwriteln(x,y,'Do you want to spin?  (y/n)');
-                   drawpic(350,175,'wheel.ln1');
+                   drawpic(350,175,'wheel.bmp');
 	               repeat
 	                    ans:=readarrowkey;
 	               until (ans in ['y','Y','n','N']);
@@ -4534,13 +4534,13 @@ begin
 	                         x:=165;
 	                         y:=180;
 	                              repeat
-                                           drawpic(x,y,'wheel1.ln1');
+                                           drawpic(x,y,'wheel1.bmp');
 	                                   delay(delayvalue);
-                                           drawpic(x,y,'wheel2.ln1');
+                                           drawpic(x,y,'wheel2.bmp');
 	                                   delay(delayvalue);
-                                           drawpic(x,y,'wheel3.ln1');
+                                           drawpic(x,y,'wheel3.bmp');
 	                                   delay(delayvalue);
-                                           drawpic(x,y,'wheel4.ln1');
+                                           drawpic(x,y,'wheel4.bmp');
 	                                   delay(delayvalue);
 	                              until keypressed;
 	                         y:=350;
@@ -4549,15 +4549,15 @@ begin
 	                         case (roll('4d8')) of
 	                            4:begin
 	                                   writetext(textfile,350,'066');
-                                           drawpic(165,180,'wheel1.ln1');
-                                           drawpic(300,220,'wheart.ln1');
+                                           drawpic(165,180,'wheel1.bmp');
+                                           drawpic(300,220,'wheart.bmp');
 	                                   player.endurancemax:=player.endurancemax+100;
 	                                   player.endurance:=player.endurance+100;
 	                              end;
 	                           32:begin
 	                                   writetext(textfile,350,'067');
-                                           drawpic(165,180,'wheel3.ln1');
-                                           drawpic(300,220,'bskull.ln1');
+                                           drawpic(165,180,'wheel3.bmp');
+                                           drawpic(300,220,'bskull.bmp');
 	                                   prompt;
 	                                   died;
 	                                   exit;
@@ -4566,8 +4566,8 @@ begin
 	                              case roll('1d8') of
 	                                 1:begin
 	                                        writetext(textfile,350,'068');
-                                                drawpic(165,180,'wheel3.ln1');
-                                                drawpic(300,220,'moon.ln1');
+                                                drawpic(165,180,'wheel3.bmp');
+                                                drawpic(300,220,'moon.bmp');
 	                                        if (player.coins>1000) then
 	                                             player.coins:=player.coins - 1000
 	                                        else
@@ -4579,29 +4579,29 @@ begin
 	                                   end;
 	                                 2:begin
 	                                        writetext(textfile,350,'069');
-                                                drawpic(165,180,'wheel1.ln1');
-                                                drawpic(300,220,'candle.ln1');
+                                                drawpic(165,180,'wheel1.bmp');
+                                                drawpic(300,220,'candle.bmp');
 	                                        if (player.strength<20) then
 	                                             player.strength:=player.strength + 1;
 	                                   end;
 	                                 3:begin
 	                                        writetext(textfile,350,'070');
-                                                drawpic(165,180,'wheel3.ln1');
-                                                drawpic(300,220,'lit.ln1');
+                                                drawpic(165,180,'wheel3.bmp');
+                                                drawpic(300,220,'lit.bmp');
 	                                        if (player.dexterity>1) then
 	                                             player.dexterity:=player.dexterity - 1;
 	                                   end;
 	                                 4:begin
 	                                        writetext(textfile,350,'071');
-                                                drawpic(165,180,'wheel1.ln1');
-                                                drawpic(300,220,'heart.ln1');
+                                                drawpic(165,180,'wheel1.bmp');
+                                                drawpic(300,220,'heart.bmp');
 	                                        player.endurancemax:=player.endurancemax+1;
 	                                        player.endurance:=player.endurance+1;
 	                                   end;
 	                                 5:begin
 	                                        writetext(textfile,350,'072');
-                                                drawpic(165,180,'wheel3.ln1');
-                                                drawpic(300,220,'skull.ln1');
+                                                drawpic(165,180,'wheel3.bmp');
+                                                drawpic(300,220,'skull.bmp');
 	                                        if (player.endurancemax>1) then
 	                                             player.endurancemax:=player.endurancemax - 1;
 	                                        if (player.endurance>1) then
@@ -4609,22 +4609,22 @@ begin
 	                                   end;
 	                                 6:begin
 	                                        writetext(textfile,350,'073');
-                                                drawpic(165,180,'wheel1.ln1');
-                                                drawpic(300,220,'water.ln1');
+                                                drawpic(165,180,'wheel1.bmp');
+                                                drawpic(300,220,'water.bmp');
 	                                        if (player.dexterity<20) then
 	                                             player.dexterity:=player.dexterity + 1;
 	                                   end;
 	                                 7:begin
 	                                        writetext(textfile,350,'074');
-                                                drawpic(165,180,'wheel3.ln1');
-                                                drawpic(300,220,'eye.ln1');
+                                                drawpic(165,180,'wheel3.bmp');
+                                                drawpic(300,220,'eye.bmp');
 	                                        if (player.strength>1) then
 	                                             player.strength:=player.strength - 1;
 	                                   end;
 	                                 8:begin
 	                                        writetext(textfile,350,'075');
-                                                drawpic(165,180,'wheel1.ln1');
-                                                drawpic(300,220,'sun.ln1');
+                                                drawpic(165,180,'wheel1.bmp');
+                                                drawpic(300,220,'sun.bmp');
 	                                        player.coins:=player.coins + 1000;
 	                                        player.experience:=player.experience + 1000;
 	                                   end;
@@ -4644,7 +4644,7 @@ var
 
 begin
 	cleardevice;
-        drawpic(70,10,'esi.ln1');
+        drawpic(70,10,'esi.bmp');
 	setcolor(yellow);
 	setfont('default.ttf',4);
 	writetext(textfile,175,'039');
@@ -4689,7 +4689,7 @@ begin
 	       'v','V':begin
 	                    viewstats(player);
 	                    cleardevice;
-                        drawpic(70,10,'esi.ln1');
+                        drawpic(70,10,'esi.bmp');
 	               end;
 	           '1':begin
 	                    writetext(textfile,175,'039');
@@ -4792,7 +4792,7 @@ begin
 	if not(unlocked in player.stages) then
 	     repeat
 	          cleardevice;
-                  drawpic(10,10,'ldoor.ln1');
+                  drawpic(10,10,'ldoor.bmp');
 	          setcolor(lightmagenta);
 	          x:=10;
 	          y:=300;
@@ -5127,7 +5127,7 @@ begin
 	          graphwriteln(x,y,'A large bat-winged creature with the body of a lion');
 	          graphwriteln(x,y,'and the head of a man guards a sword here.  It sees');
 	          graphwriteln(x,y,'you and attacks!');
-                  drawpic(200,200,'manticor.ln1');
+                  drawpic(200,200,'manticor.bmp');
 	          prompt;
 	          nummonsters:=1;
 	          rollmonsters(monster,nummonsters,'manticor');
@@ -5145,7 +5145,7 @@ begin
 	                    graphwriteln(x,y,'You find a magic sword.');
 	                    graphwriteln(x,y,'');
 	                    graphwriteln(x,y,'');
-                            drawpic(x,y,'magicswd.ln1');
+                            drawpic(x,y,'magicswd.bmp');
 	                    if (player.numitems<itemmax) then
 	                          begin
 	                               player.numitems:=player.numitems + 1;
@@ -5208,7 +5208,7 @@ begin
 	          graphwriteln(x,y,'A dark, panther-like creature with tentacles looks');
 	          graphwriteln(x,y,'at you.  It seems to fade in and out of existence.');
 	          graphwriteln(x,y,'It decides it''s hungry and attacks!');
-                  drawpic(200,200,'displace.ln1');
+                  drawpic(200,200,'displace.bmp');
 	          prompt;
 	          nummonsters:=1;
 	          rollmonsters(monster,nummonsters,'displace');
@@ -5226,7 +5226,7 @@ begin
 	                    graphwriteln(x,y,'You find a magic shield.');
 	                    graphwriteln(x,y,'');
 	                    graphwriteln(x,y,'');
-                            drawpic(x,y,'magicshl.ln1');
+                            drawpic(x,y,'magicshl.bmp');
 	                    if (player.numitems<itemmax) then
 	                          begin
 	                               player.numitems:=player.numitems + 1;
@@ -5284,7 +5284,7 @@ begin
 	          graphwriteln(x,y,'');
 	          graphwriteln(x,y,'This is the home of a large lizard with six legs.');
 	          graphwriteln(x,y,'It rears up to atack you!');
-                  drawpic(200,200,'salamand.ln1');
+                  drawpic(200,200,'salamand.bmp');
 	          prompt;
 	          nummonsters:=1;
 	          rollmonsters(monster,nummonsters,'salamand');
@@ -5328,7 +5328,7 @@ begin
 	          graphwriteln(x,y,'');
 	          graphwriteln(x,y,'Lorn Paradox, the Ice Queen''s knight lives here,');
 	          graphwriteln(x,y,'and he just happens to be at home.  He attacks!');
-                  drawpic(200,200,'knight.ln1');
+                  drawpic(200,200,'knight.bmp');
 	          prompt;
 	          nummonsters:=1;
 	          rollmonsters(monster,nummonsters,'knight');
@@ -5361,7 +5361,7 @@ begin
 	          graphwriteln(x,y,'eventually.  You have forced me to kill you..."');
 	          graphwriteln(x,y,'');
 	          graphwriteln(x,y,'She begins conjuring strong magic and attacks!');
-                  drawpic(210,300,'icequeen.ln1');
+                  drawpic(210,300,'icequeen.bmp');
 	          prompt;
 	          nummonsters:=1;
 	          rollmonsters(monster,nummonsters,'icequeen');
@@ -5602,7 +5602,7 @@ begin
 	                              graphwriteln(x,y,'In the dragon''s horde, you find the Flame Wand.');
 	                              graphwriteln(x,y,'');
 	                              graphwriteln(x,y,'');
-                                      drawpic(x,y,'flamewnd.ln1');
+                                      drawpic(x,y,'flamewnd.bmp');
 	                              if (player.numitems<itemmax) then
 	                                   begin
 	                                        player.numitems:=player.numitems + 1;
@@ -5751,7 +5751,7 @@ var
 begin
 	enter:=false;
 	cleardevice;
-        drawpic(120,1,'tcastle.ln1');
+        drawpic(120,1,'tcastle.bmp');
 	setcolor(white);
 	message(x,y,'');
 	setfont('default.ttf',4);
